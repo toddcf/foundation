@@ -3,99 +3,210 @@ const exercises = {
     title: 'The Founder',
     level: 'Basic',
     transition: 5000,
-    pose1: 15000,
-    pose2: 15000,
-    pose3: 15000,
-    pose4: 6000,
-    pose5: 15000,
-    pose6: 15000,
-    pose7: 20000
+    pose1: {
+      duration: 15000,
+      img: ''
+    },
+    pose2: {
+      duration: 15000,
+      img: ''
+    },
+    pose3: {
+      duration: 15000,
+      img: ''
+    },
+    pose4: {
+      duration: 6000,
+      img: ''
+    },
+    pose5: {
+      duration: 15000,
+      img: ''
+    },
+    pose6: {
+      duration: 15000,
+      img: ''
+    },
+    pose7: {
+      duration: 20000,
+      img: ''
+    }
   },
   foundationSquat: {
     title: 'Foundation Squat',
     level: 'Moderate',
     transition: 3000,
-    pose1: 50000
+    pose1: {
+      duration: 50000,
+      img: ''
+    }
   },
   goodMorning: {
     title: 'Good Morning',
     level: 'Intense',
     transition: 3000,
-    pose1: 42000
+    pose1: {
+      duration: 42000,
+      img: ''
+    }
   },
   windmill: {
     title: 'Windmill',
     level: 'Intense',
     transition: 3000,
-    pose1: 15000,
-    pose2: 30000,
-    pse3: 30000
-  }
+    pose1: {
+      duration: 15000,
+      img: ''
+    },
+    pose2: {
+      duration: 30000,
+      img: ''
+    },
+    pse3: {
+      duration: 30000,
+      img: ''
+    },
+  },
   woodpecker: {
     title: 'Woodpecker',
     level: 'Moderate',
     transition: 5000,
-    pose1: 5000,
-    pose2: 5000,
-    pose3: 20000,
-    pose4: 3000,
-    pose5: 15000
+    pose1: {
+      duration: 5000,
+      img: ''
+    },
+    pose2: {
+      duration: 5000,
+      img: ''
+    },
+    pose3: {
+      duration: 20000,
+      img: ''
+    },
+    pose4: {
+      duration: 3000,
+      img: ''
+    },
+    pose5: {
+      duration: 15000,
+      img: ''
+    }
   },
   backExt: {
     title: 'Back Extension',
     level: 'Basic',
     transition: 10000,
-    pose1: 30000
+    pose1: {
+      duration: 30000,
+      img: ''
+    }
   },
   foundationPlank: {
     title: 'Foundation Plank',
     level: 'Intense',
     transition: 5000,
-    pose1: 10000,
-    pose2: 30000,
-    pose3: 10000
-  }
+    pose1: {
+      duration: 10000,
+      img: ''
+    },
+    pose2: {
+      duration: 30000,
+      img: ''
+    },
+    pose3: {
+      duration: 10000,
+      img: ''
+    }
+  },
   addAssBackExt: {
     title: 'Adductor-Assisted Back Extension',
     level: 'Basic',
     transition: 5000,
-    pose1: 20000
+    pose1: {
+      duration: 20000,
+      img: ''
+    }
   },
   childPoseKneeling: {
     title: 'Child\'s Pose / Kneeling Founder',
     level: 'Basic',
-    transition: 3000
-    pose1: 30000,
-    pose2: 15000,
-    pose3: 10000
+    transition: 3000,
+    pose1: {
+      duration: 30000,
+      img: ''
+    },
+    pose2: {
+      duration: 15000,
+      img: ''
+    },
+    pose3: {
+      duration: 10000,
+      img: ''
+    }
   },
   lungeStretch: {
     title: 'Lunge Stretch',
     level: 'Basic',
     transition: 10000,
-    pose1: 20000,
+    pose1: {
+      duration: 20000,
+      img: ''
+    },
     shift: 5000,
-    pose2: 20000
+    pose2: {
+      duration: 20000,
+      img: ''
+    }
   },
   crossover: {
     title: 'Crossover',
     level: 'Bonus',
     transition: 10000,
-    pose1: 15000,
-    pose2: 15000,
-    pose3: 15000,
-    pose4: 15000
+    pose1: {
+      duration: 15000,
+      img: ''
+    },
+    pose2: {
+      duration: 15000,
+      img: ''
+    },
+    pose3: {
+      duration: 15000,
+      img: ''
+    },
+    pose4: {
+      duration: 15000,
+      img: ''
+    }
   },
   crossunder: {
     title: "Cross Under",
     level: 'Bonus',
     transition: 5000,
-    pose1: 2000,
-    pose2: 2000,
-    pose3: 20000,
-    pose4: 2000,
-    pose5: 2000,
-    pose6: 20000
+    pose1: {
+      duration: 2000,
+      img: ''
+    },
+    pose2: {
+      duration: 2000,
+      img: ''
+    },
+    pose3: {
+      duration: 20000,
+      img: ''
+    },
+    pose4: {
+      duration: 2000,
+      img: ''
+    },
+    pose5: {
+      duration: 2000,
+      img: ''
+    }
+    pose6: {
+      duration: 20000,
+      img: ''
+    }
   }
 }
 
@@ -126,7 +237,7 @@ let bonus = false; // default
 // Countdown its transition in the UI. (Negative numbers.)
 // When the countdown reaches zero, play sfx.begin.
 // Then count up its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
-// Repeat this process for each pose in this object.
+// Repeat this process for each pose OR SHIFT in this object. (NOTE: A shift should be added to some objects.)
 // When all the poses are done, play sfx.done, move on to the next object in the array, and repeat the steps above.
 // When all exercises are done, if bonus === false, then play sfx.finale. If bonus === true, initiate bonus workout.
 
