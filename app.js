@@ -78,6 +78,20 @@ const exercises = {
     pose2: 20000
   },
   crossover: {
-    
+    title: 'Crossover',
+    level: 'Bonus',
+    transition: 10000,
+    pose1: 15000,
+    pose2: 15000,
+    pose3: 15000,
+    pose4: 15000
+  },
+  crossunder: {
+    title: "Cross Under",
+    level: 'Bonus',
+    transition: 5000,
+    pose1: 2000,
+    pose2: 2000,
+    pose3: 20000
   }
 }
