@@ -92,6 +92,45 @@ const exercises = {
     transition: 5000,
     pose1: 2000,
     pose2: 2000,
-    pose3: 20000
+    pose3: 20000,
+    pose4: 2000,
+    pose5: 2000,
+    pose6: 20000
   }
 }
+
+const workout = [];
+let level;
+let circuits = 3; // default, but user can type in any whole number above 0.
+const sfx = {
+  begin: '',
+  penultimate: '',
+  nextPose: '',
+  done: '',
+  finale: ''
+}
+let bonus = false; // default
+
+// Level Selection:
+// Loop over the exercises object and store any that match the chosen level (and below) in the workout array:
+// If level = Basic, then workout = [exercises.level === 'Basic'];
+// If level = Moderate, then workout = [exercises.level === 'Basic' || 'Moderate'];
+// If level = Intense, then workout = [exercises.level === 'Basic' || 'Moderate' || 'Intense'];
+// If bonus = true, then after the workout is done, the bonus exercises will begin.
+
+
+// Initiate Workout:
+// Take the first object in the workout array.
+// Display its title in the UI.
+// Display its image in the UI.
+// Countdown its transition in the UI. (Negative numbers.)
+// When the countdown reaches zero, play sfx.begin.
+// Then count up its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
+// Repeat this process for each pose in this object.
+// When all the poses are done, play sfx.done, move on to the next object in the array, and repeat the steps above.
+// When all exercises are done, if bonus === false, then play sfx.finale. If bonus === true, initiate bonus workout.
+
+
+// Bonus Workout:
+// Run the same procedure listed above for exercises.crossover and exercises.crossUnder.
+// When complete, play sfx.finale.
