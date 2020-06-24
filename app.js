@@ -289,8 +289,6 @@ const exercises = [
 
 const workout = [];
 let bonusExercises = [];
-let level = 'Basic';
-let levelNumber;
 let circuits = 3; // default, but user can type in any whole number above 0.
 let currentCircuit = 0;
 let estimatedTime = 0; // default
@@ -302,7 +300,6 @@ const sfx = {
   finale: ''
 }
 let bonus = false; // default
-bonus = false;
 let pauses = 0; // default
 // 0 = automatic - none
 // 1 = manual - between circuits
@@ -316,6 +313,9 @@ let pauses = 0; // default
 // If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?  For now, let's say it's the latter.
 // Calculates the total estimated workout time (total array time multiplied by number of circuits) and displays on the page.
 
+// Instead of converting from a string to a level number, pull the number from a data attribute in the UI.
+let level = 'Intense';
+let levelNumber = 1; // Default
 switch (level) {
   case 'Basic':
     levelNumber = 1;
@@ -366,9 +366,8 @@ if (bonus) {
 }
 
 // Convert Time Units
-var seconds = estimatedTime / 1000;
-var minutes = Math.floor(seconds / 60);
-seconds = seconds % 60;
+var minutes = Math.floor(estimatedTime / 1000 / 60);
+var seconds = estimatedTime / 1000 % 60;
 
 console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
 
