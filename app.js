@@ -4,226 +4,292 @@ const exercises = [
     level: 'Basic',
     levelNumber: 1,
     transition: 5000,
-    pose1: {
-      duration: 15000,
-      img: ''
-    },
-    pose2: {
-      duration: 15000,
-      img: ''
-    },
-    pose3: {
-      duration: 15000,
-      img: ''
-    },
-    pose4: {
-      duration: 6000,
-      img: ''
-    },
-    pose5: {
-      duration: 15000,
-      img: ''
-    },
-    pose6: {
-      duration: 15000,
-      img: ''
-    },
-    pose7: {
-      duration: 20000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 4',
+        duration: 6000,
+        img: ''
+      },
+      {
+        desc: 'Pose 4',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 5',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 6',
+        duration: 20000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Foundation Squat',
     level: 'Moderate',
     levelNumber: 2,
     transition: 3000,
-    pose1: {
-      duration: 50000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 50000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Good Morning',
     level: 'Intense',
     levelNumber: 3,
     transition: 3000,
-    pose1: {
-      duration: 42000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 42000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Windmill',
     level: 'Intense',
     levelNumber: 3,
     transition: 3000,
-    pose1: {
-      duration: 15000,
-      img: ''
-    },
-    pose2: {
-      duration: 30000,
-      img: ''
-    },
-    pse3: {
-      duration: 30000,
-      img: ''
-    },
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 30000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 30000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Woodpecker',
     level: 'Moderate',
     levelNumber: 2,
     transition: 5000,
-    pose1: {
-      duration: 5000,
-      img: ''
-    },
-    pose2: {
-      duration: 5000,
-      img: ''
-    },
-    pose3: {
-      duration: 20000,
-      img: ''
-    },
-    pose4: {
-      duration: 3000,
-      img: ''
-    },
-    pose5: {
-      duration: 15000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 5000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 5000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 20000,
+        img: ''
+      },
+      {
+        desc: 'Pose 4',
+        duration: 3000,
+        img: ''
+      },
+      {
+        desc: 'Pose 5',
+        duration: 15000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Back Extension',
     level: 'Basic',
     levelNumber: 1,
     transition: 10000,
-    pose1: {
-      duration: 30000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 30000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Foundation Plank',
     level: 'Intense',
     levelNumber: 3,
     transition: 5000,
-    pose1: {
-      duration: 10000,
-      img: ''
-    },
-    pose2: {
-      duration: 30000,
-      img: ''
-    },
-    pose3: {
-      duration: 10000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 10000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 30000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 10000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Adductor-Assisted Back Extension',
     level: 'Basic',
     levelNumber: 1,
     transition: 5000,
-    pose1: {
-      duration: 20000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 20000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Child\'s Pose / Kneeling Founder',
     level: 'Basic',
     levelNumber: 1,
     transition: 3000,
-    pose1: {
-      duration: 30000,
-      img: ''
-    },
-    pose2: {
-      duration: 15000,
-      img: ''
-    },
-    pose3: {
-      duration: 10000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 30000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 10000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Lunge Stretch',
     level: 'Basic',
     levelNumber: 1,
     transition: 10000,
-    pose1: {
-      duration: 20000,
-      img: ''
-    },
-    shift: 5000,
-    pose2: {
-      duration: 20000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 20000,
+        img: ''
+      },
+      {
+        // Can this shift get rolled into the next pose so that that image can be displayed?
+        desc: 'Shift Position',
+        duration: 5000
+      },
+      {
+        desc: 'Pose 2',
+        duration: 20000,
+        img: ''
+      }
+    ]
   },
   {
     title: 'Crossover',
     level: 'Bonus',
     levelNumber: 4,
     transition: 10000,
-    pose1: {
-      duration: 15000,
-      img: ''
-    },
-    pose2: {
-      duration: 15000,
-      img: ''
-    },
-    pose3: {
-      duration: 15000,
-      img: ''
-    },
-    pose4: {
-      duration: 15000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 15000,
+        img: ''
+      },
+      {
+        desc: 'Pose 4',
+        duration: 15000,
+        img: ''
+      }
+    ]
   },
   {
     title: "Cross Under",
     level: 'Bonus',
     levelNumber: 4,
     transition: 5000,
-    pose1: {
-      duration: 2000,
-      img: ''
-    },
-    pose2: {
-      duration: 2000,
-      img: ''
-    },
-    pose3: {
-      duration: 20000,
-      img: ''
-    },
-    pose4: {
-      duration: 2000,
-      img: ''
-    },
-    pose5: {
-      duration: 2000,
-      img: ''
-    },
-    pose6: {
-      duration: 20000,
-      img: ''
-    }
+    poses: [
+      {
+        desc: 'Pose 1',
+        duration: 2000,
+        img: ''
+      },
+      {
+        desc: 'Pose 2',
+        duration: 2000,
+        img: ''
+      },
+      {
+        desc: 'Pose 3',
+        duration: 20000,
+        img: ''
+      },
+      {
+        desc: 'Pose 4',
+        duration: 2000,
+        img: ''
+      },
+      {
+        desc: 'Pose 5',
+        duration: 2000,
+        img: ''
+      },
+      {
+        desc: 'Pose 6',
+        duration: 20000,
+        img: ''
+      }
+    ]
   }
 ]
 
 const workout = [];
-let level = 'Intense';
+let bonusExercises = [];
+let level = 'Moderate';
 let levelNumber;
 let circuits = 3; // default, but user can type in any whole number above 0.
 let currentCircuit = 0;
@@ -235,13 +301,19 @@ const sfx = {
   finale: ''
 }
 let bonus = false; // default
+bonus = false;
+let pauses = 0; // default
+// 0 = automatic - none
+// 1 = manual - between circuits
+// 2 = manual - between each exercise
 
 // Level Selection:
 // Loop over the exercises object and store any that match the chosen level (and below) in the workout array:
 // If level = Basic, then workout = [exercises.level === 'Basic'];
 // If level = Moderate, then workout = [exercises.level === 'Basic' || 'Moderate'];
 // If level = Intense, then workout = [exercises.level === 'Basic' || 'Moderate' || 'Intense'];
-// If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?
+// If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?  For now, let's say it's the latter.
+// Calculates the total estimated workout time (total array time multiplied by number of circuits) and displays on the page.
 
 switch (level) {
   case 'Basic':
@@ -261,6 +333,18 @@ console.log(`Level Number: ${levelNumber}`);
 const program = exercises.filter(function(exercise) {
   return exercise.levelNumber <= levelNumber;
 });
+console.log(program);
+
+if (bonus) {
+  bonusExercises = exercises.filter(function(exercise) {
+    return exercise.levelNumber === 4;
+  });
+}
+console.log(bonusExercises);
+
+
+// Estimate Total Workout Time:
+// program.forEach : Add all the transitions and pose durations.
 
 
 // Initiate Workout:
