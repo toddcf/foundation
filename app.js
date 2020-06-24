@@ -302,7 +302,7 @@ const sfx = {
   finale: ''
 }
 let bonus = false; // default
-bonus = true;
+bonus = false;
 let pauses = 0; // default
 // 0 = automatic - none
 // 1 = manual - between circuits
@@ -364,6 +364,13 @@ if (bonus) {
   });
   console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
 }
+
+// Convert Time Units
+var seconds = estimatedTime / 1000;
+var minutes = Math.floor(seconds / 60);
+seconds = seconds % 60;
+
+console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
 
 
 // Initiate Workout:
