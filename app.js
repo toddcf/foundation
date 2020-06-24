@@ -289,7 +289,7 @@ const exercises = [
 
 const workout = [];
 let bonusExercises = [];
-let level = 'Moderate';
+let level = 'Basic';
 let levelNumber;
 let circuits = 3; // default, but user can type in any whole number above 0.
 let currentCircuit = 0;
@@ -302,7 +302,7 @@ const sfx = {
   finale: ''
 }
 let bonus = false; // default
-bonus = false;
+bonus = true;
 let pauses = 0; // default
 // 0 = automatic - none
 // 1 = manual - between circuits
@@ -336,31 +336,35 @@ const program = exercises.filter(function(exercise) {
 });
 console.log(program);
 
+
+// Estimate Total Workout Time:
+// Sum of all transitions and pose durations:
+program.forEach(function(exercise) {
+  estimatedTime += exercise.transition;
+  return exercise.poses.forEach(function(pose) {
+    estimatedTime += pose.duration;
+  });
+});
+console.log(`Estimated Time per Circuit: ${estimatedTime}`);
+
+estimatedTime *= circuits;
+console.log(`Estimated Total Workout Time: ${estimatedTime}`);
+
+// Add Bonus if applicable.
+// Since these are always separate (I think), maybe they should just be in their own array to begin with, and not have to be filtered.
 if (bonus) {
   bonusExercises = exercises.filter(function(exercise) {
     return exercise.levelNumber === 4;
   });
-}
-console.log(bonusExercises);
-
-
-// Estimate Total Workout Time:
-// Add all the transitions and pose durations.
-totalTime = program.forEach(function(exercise) {
-  return estimatedTime += exercise.transition;
-  // estimatedTime += exercise.poses.forEach(function(pose) {
-  //   pose.duration;
-  // });
-});
-console.log(`Total Transitions Time: ${estimatedTime}`);
-
-totalTime = program.forEach(function(exercise) {
-  exercise.poses.forEach(function(pose) {
-    return estimatedTime += pose.duration;
+  bonusExercises.forEach(function(bonusExercise) {
+    estimatedTime += bonusExercise.transition;
+    return bonusExercise.poses.forEach(function(pose) {
+      estimatedTime += pose.duration;
+    });
   });
-});
-console.log(`Total Transitions and Poses Time: ${estimatedTime}`); // Need to confirm this total is correct.
-// Once correct, try to combine this and the transition time into a single forEach.
+  console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
+}
+
 
 // Initiate Workout:
 // Take the first object in the workout array.
