@@ -1,5 +1,5 @@
-const exercises = {
-  founder: {
+const exercises = [
+  {
     title: 'The Founder',
     level: 'Basic',
     transition: 5000,
@@ -32,7 +32,7 @@ const exercises = {
       img: ''
     }
   },
-  foundationSquat: {
+  {
     title: 'Foundation Squat',
     level: 'Moderate',
     transition: 3000,
@@ -41,7 +41,7 @@ const exercises = {
       img: ''
     }
   },
-  goodMorning: {
+  {
     title: 'Good Morning',
     level: 'Intense',
     transition: 3000,
@@ -50,7 +50,7 @@ const exercises = {
       img: ''
     }
   },
-  windmill: {
+  {
     title: 'Windmill',
     level: 'Intense',
     transition: 3000,
@@ -67,7 +67,7 @@ const exercises = {
       img: ''
     },
   },
-  woodpecker: {
+  {
     title: 'Woodpecker',
     level: 'Moderate',
     transition: 5000,
@@ -92,7 +92,7 @@ const exercises = {
       img: ''
     }
   },
-  backExt: {
+  {
     title: 'Back Extension',
     level: 'Basic',
     transition: 10000,
@@ -101,7 +101,7 @@ const exercises = {
       img: ''
     }
   },
-  foundationPlank: {
+  {
     title: 'Foundation Plank',
     level: 'Intense',
     transition: 5000,
@@ -118,7 +118,7 @@ const exercises = {
       img: ''
     }
   },
-  addAssBackExt: {
+  {
     title: 'Adductor-Assisted Back Extension',
     level: 'Basic',
     transition: 5000,
@@ -127,7 +127,7 @@ const exercises = {
       img: ''
     }
   },
-  childPoseKneeling: {
+  {
     title: 'Child\'s Pose / Kneeling Founder',
     level: 'Basic',
     transition: 3000,
@@ -144,7 +144,7 @@ const exercises = {
       img: ''
     }
   },
-  lungeStretch: {
+  {
     title: 'Lunge Stretch',
     level: 'Basic',
     transition: 10000,
@@ -158,7 +158,7 @@ const exercises = {
       img: ''
     }
   },
-  crossover: {
+  {
     title: 'Crossover',
     level: 'Bonus',
     transition: 10000,
@@ -179,7 +179,7 @@ const exercises = {
       img: ''
     }
   },
-  crossunder: {
+  {
     title: "Cross Under",
     level: 'Bonus',
     transition: 5000,
@@ -202,17 +202,18 @@ const exercises = {
     pose5: {
       duration: 2000,
       img: ''
-    }
+    },
     pose6: {
       duration: 20000,
       img: ''
     }
   }
-}
+]
 
 const workout = [];
 let level;
 let circuits = 3; // default, but user can type in any whole number above 0.
+let currentCircuit = 0;
 const sfx = {
   begin: '',
   penultimate: '',
@@ -230,6 +231,8 @@ let bonus = false; // default
 // If bonus = true, then after the workout is done, the bonus exercises will begin.
 
 
+
+
 // Initiate Workout:
 // Take the first object in the workout array.
 // Display its title in the UI.
@@ -245,3 +248,13 @@ let bonus = false; // default
 // Bonus Workout:
 // Run the same procedure listed above for exercises.crossover and exercises.crossUnder.
 // When complete, play sfx.finale.
+
+
+// UX:
+// User can pause workout.
+// User can choose "one exercise at a time," "one circuit at a time," or "nonstop."
+
+
+// UI:
+// Displays current circuit number.
+// Displays remaining number of circuits.
