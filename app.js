@@ -293,6 +293,7 @@ let level = 'Moderate';
 let levelNumber;
 let circuits = 3; // default, but user can type in any whole number above 0.
 let currentCircuit = 0;
+let estimatedTime = 0; // default
 const sfx = {
   begin: '',
   penultimate: '',
@@ -344,8 +345,22 @@ console.log(bonusExercises);
 
 
 // Estimate Total Workout Time:
-// program.forEach : Add all the transitions and pose durations.
+// Add all the transitions and pose durations.
+totalTime = program.forEach(function(exercise) {
+  return estimatedTime += exercise.transition;
+  // estimatedTime += exercise.poses.forEach(function(pose) {
+  //   pose.duration;
+  // });
+});
+console.log(`Total Transitions Time: ${estimatedTime}`);
 
+totalTime = program.forEach(function(exercise) {
+  exercise.poses.forEach(function(pose) {
+    return estimatedTime += pose.duration;
+  });
+});
+console.log(`Total Transitions and Poses Time: ${estimatedTime}`); // Need to confirm this total is correct.
+// Once correct, try to combine this and the transition time into a single forEach.
 
 // Initiate Workout:
 // Take the first object in the workout array.
