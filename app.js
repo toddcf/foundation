@@ -2,6 +2,7 @@ const exercises = [
   {
     title: 'The Founder',
     level: 'Basic',
+    levelNumber: 1,
     transition: 5000,
     pose1: {
       duration: 15000,
@@ -35,6 +36,7 @@ const exercises = [
   {
     title: 'Foundation Squat',
     level: 'Moderate',
+    levelNumber: 2,
     transition: 3000,
     pose1: {
       duration: 50000,
@@ -44,6 +46,7 @@ const exercises = [
   {
     title: 'Good Morning',
     level: 'Intense',
+    levelNumber: 3,
     transition: 3000,
     pose1: {
       duration: 42000,
@@ -53,6 +56,7 @@ const exercises = [
   {
     title: 'Windmill',
     level: 'Intense',
+    levelNumber: 3,
     transition: 3000,
     pose1: {
       duration: 15000,
@@ -70,6 +74,7 @@ const exercises = [
   {
     title: 'Woodpecker',
     level: 'Moderate',
+    levelNumber: 2,
     transition: 5000,
     pose1: {
       duration: 5000,
@@ -95,6 +100,7 @@ const exercises = [
   {
     title: 'Back Extension',
     level: 'Basic',
+    levelNumber: 1,
     transition: 10000,
     pose1: {
       duration: 30000,
@@ -104,6 +110,7 @@ const exercises = [
   {
     title: 'Foundation Plank',
     level: 'Intense',
+    levelNumber: 3,
     transition: 5000,
     pose1: {
       duration: 10000,
@@ -121,6 +128,7 @@ const exercises = [
   {
     title: 'Adductor-Assisted Back Extension',
     level: 'Basic',
+    levelNumber: 1,
     transition: 5000,
     pose1: {
       duration: 20000,
@@ -130,6 +138,7 @@ const exercises = [
   {
     title: 'Child\'s Pose / Kneeling Founder',
     level: 'Basic',
+    levelNumber: 1,
     transition: 3000,
     pose1: {
       duration: 30000,
@@ -147,6 +156,7 @@ const exercises = [
   {
     title: 'Lunge Stretch',
     level: 'Basic',
+    levelNumber: 1,
     transition: 10000,
     pose1: {
       duration: 20000,
@@ -161,6 +171,7 @@ const exercises = [
   {
     title: 'Crossover',
     level: 'Bonus',
+    levelNumber: 4,
     transition: 10000,
     pose1: {
       duration: 15000,
@@ -182,6 +193,7 @@ const exercises = [
   {
     title: "Cross Under",
     level: 'Bonus',
+    levelNumber: 4,
     transition: 5000,
     pose1: {
       duration: 2000,
@@ -211,7 +223,8 @@ const exercises = [
 ]
 
 const workout = [];
-let level;
+let level = 'Intense';
+let levelNumber;
 let circuits = 3; // default, but user can type in any whole number above 0.
 let currentCircuit = 0;
 const sfx = {
@@ -228,9 +241,26 @@ let bonus = false; // default
 // If level = Basic, then workout = [exercises.level === 'Basic'];
 // If level = Moderate, then workout = [exercises.level === 'Basic' || 'Moderate'];
 // If level = Intense, then workout = [exercises.level === 'Basic' || 'Moderate' || 'Intense'];
-// If bonus = true, then after the workout is done, the bonus exercises will begin.
+// If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?
 
+switch (level) {
+  case 'Basic':
+    levelNumber = 1;
+    break;
+  case 'Moderate':
+    levelNumber = 2;
+    break;
+  case 'Intense':
+    levelNumber = 3;
+    break;
+  default:
+    levelNumber = 1;
+}
+console.log(`Level Number: ${levelNumber}`);
 
+const program = exercises.filter(function(exercise) {
+  return exercise.levelNumber <= levelNumber;
+});
 
 
 // Initiate Workout:
