@@ -379,45 +379,36 @@ let display;
 let timerValue = program[0].poses[0].duration / 1000;
 timerUI();
 
-let countdownTimer;
-let countdown = true;
-let countupTimer;
-let countup = false;
-
-if (countdown) {
-  countdownTimer = setInterval(function() {
+function countdownTimer() {
+  const timer = setInterval(function() {
     if (timerValue > 0) {
       timerValue--;
       timerUI();
     } else {
-      clearInterval(countdownTimer);
+      clearInterval(timer);
     }
   }, 1000);
 }
+
+countdownTimer(timerValue);
+
 // Display its title in the UI.
 // Display its image in the UI.
 // Countdown its transition in the UI. (Negative numbers.)
 function timerUI() {
-  // If 10 or more: Add a negative.
-  // If between 0 and 10: Add a negative and a zero.
-  // If 0: Add a zero, but NOT a negative.
   if (timerValue > 9) {
-    display = `-:${timerValue}`;
-  } else if ( (timerValue < 10) && (timerValue > 0)) {
-    display = `-:0${timerValue}`;
+    // Set color back to default if it's not already.
+    display = `${timerValue}`;
   } else {
-    // If zero:
-    display = `:0${timerValue}`;
+    // Make 5 thru 1 red and add beeps and pulsations.
+    // Make 0 green and add a finish sound.
+    display = `0${timerValue}`;
   }
   console.log(display);
 }
 // When the countdown reaches zero, play sfx.begin.
-// Then count up its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
-if (countup) {
-  let countupTimer = setInterval(function() {
+// Then count down its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
 
-  });
-}
 // Repeat this process for each pose OR SHIFT in this object. (NOTE: A shift should be added to some objects.)
 // When all the poses are done, play sfx.done, move on to the next object in the array, and repeat the steps above.
 // When all exercises are done, if bonus === false, then play sfx.finale. If bonus === true, initiate bonus workout.
