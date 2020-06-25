@@ -373,7 +373,18 @@ console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds
 
 
 // Initiate Workout:
-// Take the first object in the workout array.
+// Take the first object in the workout array.  Use a promise chain: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+let rootTimer = program[0].transition;
+let displayTimer = rootTimer / 1000;
+console.log(`-${displayTimer}`);
+let firstTransition = setInterval(function() {
+  if (displayTimer > 0) {
+    displayTimer--;
+    console.log((displayTimer > 0) ? `-${displayTimer}` : `${displayTimer}`);
+  } else {
+    clearInterval(firstTransition);
+  }
+}, 1000);
 // Display its title in the UI.
 // Display its image in the UI.
 // Countdown its transition in the UI. (Negative numbers.)
