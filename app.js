@@ -2,7 +2,7 @@ const exercises = [
   {
     title: 'The Founder',
     level: 'Basic',
-    levelNumber: 1,
+    difficulty: 1,
     transition: 5000,
     poses: [
       {
@@ -45,7 +45,7 @@ const exercises = [
   {
     title: 'Foundation Squat',
     level: 'Moderate',
-    levelNumber: 2,
+    difficulty: 2,
     transition: 3000,
     poses: [
       {
@@ -58,7 +58,7 @@ const exercises = [
   {
     title: 'Good Morning',
     level: 'Intense',
-    levelNumber: 3,
+    difficulty: 3,
     transition: 3000,
     poses: [
       {
@@ -71,7 +71,7 @@ const exercises = [
   {
     title: 'Windmill',
     level: 'Intense',
-    levelNumber: 3,
+    difficulty: 3,
     transition: 3000,
     poses: [
       {
@@ -94,7 +94,7 @@ const exercises = [
   {
     title: 'Woodpecker',
     level: 'Moderate',
-    levelNumber: 2,
+    difficulty: 2,
     transition: 5000,
     poses: [
       {
@@ -127,7 +127,7 @@ const exercises = [
   {
     title: 'Back Extension',
     level: 'Basic',
-    levelNumber: 1,
+    difficulty: 1,
     transition: 10000,
     poses: [
       {
@@ -140,7 +140,7 @@ const exercises = [
   {
     title: 'Foundation Plank',
     level: 'Intense',
-    levelNumber: 3,
+    difficulty: 3,
     transition: 5000,
     poses: [
       {
@@ -163,7 +163,7 @@ const exercises = [
   {
     title: 'Adductor-Assisted Back Extension',
     level: 'Basic',
-    levelNumber: 1,
+    difficulty: 1,
     transition: 5000,
     poses: [
       {
@@ -176,7 +176,7 @@ const exercises = [
   {
     title: 'Child\'s Pose / Kneeling Founder',
     level: 'Basic',
-    levelNumber: 1,
+    difficulty: 1,
     transition: 3000,
     poses: [
       {
@@ -199,7 +199,7 @@ const exercises = [
   {
     title: 'Lunge Stretch',
     level: 'Basic',
-    levelNumber: 1,
+    difficulty: 1,
     transition: 10000,
     poses: [
       {
@@ -222,7 +222,7 @@ const exercises = [
   {
     title: 'Crossover',
     level: 'Bonus',
-    levelNumber: 4,
+    difficulty: 4,
     transition: 10000,
     poses: [
       {
@@ -250,7 +250,7 @@ const exercises = [
   {
     title: "Cross Under",
     level: 'Bonus',
-    levelNumber: 4,
+    difficulty: 4,
     transition: 5000,
     poses: [
       {
@@ -287,7 +287,6 @@ const exercises = [
   }
 ]
 
-const workout = [];
 let bonusExercises = [];
 let circuits = 3; // default, but user can type in any whole number above 0.
 let currentCircuit = 0;
@@ -299,71 +298,71 @@ const sfx = {
   done: '',
   finale: ''
 }
-let bonus = false; // default
-let pauses = 0; // default
-// 0 = automatic - none
-// 1 = manual - between circuits
-// 2 = manual - between each exercise
+let bonus = true; // default = false
+let intervals = 0; // default = nonstop
+// User can choose intervals:
+  // A) One exercise at a time.  (You're still learning and need to look up each exercise before you begin.)
+  // B) One circuit at a time.  (You know the workout, but want to rest in between circuits.)
+  // C) Nonstop.  (You know the workout by heart, want to get the maximum physical benefit from it, and want to finish in less amount of time.)
 
-// Level Selection:
-// Loop over the exercises object and store any that match the chosen level (and below) in the workout array:
-// If level = Basic, then workout = [exercises.level === 'Basic'];
-// If level = Moderate, then workout = [exercises.level === 'Basic' || 'Moderate'];
-// If level = Intense, then workout = [exercises.level === 'Basic' || 'Moderate' || 'Intense'];
+
 // If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?  For now, let's say it's the latter.
 // Calculates the total estimated workout time (total array time multiplied by number of circuits) and displays on the page.
 
-// Instead of converting from a string to a level number, pull the number from a data attribute in the UI.
-let level = 'Intense';
-let levelNumber = 1; // Default
-switch (level) {
-  case 'Basic':
-    levelNumber = 1;
-    break;
-  case 'Moderate':
-    levelNumber = 2;
-    break;
-  case 'Intense':
-    levelNumber = 3;
-    break;
-  default:
-    levelNumber = 1;
+// Difficulty will be set by the user in the UI.
+  // 1 = 'Basic'
+  // 2 = 'Moderate'
+  // 3 = 'Intense'
+let difficulty = 2; // default = 1
+let workout;
+function createWorkout() {
+  
+  console.log(`Difficulty: ${difficulty}`);
+
+  workout = exercises.filter(function(exercise) {
+    return exercise.difficulty <= difficulty;
+  });
+  console.log(workout);
+  // Add Bonus if applicable.
+  // Since these are always separate (I think), maybe they should just be in their own array to begin with, and not have to be filtered.
+  // Gets invoked each time "Bonus" checkbox is checked or unchecked.
+  if (bonus) {
+    console.log(`Bonus: Yes`);
+    bonusExercises = exercises.filter(function(exercise) {
+      return exercise.difficulty === 4;
+    });
+  } else {
+    console.log(`Bonus: No`);
+  }
+  estimateWorkoutTime();
 }
-console.log(`Level Number: ${levelNumber}`);
-
-const program = exercises.filter(function(exercise) {
-  return exercise.levelNumber <= levelNumber;
-});
-console.log(program);
-
 
 // Estimate Total Workout Time:
-// Sum of all transitions and pose durations:
-program.forEach(function(exercise) {
-  estimatedTime += exercise.transition;
-  return exercise.poses.forEach(function(pose) {
-    estimatedTime += pose.duration;
-  });
-});
-console.log(`Estimated Time per Circuit: ${estimatedTime}`);
-
-estimatedTime *= circuits;
-console.log(`Estimated Total Workout Time: ${estimatedTime}`);
-
-// Add Bonus if applicable.
-// Since these are always separate (I think), maybe they should just be in their own array to begin with, and not have to be filtered.
-if (bonus) {
-  bonusExercises = exercises.filter(function(exercise) {
-    return exercise.levelNumber === 4;
-  });
-  bonusExercises.forEach(function(bonusExercise) {
-    estimatedTime += bonusExercise.transition;
-    return bonusExercise.poses.forEach(function(pose) {
+function estimateWorkoutTime() {
+  // Sum of all transitions and pose durations:
+  workout.forEach(function(exercise) {
+    estimatedTime += exercise.transition;
+    return exercise.poses.forEach(function(pose) {
       estimatedTime += pose.duration;
     });
   });
-  console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
+  console.log(`Estimated Time per Circuit: ${estimatedTime}`);
+
+  estimatedTime *= circuits;
+  console.log(`Estimated Total Workout Time: ${estimatedTime}`);
+
+  if (bonus) {
+    bonusExercises.forEach(function(bonusExercise) {
+      estimatedTime += bonusExercise.transition;
+      return bonusExercise.poses.forEach(function(pose) {
+        estimatedTime += pose.duration;
+      });
+    });
+    console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
+  }
 }
+
+
 
 // Convert Time Units
 var minutes = Math.floor(estimatedTime / 1000 / 60);
@@ -371,13 +370,18 @@ var seconds = estimatedTime / 1000 % 60;
 
 console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
 
+createWorkout();
 
 // Initiate Workout:
 // Take the first object in the workout array.  Use a promise chain: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
-let display;
-// let timerValue = program[0].transition / 1000;
-let timerValue = program[0].poses[0].duration / 1000;
-timerUI();
+let timerValue;
+
+function initWorkout() {
+  timerValue = workout[0].poses[0].duration / 1000;
+  timerUI();
+  countdownTimer();
+}
+initWorkout();
 
 function countdownTimer() {
   const timer = setInterval(function() {
@@ -386,22 +390,22 @@ function countdownTimer() {
       timerUI();
     } else {
       clearInterval(timer);
+      // Potentialy invoke this function on the next object in the array here, if one exists.
     }
   }, 1000);
 }
-
-countdownTimer(timerValue);
 
 // Display its title in the UI.
 // Display its image in the UI.
 // Countdown its transition in the UI. (Negative numbers.)
 function timerUI() {
+  let display;
   if (timerValue > 9) {
     // Set color back to default if it's not already.
     display = `${timerValue}`;
   } else {
     // Make 5 thru 1 red and add beeps and pulsations.
-    // Make 0 green and add a finish sound.
+    // Make 0 green and add a finish sound. (Do not collide with any starting SFX of the next pose or exercise.)
     display = `0${timerValue}`;
   }
   console.log(display);
@@ -420,8 +424,7 @@ function timerUI() {
 
 
 // UX:
-// User can pause workout.
-// User can choose "one exercise at a time," "one circuit at a time," or "nonstop."
+// User can pause, resume, reset, or clear workout.
 
 
 // UI:
