@@ -374,22 +374,37 @@ console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds
 
 // Initiate Workout:
 // Take the first object in the workout array.  Use a promise chain: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
-let rootTimer = program[0].transition;
-let displayTimer = rootTimer / 1000;
-console.log(`-${displayTimer}`);
-let firstTransition = setInterval(function() {
+let display;
+let displayTimer = program[0].transition / 1000;
+timerUI();
+let countdownTimer = setInterval(function() {
   if (displayTimer > 0) {
     displayTimer--;
-    console.log((displayTimer > 0) ? `-${displayTimer}` : `${displayTimer}`);
+    timerUI();
   } else {
-    clearInterval(firstTransition);
+    clearInterval(countdownTimer);
   }
 }, 1000);
 // Display its title in the UI.
 // Display its image in the UI.
 // Countdown its transition in the UI. (Negative numbers.)
+function timerUI() {
+  // If 10 or more: Add a negative.
+  // If between 0 and 10: Add a negative and a zero.
+  // If 0: Add a zero, but NOT a negative.
+  if (displayTimer > 10) {
+    display = `-:${displayTimer}`;
+  } else if ( (displayTimer < 10) && (displayTimer > 0)) {
+    display = `-:0${displayTimer}`;
+  } else {
+    // If zero:
+    display = `:0${displayTimer}`;
+  }
+  console.log(display);
+}
 // When the countdown reaches zero, play sfx.begin.
 // Then count up its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
+let countupTimer;
 // Repeat this process for each pose OR SHIFT in this object. (NOTE: A shift should be added to some objects.)
 // When all the poses are done, play sfx.done, move on to the next object in the array, and repeat the steps above.
 // When all exercises are done, if bonus === false, then play sfx.finale. If bonus === true, initiate bonus workout.
