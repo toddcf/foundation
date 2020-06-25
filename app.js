@@ -375,16 +375,25 @@ console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds
 // Initiate Workout:
 // Take the first object in the workout array.  Use a promise chain: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
 let display;
-let displayTimer = program[0].transition / 1000;
+// let timerValue = program[0].transition / 1000;
+let timerValue = program[0].poses[0].duration / 1000;
 timerUI();
-let countdownTimer = setInterval(function() {
-  if (displayTimer > 0) {
-    displayTimer--;
-    timerUI();
-  } else {
-    clearInterval(countdownTimer);
-  }
-}, 1000);
+
+let countdownTimer;
+let countdown = true;
+let countupTimer;
+let countup = false;
+
+if (countdown) {
+  countdownTimer = setInterval(function() {
+    if (timerValue > 0) {
+      timerValue--;
+      timerUI();
+    } else {
+      clearInterval(countdownTimer);
+    }
+  }, 1000);
+}
 // Display its title in the UI.
 // Display its image in the UI.
 // Countdown its transition in the UI. (Negative numbers.)
@@ -392,19 +401,23 @@ function timerUI() {
   // If 10 or more: Add a negative.
   // If between 0 and 10: Add a negative and a zero.
   // If 0: Add a zero, but NOT a negative.
-  if (displayTimer > 10) {
-    display = `-:${displayTimer}`;
-  } else if ( (displayTimer < 10) && (displayTimer > 0)) {
-    display = `-:0${displayTimer}`;
+  if (timerValue > 9) {
+    display = `-:${timerValue}`;
+  } else if ( (timerValue < 10) && (timerValue > 0)) {
+    display = `-:0${timerValue}`;
   } else {
     // If zero:
-    display = `:0${displayTimer}`;
+    display = `:0${timerValue}`;
   }
   console.log(display);
 }
 // When the countdown reaches zero, play sfx.begin.
 // Then count up its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
-let countupTimer;
+if (countup) {
+  let countupTimer = setInterval(function() {
+
+  });
+}
 // Repeat this process for each pose OR SHIFT in this object. (NOTE: A shift should be added to some objects.)
 // When all the poses are done, play sfx.done, move on to the next object in the array, and repeat the steps above.
 // When all exercises are done, if bonus === false, then play sfx.finale. If bonus === true, initiate bonus workout.
