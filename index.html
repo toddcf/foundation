@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <link rel="stylesheet" type="text/css" href="assets/style.css">
   <title>Foundation Exercise Timer</title>
 </head>
 <body>
+
+  <div class="project">
+
+    <main class="main">
+
+      <p class="timer">00</p>
+      
+      <div class="settings-difficulty">
+
+        <h2>Select Workout Level</h2>
+
+        <button type="button" value="1">Basic</button>
+        <button type="button" value="2">Moderate</button>
+        <button type="button" value="3">Intense</button>
+        
+      </div>
+
+      <div class="settings-bonus">
+
+        <h2>Bonus: Hip Exercises</h2>
+
+        <input type="checkbox" name="bonus" value="bonus" class="settings-bonus__checkbox"> Bonus
+        
+      </div>
+
+      <div class="program">
+        <p class="program-exercises"></p>
+        <p class="program-length"></p>
+      </div>
+
+    </main>
+    
+  </div>
 
   <script src="app.js"></script>
 
