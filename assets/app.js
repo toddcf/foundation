@@ -292,14 +292,15 @@ startBtn.addEventListener('click', initWorkout);
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let estimatedTime = 0; // default
-let bonus = true; // default = false
+let bonus = false; // default = false
 let workout;
-let difficulty = 1;
+let difficulty = 1; // default
 const difficultyUI = document.querySelector('.settings-difficulty__name');
 let difficultyText;
 let bonusExercises = [];
-let circuits;
 const circuitsInput = document.querySelector('.settings-circuits__value');
+let circuits = circuitsInput.value;
+console.log(`Default Circuits: ${circuits}`);
 function setCircuits() {
   if (circuitsInput.value > 0) {
     circuits = circuitsInput.value;
@@ -307,8 +308,9 @@ function setCircuits() {
     createWorkout();
   }
 }
-setCircuits();
+
 circuitsInput.addEventListener('keyup', setCircuits);
+circuitsInput.addEventListener('change', setCircuits);
 let currentCircuit = 0;
 
 const sfx = {
@@ -329,18 +331,13 @@ let intervals = 0; // default = nonstop
 // If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?  For now, let's say it's the latter.
 // Calculates the total estimated workout time (total array time multiplied by number of circuits) and displays on the page.
 
-// Difficulty will be set by the user in the UI.
-  // 1 = 'Basic'
-  // 2 = 'Moderate'
-  // 3 = 'Intense'
-
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
 function setDifficulty(e) {
   difficulty = parseInt(e.target.value);
   createWorkout();
 }
-difficultyButtons.forEach(function() {
-  addEventListener('click', setDifficulty);
+difficultyButtons.forEach(function(difficultyButton) {
+  difficultyButton.addEventListener('click', setDifficulty);
 });
 
 const bonusCheckbox = document.querySelector('.settings-bonus__checkbox');
@@ -355,6 +352,8 @@ function setBonus(e) {
 }
 bonusCheckbox.addEventListener('click', setBonus);
 
+// Create nodelist(s) of all exercises to be included.
+// Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
   
   console.log(`createWorkout fired.`);
@@ -363,9 +362,7 @@ function createWorkout() {
     return exercise.difficulty <= difficulty;
   });
   console.log(workout);
-  // Add Bonus if applicable.
-  // Since these are always separate (I think), maybe they should just be in their own array to begin with, and not have to be filtered.
-  // Gets invoked each time "Bonus" checkbox is checked or unchecked.
+  
   if (bonus) {
     console.log(`Bonus: Yes`);
     bonusExercises = exercises.filter(function(exercise) {
@@ -377,8 +374,6 @@ function createWorkout() {
   estimateWorkoutTime();
   textUI();
 }
-
-createWorkout(); // Create default when page loads.
 
 // Estimate Total Workout Time:
 function estimateWorkoutTime() {
@@ -401,16 +396,11 @@ function estimateWorkoutTime() {
       return bonusExercise.poses.forEach(function(pose) {
         estimatedTime += pose.duration;
       });
-    });
-    //console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
-    // Convert Time Units
-    const minutes = Math.floor(estimatedTime / 1000 / 60);
-    const seconds = estimatedTime / 1000 % 60;
-
-    //console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
-
-    totalDurationUI.innerText = `${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`;
+    });  
   }
+  const minutes = Math.floor(estimatedTime / 1000 / 60);
+  const seconds = estimatedTime / 1000 % 60;
+  totalDurationUI.innerText = `${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`;
 }
 
 
@@ -433,7 +423,7 @@ function textUI() {
 let timerValue;
 
 function initWorkout() {
-  timerValue = workout[0].poses[0].duration / 1000;
+  timerValue = workout[0].poses[0].duration / 1000; // Needs to be dynamically coded.
   timerUI();
   countdownTimer();
 }
@@ -488,3 +478,4 @@ function timerUI() {
 // UI:
 // Displays current circuit number.
 // Displays remaining number of circuits.
+createWorkout(); // Create default when page loads.

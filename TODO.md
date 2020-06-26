@@ -1,12 +1,9 @@
 # To Do
 
 - Build basic UI in BEM, following proper accessibility protocols. (Functionality only, style later.)
-  - Difficulty level
-  - Bonus
-  - Start button
-  - Timer display (BIG and BOLD)
+  - Pause button
+  - Intervals
 - Add event listeners to JS so that user selections trigger things in the JS.
-- BUG: Every time user clicks ANYWHERE on the page, createWorkout is fired.
 - Add displays to the UI so the console can be closed. (Then delete the console logs.)
 - Chain the workout timers to each other.
 - Find sfx and add them to the project:
