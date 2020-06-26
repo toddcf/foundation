@@ -287,10 +287,27 @@ const exercises = [
   }
 ]
 
-let bonusExercises = [];
-let circuits = 3; // default, but user can type in any whole number above 0.
-let currentCircuit = 0;
+const totalDurationUI = document.querySelector('.totalDurationUI');
 let estimatedTime = 0; // default
+let bonus = true; // default = false
+let workout;
+let difficulty = 1;
+const difficultyUI = document.querySelector('.settings-difficulty__name');
+let difficultyText;
+let bonusExercises = [];
+let circuits;
+const circuitsInput = document.querySelector('.settings-circuits__value');
+function setCircuits() {
+  if (circuitsInput.value > 0) {
+    circuits = circuitsInput.value;
+    console.log(`Circuits: ${circuits}`);
+    createWorkout();
+  }
+}
+setCircuits();
+circuitsInput.addEventListener('keyup', setCircuits);
+let currentCircuit = 0;
+
 const sfx = {
   begin: '',
   penultimate: '',
@@ -298,7 +315,7 @@ const sfx = {
   done: '',
   finale: ''
 }
-let bonus = true; // default = false
+
 let intervals = 0; // default = nonstop
 // User can choose intervals:
   // A) One exercise at a time.  (You're still learning and need to look up each exercise before you begin.)
@@ -313,11 +330,31 @@ let intervals = 0; // default = nonstop
   // 1 = 'Basic'
   // 2 = 'Moderate'
   // 3 = 'Intense'
-let difficulty = 2; // default = 1
-let workout;
+
+const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
+function setDifficulty(e) {
+  difficulty = parseInt(e.target.value);
+  createWorkout();
+}
+difficultyButtons.forEach(function() {
+  addEventListener('click', setDifficulty);
+});
+
+const bonusCheckbox = document.querySelector('.settings-bonus__checkbox');
+function setBonus(e) {
+  if (e.target.checked) {
+    bonus = true;
+  } else {
+    bonus = false;
+  }
+  console.log(`Bonus Checked: ${bonus}`);
+  createWorkout();
+}
+bonusCheckbox.addEventListener('click', setBonus);
+
 function createWorkout() {
   
-  console.log(`Difficulty: ${difficulty}`);
+  console.log(`createWorkout fired.`);
 
   workout = exercises.filter(function(exercise) {
     return exercise.difficulty <= difficulty;
@@ -335,10 +372,14 @@ function createWorkout() {
     console.log(`Bonus: No`);
   }
   estimateWorkoutTime();
+  textUI();
 }
+
+createWorkout(); // Create default when page loads.
 
 // Estimate Total Workout Time:
 function estimateWorkoutTime() {
+  estimatedTime = 0; // Reset
   // Sum of all transitions and pose durations:
   workout.forEach(function(exercise) {
     estimatedTime += exercise.transition;
@@ -370,7 +411,17 @@ var seconds = estimatedTime / 1000 % 60;
 
 console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
 
-createWorkout();
+function textUI() {
+  if (difficulty === 1) {
+    difficultyUI.innerText = 'Basic';
+  } else if (difficulty === 2) {
+    difficultyUI.innerText = 'Moderate';
+  } else if (difficulty === 3) {
+    difficultyUI.innerText = 'Intense';
+  }
+}
+
+
 
 // Initiate Workout:
 // Take the first object in the workout array.  Use a promise chain: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
@@ -381,7 +432,7 @@ function initWorkout() {
   timerUI();
   countdownTimer();
 }
-initWorkout();
+//initWorkout();
 
 function countdownTimer() {
   const timer = setInterval(function() {

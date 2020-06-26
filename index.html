@@ -12,15 +12,24 @@
     <main class="main">
 
       <p class="timer">00</p>
+
+      <button type="button" class="begin-btn">Begin Workout</button>
       
       <div class="settings-difficulty">
 
-        <h2>Select Workout Level</h2>
+        <h2>Selected Workout Level: <span class="settings-difficulty__name"></span></h2>
 
-        <button type="button" value="1">Basic</button>
-        <button type="button" value="2">Moderate</button>
-        <button type="button" value="3">Intense</button>
+        <button type="button" value="1" class="settings-difficulty__btn">Basic</button>
+        <button type="button" value="2" class="settings-difficulty__btn">Moderate</button>
+        <button type="button" value="3" class="settings-difficulty__btn">Intense</button>
         
+      </div>
+
+      <div class="settings-circuits">
+        
+        <h2>Circuits</h2>
+        <p>(Number of times you will repeat this block of exercises.)</p>
+        <p><input type="number" min="1" name="circuits" value="3" class="settings-circuits__value"></p>
       </div>
 
       <div class="settings-bonus">
@@ -32,8 +41,8 @@
       </div>
 
       <div class="program">
-        <p class="program-exercises"></p>
-        <p class="program-length"></p>
+        <p class="program-exercises">Exercises:</p>
+        <p class="program-length">Estimated Workout Time (without breaks): <span class="totalDurationUI"></span></p>
       </div>
 
     </main>
