@@ -287,6 +287,9 @@ const exercises = [
   }
 ]
 
+const startBtn = document.querySelector('.begin-btn');
+startBtn.addEventListener('click', initWorkout);
+const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let estimatedTime = 0; // default
 let bonus = true; // default = false
@@ -399,17 +402,19 @@ function estimateWorkoutTime() {
         estimatedTime += pose.duration;
       });
     });
-    console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
+    //console.log(`Estimated Time Including Bonus Exercises: ${estimatedTime}`);
+    // Convert Time Units
+    const minutes = Math.floor(estimatedTime / 1000 / 60);
+    const seconds = estimatedTime / 1000 % 60;
+
+    //console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
+
+    totalDurationUI.innerText = `${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`;
   }
 }
 
 
 
-// Convert Time Units
-var minutes = Math.floor(estimatedTime / 1000 / 60);
-var seconds = estimatedTime / 1000 % 60;
-
-console.log(`Estimated Workout Time: ${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`); // Add a 0 before seconds if under 10.
 
 function textUI() {
   if (difficulty === 1) {
@@ -450,16 +455,18 @@ function countdownTimer() {
 // Display its image in the UI.
 // Countdown its transition in the UI. (Negative numbers.)
 function timerUI() {
-  let display;
+  // let display;
   if (timerValue > 9) {
     // Set color back to default if it's not already.
-    display = `${timerValue}`;
+    timerDisplay.innerText = timerValue;
+    // display = `${timerValue}`;
   } else {
     // Make 5 thru 1 red and add beeps and pulsations.
     // Make 0 green and add a finish sound. (Do not collide with any starting SFX of the next pose or exercise.)
-    display = `0${timerValue}`;
+    // display = `0${timerValue}`;
+    timerDisplay.innerText = `0${timerValue}`;
   }
-  console.log(display);
+  //console.log(display);
 }
 // When the countdown reaches zero, play sfx.begin.
 // Then count down its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
