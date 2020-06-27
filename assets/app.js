@@ -405,7 +405,8 @@ function estimateWorkoutTime() {
 
 
 
-
+let titles = [];
+const exercisesList = document.querySelector('.list-of-exercises');
 function textUI() {
   if (difficulty === 1) {
     difficultyUI.innerText = 'Basic';
@@ -414,6 +415,12 @@ function textUI() {
   } else if (difficulty === 3) {
     difficultyUI.innerText = 'Intense';
   }
+  titles = workout.map(function(exercise) {
+    return exercise.title;
+  });
+  
+  exercisesList.innerText = titles.join(', ');
+  
 }
 
 
@@ -456,7 +463,6 @@ function timerUI() {
     // display = `0${timerValue}`;
     timerDisplay.innerText = `0${timerValue}`;
   }
-  //console.log(display);
 }
 // When the countdown reaches zero, play sfx.begin.
 // Then count down its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
