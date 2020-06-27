@@ -288,7 +288,7 @@ const exercises = [
 ]
 
 const startBtn = document.querySelector('.begin-btn');
-startBtn.addEventListener('click', initWorkout);
+startBtn.addEventListener('click', beginNextExercise);
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let estimatedTime = 0; // default
@@ -321,15 +321,7 @@ const sfx = {
   finale: ''
 }
 
-let intervals = 0; // default = nonstop
-// User can choose intervals:
-  // A) One exercise at a time.  (You're still learning and need to look up each exercise before you begin.)
-  // B) One circuit at a time.  (You know the workout, but want to rest in between circuits.)
-  // C) Nonstop.  (You know the workout by heart, want to get the maximum physical benefit from it, and want to finish in less amount of time.)
-
-
-// If bonus = true, then after the workout is done, the bonus exercises will begin.  QUESTION: ARE THESE SUPPOSED TO BE ADDED TO THE END OF EACH CIRCUIT (PUSHED TO THE ARRAY), OR ADDED TO THE END OF THE ENTIRE WORKOUT (A SEPARATE ARRAY THAT RUNS AFTERWARD)?  For now, let's say it's the latter.
-// Calculates the total estimated workout time (total array time multiplied by number of circuits) and displays on the page.
+let intervals = 0; // default = nonstop.  User can override this via UI.
 
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
 function setDifficulty(e) {
@@ -433,15 +425,19 @@ function textUI() {
 
 
 // Initiate Workout:
-// Take the first object in the workout array.  Use a promise chain: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+// Take the first object in the workout array.  Use a promise chain:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+  // https://javascript.info/promise-chaining
 let timerValue;
+let i = 0;
 
-function initWorkout() {
-  timerValue = workout[0].poses[0].duration / 1000; // Needs to be dynamically coded.
-  timerUI();
-  countdownTimer();
+function beginNextExercise() {
+  if (i < workout.length) {
+    timerValue = workout[i].poses[0].duration / 1000; // Needs to be dynamically coded.
+    timerUI(); // This is just going to get fired again in countdownTimer. Can I remove this?
+    countdownTimer();
+  }
 }
-//initWorkout();
 
 function countdownTimer() {
   const timer = setInterval(function() {
@@ -451,13 +447,12 @@ function countdownTimer() {
     } else {
       clearInterval(timer);
       // Potentialy invoke this function on the next object in the array here, if one exists.
+      i++;
+      beginNextExercise();
     }
   }, 1000);
 }
 
-// Display its title in the UI.
-// Display its image in the UI.
-// Countdown its transition in the UI. (Negative numbers.)
 function timerUI() {
   // let display;
   if (timerValue > 9) {
@@ -491,4 +486,4 @@ function timerUI() {
 // UI:
 // Displays current circuit number.
 // Displays remaining number of circuits.
-createWorkout(); // Create default when page loads.
+createWorkout(); // Create default workout when page loads.
