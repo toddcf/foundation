@@ -1,7 +1,7 @@
 # To Do
 
 - Add displays to the UI so the console can be closed. (Then delete the console logs.)
-  - Display list of included exercises every time createWorkout() fires.
+  - Also display list of bonus exercises every time createWorkout() fires.
 - Chain the workout timers to each other.
 - Build basic UI in BEM, following proper accessibility protocols. (Functionality only, style later.)
   - Pause button
