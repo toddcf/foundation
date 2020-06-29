@@ -3,41 +3,41 @@ const exercises = [
     title: 'The Founder',
     level: 'Basic',
     difficulty: 1,
-    transition: 5000,
+    transition: 5,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 4',
-        duration: 6000,
+        duration: 6,
         img: ''
       },
       {
         desc: 'Pose 4',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 5',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 6',
-        duration: 20000,
+        duration: 20,
         img: ''
       }
     ]
@@ -46,11 +46,11 @@ const exercises = [
     title: 'Foundation Squat',
     level: 'Moderate',
     difficulty: 2,
-    transition: 3000,
+    transition: 3,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 50000,
+        duration: 50,
         img: ''
       }
     ]
@@ -59,11 +59,11 @@ const exercises = [
     title: 'Good Morning',
     level: 'Intense',
     difficulty: 3,
-    transition: 3000,
+    transition: 3,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 42000,
+        duration: 42,
         img: ''
       }
     ]
@@ -72,21 +72,21 @@ const exercises = [
     title: 'Windmill',
     level: 'Intense',
     difficulty: 3,
-    transition: 3000,
+    transition: 3,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 30000,
+        duration: 30,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 30000,
+        duration: 30,
         img: ''
       }
     ]
@@ -95,31 +95,31 @@ const exercises = [
     title: 'Woodpecker',
     level: 'Moderate',
     difficulty: 2,
-    transition: 5000,
+    transition: 5,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 5000,
+        duration: 5,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 5000,
+        duration: 5,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 20000,
+        duration: 20,
         img: ''
       },
       {
         desc: 'Pose 4',
-        duration: 3000,
+        duration: 3,
         img: ''
       },
       {
         desc: 'Pose 5',
-        duration: 15000,
+        duration: 15,
         img: ''
       }
     ]
@@ -128,11 +128,11 @@ const exercises = [
     title: 'Back Extension',
     level: 'Basic',
     difficulty: 1,
-    transition: 10000,
+    transition: 10,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 30000,
+        duration: 30,
         img: ''
       }
     ]
@@ -141,21 +141,21 @@ const exercises = [
     title: 'Foundation Plank',
     level: 'Intense',
     difficulty: 3,
-    transition: 5000,
+    transition: 5,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 10000,
+        duration: 10,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 30000,
+        duration: 30,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 10000,
+        duration: 10,
         img: ''
       }
     ]
@@ -164,11 +164,11 @@ const exercises = [
     title: 'Adductor-Assisted Back Extension',
     level: 'Basic',
     difficulty: 1,
-    transition: 5000,
+    transition: 5,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 20000,
+        duration: 20,
         img: ''
       }
     ]
@@ -177,21 +177,21 @@ const exercises = [
     title: 'Child\'s Pose / Kneeling Founder',
     level: 'Basic',
     difficulty: 1,
-    transition: 3000,
+    transition: 3,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 30000,
+        duration: 30,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 10000,
+        duration: 10,
         img: ''
       }
     ]
@@ -200,21 +200,21 @@ const exercises = [
     title: 'Lunge Stretch',
     level: 'Basic',
     difficulty: 1,
-    transition: 10000,
+    transition: 10,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 20000,
+        duration: 20,
         img: ''
       },
       {
         // Can this shift get rolled into the next pose so that that image can be displayed?
         desc: 'Shift Position',
-        duration: 5000
+        duration: 5
       },
       {
         desc: 'Pose 2',
-        duration: 20000,
+        duration: 20,
         img: ''
       }
     ]
@@ -223,26 +223,26 @@ const exercises = [
     title: 'Crossover',
     level: 'Bonus',
     difficulty: 0,
-    transition: 10000,
+    transition: 10,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 15000,
+        duration: 15,
         img: ''
       },
       {
         desc: 'Pose 4',
-        duration: 15000,
+        duration: 15,
         img: ''
       }
     ]
@@ -251,36 +251,36 @@ const exercises = [
     title: "Cross Under",
     level: 'Bonus',
     difficulty: 0,
-    transition: 5000,
+    transition: 5,
     poses: [
       {
         desc: 'Pose 1',
-        duration: 2000,
+        duration: 2,
         img: ''
       },
       {
         desc: 'Pose 2',
-        duration: 2000,
+        duration: 2,
         img: ''
       },
       {
         desc: 'Pose 3',
-        duration: 20000,
+        duration: 20,
         img: ''
       },
       {
         desc: 'Pose 4',
-        duration: 2000,
+        duration: 2,
         img: ''
       },
       {
         desc: 'Pose 5',
-        duration: 2000,
+        duration: 2,
         img: ''
       },
       {
         desc: 'Pose 6',
-        duration: 20000,
+        duration: 20,
         img: ''
       }
     ]
@@ -373,8 +373,8 @@ function estimateWorkoutTime() {
       });
     });  
   }
-  const minutes = Math.floor(estimatedTime / 1000 / 60);
-  const seconds = estimatedTime / 1000 % 60;
+  const minutes = Math.floor(estimatedTime / 60);
+  const seconds = estimatedTime % 60;
   totalDurationUI.innerText = `${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`;
 }
 
@@ -393,7 +393,7 @@ function textUI() {
   }
   qtyExercises.innerText = workout.length;
 
-  exercisesList.innerHTML = '';
+  exercisesList.innerHTML = ''; // Is there a better way than innerHTML?
   workout.forEach(function(exercise) {
     const exerciseCard = document.createElement('div');
     exerciseCard.classList.add('exercise-card');
@@ -416,24 +416,38 @@ function textUI() {
   // https://javascript.info/promise-chaining
 let timerValue;
 let i = 0;
+let t = true;
+let p = 0;
 
 function beginNextExercise() {
   if (i < workout.length) {
-    timerValue = workout[i].poses[0].duration / 1000; // Needs to be dynamically coded.
-    timerUI(); // This is just going to get fired again in countdownTimer. Can I remove this?
+    // timerValue = workout[i].poses[0].duration / 1000; // Needs to be dynamically coded.
+    if (t) {
+      timerValue = workout[i].transition;
+      t = false;
+    } else {
+      if (p < workout[i].poses.length) {
+        p++;
+      } else {
+        i++;
+        t = true;
+        p = 0;
+        beginNextExercise();
+      }
+      timerValue = workout[i].poses[p].duration;
+    }
     countdownTimer();
   }
 }
 
 function countdownTimer() {
+  timerUI();
   const timer = setInterval(function() {
     if (timerValue > 0) {
       timerValue--;
       timerUI();
     } else {
       clearInterval(timer);
-      // Potentialy invoke this function on the next object in the array here, if one exists.
-      i++;
       beginNextExercise();
     }
   }, 1000);
