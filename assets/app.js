@@ -342,22 +342,10 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Create nodelist(s) of all exercises to be included.
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
-  
   console.log(`createWorkout fired.`);
-
   workout = exercises.filter(function(exercise) {
     return (bonus) ? (exercise.difficulty <= difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= difficulty));
   });
-  console.log(workout);
-  
-  if (bonus) {
-    console.log(`Bonus: Yes`);
-    bonusExercises = exercises.filter(function(exercise) {
-      return exercise.difficulty === 4;
-    });
-  } else {
-    console.log(`Bonus: No`);
-  }
   estimateWorkoutTime();
   textUI();
 }
@@ -395,6 +383,7 @@ function estimateWorkoutTime() {
 let titles = [];
 const exercisesList = document.querySelector('.list-of-exercises');
 const bonusExercisesList = document.querySelector('.list-of-bonus-exercises');
+const qtyExercises = document.querySelector('.qty-Exercises');
 function textUI() {
   if (difficulty === 1) {
     difficultyUI.innerText = (bonus) ? 'Basic + Bonus' : 'Basic';
@@ -403,7 +392,8 @@ function textUI() {
   } else if (difficulty === 3) {
     difficultyUI.innerText = (bonus) ? 'Intense + Bonus' : 'Intense';
   }
-   // In the future, generate a card with image and text for each exercise and push that tot he UI instead of just the text.
+  qtyExercises.innerText = workout.length;
+  // In the future, generate a card with image and text for each exercise and push that tot he UI instead of just the text.
   titles = workout.map(function(exercise) {
     return exercise.title;
   });
