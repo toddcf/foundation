@@ -397,10 +397,11 @@ function textUI() {
   workout.forEach(function(exercise) {
     const exerciseCard = document.createElement('div');
     exerciseCard.classList.add('exercise-card');
-    const exerciseCardImg = document.createElement('img');
-    exerciseCardImg.src = 'https://via.placeholder.com/150x100.png';
+    const exerciseCardImg = document.createElement('div');
+    exerciseCardImg.classList.add('exercise-card-img');
     exerciseCard.appendChild(exerciseCardImg);
     const exerciseTitle = document.createElement('H3');
+    exerciseTitle.classList.add('h3');
     exerciseTitle.innerText = exercise.title;
     exerciseCard.appendChild(exerciseTitle);
     exercisesList.appendChild(exerciseCard);
