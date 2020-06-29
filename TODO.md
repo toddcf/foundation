@@ -3,17 +3,15 @@
 - Chain the workout timers to each other.
   - `beginNextExercise();`
     - Write code in this function that iterates over each object in the workout array until it ends, then moves on to the next.
-      - Within each of these, it must countdown the transition time first.
+      - Within each of these, it must count down the transition time first.
       - After the transition, within each of these, it must iterate over all the poses.
-    - When it reaches the end, `if (bonus)`, then do the same thing to the bonus array.  If not, execute the finale function.
-  - Allow the option for intervals, if selected.
-    - One exercise at a time.  (You're still learning and need to look up each exercise before you begin.)
-    - One circuit at a time.  (You know the workout, but want to rest in between circuits.)
-    - Nonstop.  (You know the workout by heart, want to get the maximum physical benefit from it, and want to finish in less amount of time.) DEFAULT
 - Build basic UI in BEM, following proper accessibility protocols. (Functionality only, style later.)
   - Pause button
   - Reset / Cancel button
   - Intervals
+    - One exercise at a time.  (You're still learning and need to look up each exercise before you begin.)
+    - One circuit at a time.  (You know the workout, but want to rest in between circuits.)
+    - Nonstop.  (You know the workout by heart, want to get the maximum physical benefit from it, and want to finish in less amount of time.) DEFAULT
 - Find sfx and add them to the project:
   - Start workout.
   - Last 5 seconds of pose. (One beep per second except for zero.)

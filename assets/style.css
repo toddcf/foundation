@@ -2,6 +2,23 @@
   text-align: center;
 }
 
+.exercise-card {
+  /*border: 1px solid red;*/
+  border-radius: 5px;
+  flex-grow: 1;
+  max-width: 15%;
+  width: 15%;
+}
+
+.list-of-exercises {
+  align-content: center;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .timer {
   font-size: 200px;
 }

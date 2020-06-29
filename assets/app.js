@@ -393,12 +393,15 @@ function textUI() {
   }
   qtyExercises.innerText = workout.length;
 
-  // Card Version:
   exercisesList.innerHTML = '';
   workout.forEach(function(exercise) {
     const exerciseCard = document.createElement('div');
     exerciseCard.classList.add('exercise-card');
-    const exerciseTitle = document.createTextNode(exercise.title);
+    const exerciseCardImg = document.createElement('img');
+    exerciseCardImg.src = 'https://via.placeholder.com/150x100.png';
+    exerciseCard.appendChild(exerciseCardImg);
+    const exerciseTitle = document.createElement('H3');
+    exerciseTitle.innerText = exercise.title;
     exerciseCard.appendChild(exerciseTitle);
     exercisesList.appendChild(exerciseCard);
   });
