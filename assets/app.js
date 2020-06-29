@@ -222,7 +222,7 @@ const exercises = [
   {
     title: 'Crossover',
     level: 'Bonus',
-    difficulty: 4,
+    difficulty: 0,
     transition: 10000,
     poses: [
       {
@@ -250,7 +250,7 @@ const exercises = [
   {
     title: "Cross Under",
     level: 'Bonus',
-    difficulty: 4,
+    difficulty: 0,
     transition: 5000,
     poses: [
       {
@@ -334,12 +334,7 @@ difficultyButtons.forEach(function(difficultyButton) {
 
 const bonusCheckbox = document.querySelector('.settings-bonus__checkbox');
 function setBonus(e) {
-  if (e.target.checked) {
-    bonus = true;
-  } else {
-    bonus = false;
-  }
-  console.log(`Bonus Checked: ${bonus}`);
+  bonus = (e.target.checked) ? true : false;
   createWorkout();
 }
 bonusCheckbox.addEventListener('click', setBonus);
@@ -351,7 +346,7 @@ function createWorkout() {
   console.log(`createWorkout fired.`);
 
   workout = exercises.filter(function(exercise) {
-    return exercise.difficulty <= difficulty;
+    return (bonus) ? (exercise.difficulty <= difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= difficulty));
   });
   console.log(workout);
   
@@ -402,11 +397,11 @@ const exercisesList = document.querySelector('.list-of-exercises');
 const bonusExercisesList = document.querySelector('.list-of-bonus-exercises');
 function textUI() {
   if (difficulty === 1) {
-    difficultyUI.innerText = 'Basic';
+    difficultyUI.innerText = (bonus) ? 'Basic + Bonus' : 'Basic';
   } else if (difficulty === 2) {
-    difficultyUI.innerText = 'Moderate';
+    difficultyUI.innerText = (bonus) ? 'Moderate + Bonus' : 'Moderate';
   } else if (difficulty === 3) {
-    difficultyUI.innerText = 'Intense';
+    difficultyUI.innerText = (bonus) ? 'Intense + Bonus' : 'Intense';
   }
    // In the future, generate a card with image and text for each exercise and push that tot he UI instead of just the text.
   titles = workout.map(function(exercise) {
