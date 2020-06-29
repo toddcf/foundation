@@ -382,7 +382,6 @@ function estimateWorkoutTime() {
 
 let titles = [];
 const exercisesList = document.querySelector('.list-of-exercises');
-const bonusExercisesList = document.querySelector('.list-of-bonus-exercises');
 const qtyExercises = document.querySelector('.qty-Exercises');
 function textUI() {
   if (difficulty === 1) {
@@ -393,18 +392,16 @@ function textUI() {
     difficultyUI.innerText = (bonus) ? 'Intense + Bonus' : 'Intense';
   }
   qtyExercises.innerText = workout.length;
-  // In the future, generate a card with image and text for each exercise and push that tot he UI instead of just the text.
-  titles = workout.map(function(exercise) {
-    return exercise.title;
+
+  // Card Version:
+  exercisesList.innerHTML = '';
+  workout.forEach(function(exercise) {
+    const exerciseCard = document.createElement('div');
+    exerciseCard.classList.add('exercise-card');
+    const exerciseTitle = document.createTextNode(exercise.title);
+    exerciseCard.appendChild(exerciseTitle);
+    exercisesList.appendChild(exerciseCard);
   });
-  exercisesList.innerText = titles.join(', ');
-  let bonusTitles = [];
-  if (bonus) {
-    bonusTitles = bonusExercises.map(function(bonusExercise) {
-      return bonusExercise.title;
-    });
-  }
-  bonusExercisesList.innerText = bonusTitles.join(', ');
 }
 
 
