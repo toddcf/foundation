@@ -26,17 +26,17 @@ const exercises = [
         img: ''
       },
       {
-        desc: 'Pose 4',
-        duration: 15,
-        img: ''
-      },
-      {
         desc: 'Pose 5',
         duration: 15,
         img: ''
       },
       {
         desc: 'Pose 6',
+        duration: 15,
+        img: ''
+      },
+      {
+        desc: 'Pose 7',
         duration: 20,
         img: ''
       }
@@ -463,7 +463,6 @@ function countdownTimer() {
 }
 
 function timerUI() {
-  // let display;
   if (timerValue > 9) {
     // Set color back to default if it's not already.
     timerDisplay.innerText = timerValue;
@@ -493,4 +492,5 @@ function timerUI() {
 // UI:
 // Displays current circuit number.
 // Displays remaining number of circuits.
+// Displays total remaining time.
 createWorkout(); // Create default workout when page loads.
