@@ -421,16 +421,13 @@ function beginNextExercise() {
       console.log(`t = true. Setting timerValue to "${workout[i].title}" transition: ${workout[i].transition} seconds`);
       timerValue = workout[i].transition;
       t = false;
-      console.log(`t set to false.`);
     } else {
-      console.log(`t = false. workout[${i}].poses[${p}].`);
       if (p < workout[i].poses.length) {
-        console.log(`p is less than workout[i].poses.length. Setting timerValue to "${workout[i].title}" ${workout[i].poses[p].desc}: ${workout[i].poses[p].duration} seconds`);
+        console.log(`Setting timerValue to "${workout[i].title}" ${workout[i].poses[p].desc}: ${workout[i].poses[p].duration} seconds`);
         timerValue = workout[i].poses[p].duration;
         p++;
-        console.log(`p incremented to ${p}`);
       } else {
-        console.log(`p is greater than workout[i].poses.length, so it is time to move on to the next exercise.`);
+        console.log(`Moving on to the next exercise.`);
         i++;
         p = 0;
         t = true;
@@ -446,6 +443,8 @@ function beginNextExercise() {
       p = 0;
       t = true;
       countdownTimer();
+    } else {
+      console.log('Finished!');
     }
   }
 }
