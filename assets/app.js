@@ -300,7 +300,6 @@ let difficultyText;
 let bonusExercises = [];
 const circuitsInput = document.querySelector('.settings-circuits__value');
 let circuits = circuitsInput.value;
-console.log(`Default Circuits: ${circuits}`);
 function setCircuits() {
   if (circuitsInput.value > 0) {
     circuits = circuitsInput.value;
@@ -342,7 +341,6 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Create nodelist(s) of all exercises to be included.
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
-  console.log(`createWorkout fired.`);
   workout = exercises.filter(function(exercise) {
     return (bonus) ? (exercise.difficulty <= difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= difficulty));
   });
@@ -360,10 +358,8 @@ function estimateWorkoutTime() {
       estimatedTime += pose.duration;
     });
   });
-  console.log(`Estimated Time per Circuit: ${estimatedTime}`);
 
   estimatedTime *= circuits;
-  console.log(`Estimated Total Workout Time: ${estimatedTime}`);
 
   if (bonus) {
     bonusExercises.forEach(function(bonusExercise) {
@@ -421,22 +417,36 @@ let p = 0;
 
 function beginNextExercise() {
   if (i < workout.length) {
-    // timerValue = workout[i].poses[0].duration / 1000; // Needs to be dynamically coded.
     if (t) {
+      console.log(`t = true. Setting timerValue to "${workout[i].title}" transition: ${workout[i].transition} seconds`);
       timerValue = workout[i].transition;
       t = false;
+      console.log(`t set to false.`);
     } else {
+      console.log(`t = false. workout[${i}].poses[${p}].`);
       if (p < workout[i].poses.length) {
+        console.log(`p is less than workout[i].poses.length. Setting timerValue to "${workout[i].title}" ${workout[i].poses[p].desc}: ${workout[i].poses[p].duration} seconds`);
+        timerValue = workout[i].poses[p].duration;
         p++;
+        console.log(`p incremented to ${p}`);
       } else {
+        console.log(`p is greater than workout[i].poses.length, so it is time to move on to the next exercise.`);
         i++;
-        t = true;
         p = 0;
-        beginNextExercise();
+        t = true;
       }
-      timerValue = workout[i].poses[p].duration;
     }
     countdownTimer();
+  } else {
+    // Advance to next circuit:
+    if (circuits > 0) {
+      circuits--;
+      console.log(`Circuits remaining: ${circuits}`);
+      i = 0;
+      p = 0;
+      t = true;
+      countdownTimer();
+    }
   }
 }
 
@@ -458,11 +468,9 @@ function timerUI() {
   if (timerValue > 9) {
     // Set color back to default if it's not already.
     timerDisplay.innerText = timerValue;
-    // display = `${timerValue}`;
   } else {
     // Make 5 thru 1 red and add beeps and pulsations.
     // Make 0 green and add a finish sound. (Do not collide with any starting SFX of the next pose or exercise.)
-    // display = `0${timerValue}`;
     timerDisplay.innerText = `0${timerValue}`;
   }
 }
