@@ -1,7 +1,7 @@
 # To Do
 
 - Build UI in BEM, following proper accessibility protocols.
-  - Pause button
+  - Pause / Resume button
   - Reset / Cancel button
   - Interval Selections:
     - "One exercise at a time."  (You're still learning and need to look up each exercise before you begin.)
@@ -13,3 +13,5 @@
   - Finish pose || exercise || circuit || workout.
   - User option to turn sound on or off.
 - Do I need to disable the rest of the buttons while a workout is in progress? Otherwise, what happens if the user selects a new workout while the timer is runnig?
+- What should the "Begin Workout" button do after the workout has ended? Right now it just prints "Finished!" to the console again. It doesn't reset anything.
+  - Maybe every time `createWorkout()` fires, it should save all the starting settings. That way at the end, a function can be invoked that goes back to those settings, even though the timer doesn't begin again unless you click the "Begin Workout" button.
