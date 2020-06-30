@@ -418,12 +418,12 @@ let p = 0;
 function beginNextExercise() {
   if (i < workout.length) {
     if (t) {
-      console.log(`t = true. Setting timerValue to "${workout[i].title}" transition: ${workout[i].transition} seconds`);
+      console.log(`Transition to "${workout[i].title}": ${workout[i].transition} seconds`);
       timerValue = workout[i].transition;
       t = false;
     } else {
       if (p < workout[i].poses.length) {
-        console.log(`Setting timerValue to "${workout[i].title}" ${workout[i].poses[p].desc}: ${workout[i].poses[p].duration} seconds`);
+        console.log(`"${workout[i].title}" ${workout[i].poses[p].desc} of ${workout[i].poses.length}: ${workout[i].poses[p].duration} seconds`);
         timerValue = workout[i].poses[p].duration;
         p++;
       } else {
@@ -436,7 +436,7 @@ function beginNextExercise() {
     countdownTimer();
   } else {
     // Advance to next circuit:
-    if (circuits > 0) {
+    if (circuits > 1) {
       circuits--;
       console.log(`Circuits remaining: ${circuits}`);
       i = 0;
