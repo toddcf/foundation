@@ -430,24 +430,18 @@ function textUI() {
 
 
 
-// Initiate Workout:
-// Take the first object in the workout array.  Use a promise chain:
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
-  // https://javascript.info/promise-chaining
-let timerValue = 0;
-// let t = true;
-// let p = 0;
+//let timerValue = 0;
 
 function beginNextExercise() {
   if (persistentSettings.i < workout.length) {
     if (persistentSettings.t) {
       console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
-      timerValue = workout[persistentSettings.i].transition;
+      persistentSettings.timerValue = workout[persistentSettings.i].transition;
       persistentSettings.t = false;
     } else {
       if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
         console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[persistentSettings.p].duration} seconds`);
-        timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
+        persistentSettings.timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
         persistentSettings.p++;
       } else {
         console.log(`Moving on to the next exercise.`);
@@ -475,24 +469,24 @@ function beginNextExercise() {
 function countdownTimer() {
   timerUI();
   const timer = setInterval(function() {
-    if (timerValue > 0) {
-      timerValue--;
+    if (persistentSettings.timerValue > 0) {
+      persistentSettings.timerValue--;
       timerUI();
     } else {
       clearInterval(timer);
       beginNextExercise();
     }
-  }, 1);
+  }, 1000);
 }
 
 function timerUI() {
-  if (timerValue > 9) {
+  if (persistentSettings.timerValue > 9) {
     // Set color back to default if it's not already.
-    timerDisplay.innerText = timerValue;
+    timerDisplay.innerText = persistentSettings.timerValue;
   } else {
     // Make 5 thru 1 red and add beeps and pulsations.
     // Make 0 green and add a finish sound. (Do not collide with any starting SFX of the next pose or exercise.)
-    timerDisplay.innerText = `0${timerValue}`;
+    timerDisplay.innerText = `0${persistentSettings.timerValue}`;
   }
 }
 // When the countdown reaches zero, play sfx.begin.
