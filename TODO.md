@@ -1,15 +1,10 @@
 # To Do
 
-- Refactor code to always push values to and pull values from the `persistentSettings` object.
-  - Intervals (and pull the value from the `select` option).
-- Display the name of the current exercise in the UI.
 - Build UI in BEM, following proper accessibility protocols.
   - Pause / Resume button
+    - Transition resume feature is fixed.  Apply a similar fix to the pose countdowns.
   - Reset / Cancel button
-  - Interval Selections:
-    - "One exercise at a time."  (You're still learning and need to look up each exercise before you begin.)
-    - "One circuit at a time."  (You know the workout, but want to rest in between circuits.)
-    - "Nonstop."  (You know the workout by heart, want to get the maximum physical benefit from it, and want to finish in less amount of time.) DEFAULT
+- Display the name of the current exercise in the UI.
 - Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
   - Start workout.
