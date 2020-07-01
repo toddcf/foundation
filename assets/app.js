@@ -293,7 +293,6 @@ const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', beginNextExercise);
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
-let estimatedTime = 0; // default
 let workout;
 const difficultyUI = document.querySelector('.settings-difficulty__name');
 let difficultyText;
@@ -331,7 +330,8 @@ const persistentSettings = {
   i: 0,
   p: 0,
   t: true,
-  timerValue: 0
+  timerValue: 0,
+  totalTimeRemaining: 0
 }
 
 
@@ -374,27 +374,28 @@ function createWorkout() {
 
 // Estimate Total Workout Time:
 function estimateWorkoutTime() {
-  estimatedTime = 0; // Reset
+  persistentSettings.totalTimeRemaining = 0; // Reset
   // Sum of all transitions and pose durations:
   workout.forEach(function(exercise) {
-    estimatedTime += exercise.transition;
+    persistentSettings.totalTimeRemaining += exercise.transition;
     return exercise.poses.forEach(function(pose) {
-      estimatedTime += pose.duration;
+      persistentSettings.totalTimeRemaining += pose.duration;
     });
   });
 
-  estimatedTime *= persistentSettings.circuitsRemaining;
-
   if (persistentSettings.bonus) {
     bonusExercises.forEach(function(bonusExercise) {
-      estimatedTime += bonusExercise.transition;
+      persistentSettings.totalTimeRemaining += bonusExercise.transition;
       return bonusExercise.poses.forEach(function(pose) {
-        estimatedTime += pose.duration;
+        persistentSettings.totalTimeRemaining += pose.duration;
       });
     });  
   }
-  const minutes = Math.floor(estimatedTime / 60);
-  const seconds = estimatedTime % 60;
+
+  persistentSettings.totalTimeRemaining *= persistentSettings.circuitsRemaining;
+
+  const minutes = Math.floor(persistentSettings.totalTimeRemaining / 60);
+  const seconds = persistentSettings.totalTimeRemaining % 60;
   totalDurationUI.innerText = `${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`;
 }
 
@@ -429,8 +430,6 @@ function textUI() {
 }
 
 
-
-//let timerValue = 0;
 
 function beginNextExercise() {
   if (persistentSettings.i < workout.length) {
