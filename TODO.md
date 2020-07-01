@@ -1,7 +1,7 @@
 # To Do
 
 - Refactor code to always push values to and pull values from the `persistentSettings` object.
-  - Next: intervals
+  - Intervals (and pull the value from the `select` option).
 - Display the name of the current exercise in the UI.
 - Build UI in BEM, following proper accessibility protocols.
   - Pause / Resume button

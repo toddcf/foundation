@@ -288,7 +288,7 @@ const exercises = [
 ]
 
 
-let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
+const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', beginNextExercise);
 const timerDisplay = document.querySelector('.timer');
@@ -323,18 +323,28 @@ function setCircuits(e) {
 circuitsInput.addEventListener('keyup', setCircuits);
 circuitsInput.addEventListener('change', setCircuits);
 
+
+//let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
+// Pull intervals value from the UI
 const persistentSettings = {
   bonus: false,
   circuitsRemaining: parseInt(circuitsInput.value),
   difficulty: 1,
   i: 0,
-  intervals: 0,
+  breaks: breakDropdown.options[breakDropdown.selectedIndex].value,
   p: 0,
   t: true,
   timerValue: 0,
   totalTimeRemaining: 0
 }
 
+
+function setBreaks() {
+  persistentSettings.breaks = breakDropdown.options[breakDropdown.selectedIndex].value;
+  console.log(`Breaks: ${persistentSettings.breaks}`);
+}
+
+breakDropdown.addEventListener('change', setBreaks);
 
 
 const sfx = {
