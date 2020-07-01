@@ -8,6 +8,7 @@
     - "One exercise at a time."  (You're still learning and need to look up each exercise before you begin.)
     - "One circuit at a time."  (You know the workout, but want to rest in between circuits.)
     - "Nonstop."  (You know the workout by heart, want to get the maximum physical benefit from it, and want to finish in less amount of time.) DEFAULT
+- Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
   - Start workout.
   - Last 5 seconds of pose. (One beep per second except for zero.)

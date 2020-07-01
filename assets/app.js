@@ -287,16 +287,6 @@ const exercises = [
   }
 ]
 
-const persistentSettings = {
-  bonus: false,
-  difficulty: 1,
-  circuitsRemaining: 3,
-  i: 0,
-  t: true,
-  p: 0,
-  timerValue: 0
-}
-
 
 
 const startBtn = document.querySelector('.begin-btn');
@@ -304,25 +294,47 @@ startBtn.addEventListener('click', beginNextExercise);
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let estimatedTime = 0; // default
-let bonus = false; // default = false
 let workout;
-let difficulty = 1; // default
 const difficultyUI = document.querySelector('.settings-difficulty__name');
 let difficultyText;
 let bonusExercises = [];
 const circuitsInput = document.querySelector('.settings-circuits__value');
-let circuits = parseInt(circuitsInput.value);
-function setCircuits() {
-  if (circuitsInput.value > 0) {
-    circuits = circuitsInput.value;
-    console.log(`Circuits: ${circuits}`);
+function setCircuits(e) {
+  // Value must be greater than 0, and keyup must be a number key.
+  // Convert to regex later.
+  if (
+    (circuitsInput.value > 0) &&
+    (
+      (
+        (e.keyCode >= 48) &&
+        (e.keyCode <= 57)
+      ) ||
+      (
+        (e.keyCode >= 96) &&
+        (e.keyCode <= 105)
+      )
+    )
+  ) {
+    persistentSettings.circuitsRemaining = parseInt(circuitsInput.value);
+    console.log(`Circuits Remaining: ${persistentSettings.circuitsRemaining}`);
     createWorkout();
   }
 }
 
 circuitsInput.addEventListener('keyup', setCircuits);
 circuitsInput.addEventListener('change', setCircuits);
-let currentCircuit = 0;
+
+const persistentSettings = {
+  bonus: false,
+  difficulty: 1,
+  circuitsRemaining: parseInt(circuitsInput.value),
+  i: 0,
+  t: true,
+  p: 0,
+  timerValue: 0
+}
+
+
 
 const sfx = {
   begin: '',
@@ -336,7 +348,7 @@ let intervals = 0; // default = nonstop.  User can override this via UI.
 
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
 function setDifficulty(e) {
-  difficulty = parseInt(e.target.value);
+  persistentSettings.difficulty = parseInt(e.target.value);
   createWorkout();
 }
 difficultyButtons.forEach(function(difficultyButton) {
@@ -354,7 +366,7 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
   workout = exercises.filter(function(exercise) {
-    return (persistentSettings.bonus) ? (exercise.difficulty <= difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= difficulty));
+    return (persistentSettings.bonus) ? (exercise.difficulty <= persistentSettings.difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= persistentSettings.difficulty));
   });
   estimateWorkoutTime();
   textUI();
@@ -371,7 +383,7 @@ function estimateWorkoutTime() {
     });
   });
 
-  estimatedTime *= circuits;
+  estimatedTime *= persistentSettings.circuitsRemaining;
 
   if (persistentSettings.bonus) {
     bonusExercises.forEach(function(bonusExercise) {
@@ -392,11 +404,11 @@ let titles = [];
 const exercisesList = document.querySelector('.list-of-exercises');
 const qtyExercises = document.querySelector('.qty-Exercises');
 function textUI() {
-  if (difficulty === 1) {
+  if (persistentSettings.difficulty === 1) {
     difficultyUI.innerText = (persistentSettings.bonus) ? 'Basic + Bonus' : 'Basic';
-  } else if (difficulty === 2) {
+  } else if (persistentSettings.difficulty === 2) {
     difficultyUI.innerText = (persistentSettings.bonus) ? 'Moderate + Bonus' : 'Moderate';
-  } else if (difficulty === 3) {
+  } else if (persistentSettings.difficulty === 3) {
     difficultyUI.innerText = (persistentSettings.bonus) ? 'Intense + Bonus' : 'Intense';
   }
   qtyExercises.innerText = workout.length;
@@ -448,9 +460,9 @@ function beginNextExercise() {
     countdownTimer();
   } else {
     // Advance to next circuit:
-    if (circuits > 1) {
-      circuits--;
-      console.log(`Circuits remaining: ${circuits}`);
+    if (persistentSettings.circuitsRemaining > 1) {
+      persistentSettings.circuitsRemaining--;
+      console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
       i = 0;
       p = 0;
       t = true;
@@ -506,6 +518,7 @@ function timerUI() {
 // Displays remaining number of circuits.
 // Displays total remaining time.
 
+// NOTE: ALL OF THESE ARE CONSTANTLY BEING UPDATED AS THE TIMER RUNS, CORRECT?  SO NO NEED FOR A FUNCTION THAT UPDATES THEM WHEN IT PAUSES.
 function saveSettings(bonus, diff, circ, i, t, p, timer) {
   persistentSettings.bonus = bonus;
   persistentSettings.difficulty = diff;
@@ -519,11 +532,12 @@ function saveSettings(bonus, diff, circ, i, t, p, timer) {
 
 function pause() {
   // clearInterval
-  saveSettings(bonus, difficulty, circuits, i, t, p, timerValue);
+  // NOTE: ALL OF THESE ARE CONSTANTLY BEING UPDATED AS THE TIMER RUNS, CORRECT?  SO NO NEED FOR A FUNCTION THAT UPDATES THEM WHEN IT PAUSES.
+  saveSettings(bonus, difficulty, persistentSettings.circuitsRemaining, i, t, p, timerValue);
 }
 
 function resume() {
-
+  // Begin Workout, just make sure to pull from the persistent settings object for EVERYTHING.
 }
 
 createWorkout(); // Create default workout when page loads.
