@@ -435,9 +435,8 @@ function textUI() {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
   // https://javascript.info/promise-chaining
 let timerValue = 0;
-// let i = 0;
 let t = true;
-let p = 0;
+// let p = 0;
 
 function beginNextExercise() {
   if (persistentSettings.i < workout.length) {
@@ -446,14 +445,14 @@ function beginNextExercise() {
       timerValue = workout[persistentSettings.i].transition;
       t = false;
     } else {
-      if (p < workout[persistentSettings.i].poses.length) {
-        console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[p].duration} seconds`);
-        timerValue = workout[persistentSettings.i].poses[p].duration;
-        p++;
+      if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
+        console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[persistentSettings.p].duration} seconds`);
+        timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
+        persistentSettings.p++;
       } else {
         console.log(`Moving on to the next exercise.`);
         persistentSettings.i++;
-        p = 0;
+        persistentSettings.p = 0;
         t = true;
       }
     }
@@ -464,7 +463,7 @@ function beginNextExercise() {
       persistentSettings.circuitsRemaining--;
       console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
       persistentSettings.i = 0;
-      p = 0;
+      persistentSettings.p = 0;
       t = true;
       countdownTimer();
     } else {
