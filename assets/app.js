@@ -288,7 +288,7 @@ const exercises = [
 ]
 
 
-
+let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
 const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', beginNextExercise);
 const timerDisplay = document.querySelector('.timer');
@@ -328,6 +328,7 @@ const persistentSettings = {
   circuitsRemaining: parseInt(circuitsInput.value),
   difficulty: 1,
   i: 0,
+  intervals: 0,
   p: 0,
   t: true,
   timerValue: 0,
@@ -343,8 +344,6 @@ const sfx = {
   done: '',
   finale: ''
 }
-
-let intervals = 0; // default = nonstop.  User can override this via UI.
 
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
 function setDifficulty(e) {
