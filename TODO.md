@@ -2,6 +2,7 @@
 
 - Build UI in BEM, following proper accessibility protocols.
   - Pause / Resume button
+    - Refactor code to always push values to and pull values from the `persistentSettings` object.
   - Reset / Cancel button
   - Interval Selections:
     - "One exercise at a time."  (You're still learning and need to look up each exercise before you begin.)

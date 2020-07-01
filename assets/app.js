@@ -287,6 +287,18 @@ const exercises = [
   }
 ]
 
+const persistentSettings = {
+  bonus: false,
+  difficulty: 1,
+  circuitsRemaining: 3,
+  i: 0,
+  t: true,
+  p: 0,
+  timerValue: 0
+}
+
+
+
 const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', beginNextExercise);
 const timerDisplay = document.querySelector('.timer');
@@ -299,7 +311,7 @@ const difficultyUI = document.querySelector('.settings-difficulty__name');
 let difficultyText;
 let bonusExercises = [];
 const circuitsInput = document.querySelector('.settings-circuits__value');
-let circuits = circuitsInput.value;
+let circuits = parseInt(circuitsInput.value);
 function setCircuits() {
   if (circuitsInput.value > 0) {
     circuits = circuitsInput.value;
@@ -333,7 +345,7 @@ difficultyButtons.forEach(function(difficultyButton) {
 
 const bonusCheckbox = document.querySelector('.settings-bonus__checkbox');
 function setBonus(e) {
-  bonus = (e.target.checked) ? true : false;
+  persistentSettings.bonus = (e.target.checked) ? true : false;
   createWorkout();
 }
 bonusCheckbox.addEventListener('click', setBonus);
@@ -342,7 +354,7 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
   workout = exercises.filter(function(exercise) {
-    return (bonus) ? (exercise.difficulty <= difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= difficulty));
+    return (persistentSettings.bonus) ? (exercise.difficulty <= difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= difficulty));
   });
   estimateWorkoutTime();
   textUI();
@@ -361,7 +373,7 @@ function estimateWorkoutTime() {
 
   estimatedTime *= circuits;
 
-  if (bonus) {
+  if (persistentSettings.bonus) {
     bonusExercises.forEach(function(bonusExercise) {
       estimatedTime += bonusExercise.transition;
       return bonusExercise.poses.forEach(function(pose) {
@@ -381,11 +393,11 @@ const exercisesList = document.querySelector('.list-of-exercises');
 const qtyExercises = document.querySelector('.qty-Exercises');
 function textUI() {
   if (difficulty === 1) {
-    difficultyUI.innerText = (bonus) ? 'Basic + Bonus' : 'Basic';
+    difficultyUI.innerText = (persistentSettings.bonus) ? 'Basic + Bonus' : 'Basic';
   } else if (difficulty === 2) {
-    difficultyUI.innerText = (bonus) ? 'Moderate + Bonus' : 'Moderate';
+    difficultyUI.innerText = (persistentSettings.bonus) ? 'Moderate + Bonus' : 'Moderate';
   } else if (difficulty === 3) {
-    difficultyUI.innerText = (bonus) ? 'Intense + Bonus' : 'Intense';
+    difficultyUI.innerText = (persistentSettings.bonus) ? 'Intense + Bonus' : 'Intense';
   }
   qtyExercises.innerText = workout.length;
 
@@ -410,7 +422,7 @@ function textUI() {
 // Take the first object in the workout array.  Use a promise chain:
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
   // https://javascript.info/promise-chaining
-let timerValue;
+let timerValue = 0;
 let i = 0;
 let t = true;
 let p = 0;
@@ -493,4 +505,25 @@ function timerUI() {
 // Displays current circuit number.
 // Displays remaining number of circuits.
 // Displays total remaining time.
+
+function saveSettings(bonus, diff, circ, i, t, p, timer) {
+  persistentSettings.bonus = bonus;
+  persistentSettings.difficulty = diff;
+  persistentSettings.circuitsRemaining = circ;
+  persistentSettings.i = i;
+  persistentSettings.t = t;
+  persistentSettings.p = p;
+  persistentSettings.timerValue = timer;
+  console.log(persistentSettings);
+}
+
+function pause() {
+  // clearInterval
+  saveSettings(bonus, difficulty, circuits, i, t, p, timerValue);
+}
+
+function resume() {
+
+}
+
 createWorkout(); // Create default workout when page loads.
