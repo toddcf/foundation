@@ -435,15 +435,15 @@ function textUI() {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
   // https://javascript.info/promise-chaining
 let timerValue = 0;
-let t = true;
+// let t = true;
 // let p = 0;
 
 function beginNextExercise() {
   if (persistentSettings.i < workout.length) {
-    if (t) {
+    if (persistentSettings.t) {
       console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
       timerValue = workout[persistentSettings.i].transition;
-      t = false;
+      persistentSettings.t = false;
     } else {
       if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
         console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[persistentSettings.p].duration} seconds`);
@@ -453,7 +453,7 @@ function beginNextExercise() {
         console.log(`Moving on to the next exercise.`);
         persistentSettings.i++;
         persistentSettings.p = 0;
-        t = true;
+        persistentSettings.t = true;
       }
     }
     countdownTimer();
@@ -464,7 +464,7 @@ function beginNextExercise() {
       console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
       persistentSettings.i = 0;
       persistentSettings.p = 0;
-      t = true;
+      persistentSettings.t = true;
       countdownTimer();
     } else {
       console.log('Finished!');
@@ -482,7 +482,7 @@ function countdownTimer() {
       clearInterval(timer);
       beginNextExercise();
     }
-  }, 1000);
+  }, 1);
 }
 
 function timerUI() {
