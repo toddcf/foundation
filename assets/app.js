@@ -339,12 +339,9 @@ const persistentSettings = {
 }
 
 
-function setBreaks() {
+breakDropdown.addEventListener('change', function() {
   persistentSettings.breaks = breakDropdown.options[breakDropdown.selectedIndex].value;
-  console.log(`Breaks: ${persistentSettings.breaks}`);
-}
-
-breakDropdown.addEventListener('change', setBreaks);
+});
 
 
 const sfx = {
