@@ -326,11 +326,11 @@ circuitsInput.addEventListener('change', setCircuits);
 
 const persistentSettings = {
   bonus: false,
-  difficulty: 1,
   circuitsRemaining: parseInt(circuitsInput.value),
+  difficulty: 1,
   i: 0,
-  t: true,
   p: 0,
+  t: true,
   timerValue: 0
 }
 
@@ -435,24 +435,24 @@ function textUI() {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
   // https://javascript.info/promise-chaining
 let timerValue = 0;
-let i = 0;
+// let i = 0;
 let t = true;
 let p = 0;
 
 function beginNextExercise() {
-  if (i < workout.length) {
+  if (persistentSettings.i < workout.length) {
     if (t) {
-      console.log(`Transition to "${workout[i].title}": ${workout[i].transition} seconds`);
-      timerValue = workout[i].transition;
+      console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
+      timerValue = workout[persistentSettings.i].transition;
       t = false;
     } else {
-      if (p < workout[i].poses.length) {
-        console.log(`"${workout[i].title}" ${workout[i].poses[p].desc} of ${workout[i].poses.length}: ${workout[i].poses[p].duration} seconds`);
-        timerValue = workout[i].poses[p].duration;
+      if (p < workout[persistentSettings.i].poses.length) {
+        console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[p].duration} seconds`);
+        timerValue = workout[persistentSettings.i].poses[p].duration;
         p++;
       } else {
         console.log(`Moving on to the next exercise.`);
-        i++;
+        persistentSettings.i++;
         p = 0;
         t = true;
       }
@@ -463,7 +463,7 @@ function beginNextExercise() {
     if (persistentSettings.circuitsRemaining > 1) {
       persistentSettings.circuitsRemaining--;
       console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
-      i = 0;
+      persistentSettings.i = 0;
       p = 0;
       t = true;
       countdownTimer();
