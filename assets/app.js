@@ -292,8 +292,6 @@ const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', function() {
   pauseBtn.classList.remove('hideBtn');
-  pauseBtn.classList.add('showBtn');
-  startBtn.classList.remove('showBtn');
   startBtn.classList.add('hideBtn');
   setTimerValue();
 });
@@ -483,13 +481,10 @@ function setTimerValue() {
     } else {
       // Should these be moved to runCountdownTimer or not?
       currentExerciseUI.innerText = `Finished!`;
-      pauseBtn.classList.remove('showBtn');
       pauseBtn.classList.add('hideBtn');
-      resumeBtn.classList.remove('showBtn'); // Probably unnecessary
       resumeBtn.classList.add('hideBtn'); // Probably unnecessary
       resetBtn.classList.remove('hideBtn');
-      resetBtn.classList.add('showBtn');
-
+      
       // Reset:
       // Put original workout settings back into the object.
       // For this to happen, when the "Begin Workout" button is clicked, the first thing that should happen is the persistentSettings object should get copied into another object and saved. Then it can get copied back into the persistentSettings object at this point.
@@ -501,8 +496,6 @@ function setTimerValue() {
 let timer;
 function runCountdownTimer() {
   pauseBtn.classList.remove('hideBtn');
-  pauseBtn.classList.add('showBtn');
-  startBtn.classList.remove('showBtn');
   startBtn.classList.add('hideBtn');
   timerUI();
   timer = setInterval(function() {
@@ -580,20 +573,15 @@ const resetBtn = document.querySelector('.reset-btn');
 pauseBtn.addEventListener('click', pause);
 function pause() {
   clearInterval(timer);
-  pauseBtn.classList.remove('showBtn');
   pauseBtn.classList.add('hideBtn');
   resumeBtn.classList.remove('hideBtn');
-  resumeBtn.classList.add('showBtn');
   resetBtn.classList.remove('hideBtn');
-  resetBtn.classList.add('showBtn');
 }
 
 resumeBtn.addEventListener('click', resume);
 function resume() {
   runCountdownTimer();
   pauseBtn.classList.remove('hideBtn');
-  pauseBtn.classList.add('showBtn');
-  resumeBtn.classList.remove('showBtn');
   resumeBtn.classList.add('hideBtn');
 }
 
