@@ -4,9 +4,6 @@
 ## First Iteration
 
 - Add a thick border to the exercise card for the current exercise.
-- Reset button
-  - Every time `createWorkout()` fires, it should save all the starting settings. That way at the end, a function can be invoked that goes back to those settings, even though the timer doesn't begin again unless you click the "Begin Workout" button.
-  - LOOK UP "UNDERSTANDING THE WEIRD PARTS" IN REGARD TO COPYING OBJECTS.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - At the end of each circuit:
   - If circuits remain:

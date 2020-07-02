@@ -291,6 +291,7 @@ const exercises = [
 const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', function() {
+  persistentSettings.active = true;
   pauseBtn.classList.remove('hideBtn');
   startBtn.classList.add('hideBtn');
   setTimerValue();
@@ -331,7 +332,8 @@ circuitsInput.addEventListener('change', setCircuits);
 
 //let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
 // Pull intervals value from the UI
-let persistentSettings = {
+const persistentSettings = {
+  active: false,
   bonus: false,
   circuitsRemaining: parseInt(circuitsInput.value),
   difficulty: 1,
@@ -468,7 +470,10 @@ function setTimerValue() {
         console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${persistentSettings.timerValue} seconds`);
       }
     }
-    runCountdownTimer();
+    // Prevent firing if workout is simply being reset:
+    if (persistentSettings.active) {
+      runCountdownTimer();
+    }
   } else {
     // If circuit is finished:
     // Advance to next circuit:
@@ -477,7 +482,10 @@ function setTimerValue() {
       // if (breaks === nonstop), do nothing -- continue on to fire runCountdownTimer.
       // if (breaks === circuit), fire the pause function.
       // if (breaks === exercises), I think the pause might have happened at the end of the last exercise, before reaching this point. Be careful how this is handled -- maybe it can skate right past as if it were set to nonstop?
-      runCountdownTimer();
+      // Prevent firing if workout is simply being reset:
+      if (persistentSettings.active) {
+        runCountdownTimer();
+      }
     } else {
       // Should these be moved to runCountdownTimer or not?
       currentExerciseUI.innerText = `Finished!`;
@@ -584,18 +592,23 @@ function continueWorkout() {
 
 resetBtn.addEventListener('click', reset);
 function reset() {
-  persistentSettings = {
-    bonus: startingSettings.bonus,
-    circuitsRemaining: startingSettings.circuitsRemaining,
-    difficulty: startingSettings.difficulty,
-    i: startingSettings.i,
-    breaks: startingSettings.breaks,
-    p: startingSettings.p,
-    transition: startingSettings.transition,
-    timerValue: startingSettings.timerValue,
-    totalTimeRemaining: startingSettings.totalTimeRemaining
-  };
-  setTimerValue();
+  pauseBtn.classList.add('hideBtn');
+  continueBtn.classList.add('hideBtn');
+  resetBtn.classList.add('hideBtn'); 
+  startBtn.classList.remove('hideBtn');
+  persistentSettings.active = false;
+  persistentSettings.bonus = startingSettings.bonus;
+  persistentSettings.circuitsRemaining = startingSettings.circuitsRemaining;
+  persistentSettings.difficulty = startingSettings.difficulty;
+  persistentSettings.i = startingSettings.i;
+  persistentSettings.breaks = startingSettings.breaks;
+  persistentSettings.p = startingSettings.p;
+  persistentSettings.transition = startingSettings.transition;
+  persistentSettings.timerValue = startingSettings.timerValue;
+  persistentSettings.totalTimeRemaining = startingSettings.totalTimeRemaining;
+  
+  timerUI();
+  currentExerciseUI.innerText = ``; // Clear current exercise UI.
 }
 
 createWorkout(); // Create default workout when page loads.
