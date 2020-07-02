@@ -327,8 +327,8 @@ function setCircuits(e) {
   }
 }
 
-circuitsInput.addEventListener('keyup', setCircuits);
-circuitsInput.addEventListener('change', setCircuits);
+circuitsInput.addEventListener('keyup', setCircuits); // For typing into the field
+circuitsInput.addEventListener('change', setCircuits); // For input arrow keys
 
 
 //let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
@@ -391,11 +391,7 @@ function createWorkout() {
     bonus: persistentSettings.bonus,
     circuitsRemaining: persistentSettings.circuitsRemaining,
     difficulty: persistentSettings.difficulty,
-    i: persistentSettings.i,
     breaks: persistentSettings.breaks,
-    p: persistentSettings.p,
-    transition: persistentSettings.transition,
-    timerValue: persistentSettings.timerValue,
     totalTimeRemaining: persistentSettings.totalTimeRemaining
   };
 }
@@ -591,15 +587,14 @@ function reset() {
   continueBtn.classList.add('hideBtn');
   resetBtn.classList.add('hideBtn'); 
   startBtn.classList.remove('hideBtn');
+  // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
   persistentSettings.active = false;
   persistentSettings.bonus = startingSettings.bonus;
   persistentSettings.circuitsRemaining = startingSettings.circuitsRemaining;
   persistentSettings.difficulty = startingSettings.difficulty;
-  persistentSettings.i = startingSettings.i;
   persistentSettings.breaks = startingSettings.breaks;
-  persistentSettings.p = startingSettings.p;
-  persistentSettings.transition = startingSettings.transition;
-  persistentSettings.timerValue = startingSettings.timerValue;
+  persistentSettings.transition = true;
+  persistentSettings.timerValue = 0;
   persistentSettings.totalTimeRemaining = startingSettings.totalTimeRemaining;
   timerUI();
   currentExerciseUI.innerText = ``; // Clear UI.
