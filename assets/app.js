@@ -441,16 +441,12 @@ function textUI() {
 function setCountdownTimer() {
   if (persistentSettings.i < workout.length) {
     if (persistentSettings.t) {
+      persistentSettings.timerValue = workout[persistentSettings.i].transition;
       console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
-      if (persistentSettings.resume === false) {
-        persistentSettings.timerValue = workout[persistentSettings.i].transition;
-        persistentSettings.resume = true;
-      }
-      //persistentSettings.t = false;
     } else {
       if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
-        console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[persistentSettings.p].duration} seconds`);
         persistentSettings.timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
+        console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${persistentSettings.timerValue} seconds`);
       } else {
         /*
         console.log(`Moving on to the next exercise.`);
