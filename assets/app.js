@@ -290,7 +290,7 @@ const exercises = [
 
 const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
-startBtn.addEventListener('click', beginNextExercise);
+startBtn.addEventListener('click', setCountdownTimer);
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let workout;
@@ -437,8 +437,8 @@ function textUI() {
 }
 
 
-
-function beginNextExercise() {
+// Change "persistentSettings.resume" to "persistentSettings.timerStatus", and set it to various strings, such as "ready," "active," "paused," etc.
+function setCountdownTimer() {
   if (persistentSettings.i < workout.length) {
     if (persistentSettings.t) {
       console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
@@ -451,15 +451,16 @@ function beginNextExercise() {
       if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
         console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${workout[persistentSettings.i].poses[persistentSettings.p].duration} seconds`);
         persistentSettings.timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
-        persistentSettings.p++;
       } else {
+        /*
         console.log(`Moving on to the next exercise.`);
         persistentSettings.i++; // Next exercise
         persistentSettings.p = 0; // Reset to first pose
         persistentSettings.t = true; // Reset transition
+        */
       }
     }
-    countdownTimer();
+    runCountdownTimer();
   } else {
     // Advance to next circuit:
     if (persistentSettings.circuitsRemaining > 1) {
@@ -470,10 +471,10 @@ function beginNextExercise() {
       persistentSettings.t = true;
 
       // Add condition:
-      // if (breaks === nonstop), fire the countdownTimer.
+      // if (breaks === nonstop), do nothing -- continue on to fire runCountdownTimer.
       // if (breaks === circuit), fire the pause function.
       // if (breaks === exercises), I think the pause might have happened at the end of the last exercise, before reaching this point. Be careful how this is handled -- maybe it can skate right past as if it were set to nonstop?
-      countdownTimer();
+      runCountdownTimer();
     } else {
       console.log('Finished!');
     }
@@ -481,16 +482,27 @@ function beginNextExercise() {
 }
 
 let timer;
-function countdownTimer() {
+function runCountdownTimer() {
   timerUI();
   timer = setInterval(function() {
     if (persistentSettings.timerValue > 0) {
       persistentSettings.timerValue--;
       timerUI();
     } else {
-      if (persistentSettings.t) {persistentSettings.t = false;}
+      if (persistentSettings.t) {
+        persistentSettings.t = false;
+      } else {
+        if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
+          persistentSettings.p++;
+        } else {
+          console.log(`Moving on to the next exercise.`);
+          persistentSettings.i++; // Next exercise
+          persistentSettings.p = 0; // Reset to first pose
+          persistentSettings.t = true; // Reset transition
+        }
+      }
       clearInterval(timer);
-      beginNextExercise();
+      setCountdownTimer();
     }
   }, 1000);
 }
@@ -536,6 +548,6 @@ function pause() {
 }
 
 const resumeBtn = document.querySelector('.resume-btn');
-resumeBtn.addEventListener('click', beginNextExercise);
+resumeBtn.addEventListener('click', runCountdownTimer);
 
 createWorkout(); // Create default workout when page loads.

@@ -1,10 +1,15 @@
 # To Do
 
-- Build UI in BEM, following proper accessibility protocols.
-  - Pause / Resume button
-    - Transition resume feature is fixed.  Apply a similar fix to the pose countdowns.
-  - Reset / Cancel button
+- Pause / Resume button
+  - Reconfigure `beginNextExercise()` to `setCountdownTimer()`, and reconfigure `countdownTimer()` to `runCountdownTimer()`. Move incrementations, resets, etc. into `runCountdownTimer()`.
+- BUG: Make sure certain buttons can't be clicked while the timer is already running.  (Will fire multiple timers and confuse the UI.)
+- Circuits input: Make sure everything still updates when up and down arrows are clicked. That functionality was lost when the `keyup` condition was added.
+- Reset / Cancel button
 - Display the name of the current exercise in the UI.
+- Style UI.
+  - Adobe XD.
+  - Use proper accessibility protocols.
+  - Refactor in BEM.
 - Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
   - Start workout.
