@@ -531,7 +531,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1);
+  }, 1000);
 }
 
 function timerUI() {
@@ -583,6 +583,7 @@ function resume() {
   runCountdownTimer();
   pauseBtn.classList.remove('hideBtn');
   resumeBtn.classList.add('hideBtn');
+  resetBtn.classList.add('hideBtn');
 }
 
 resetBtn.addEventListener('click', reset);
