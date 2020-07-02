@@ -2,6 +2,7 @@
 
 - Pause / Resume button
   - Reconfigure `beginNextExercise()` to `setCountdownTimer()`, and reconfigure `countdownTimer()` to `runCountdownTimer()`. Move incrementations, resets, etc. into `runCountdownTimer()`.
+    - Figure out the "If circuit is finished" scenario.
 - BUG: Make sure certain buttons can't be clicked while the timer is already running.  (Will fire multiple timers and confuse the UI.)
 - Circuits input: Make sure everything still updates when up and down arrows are clicked. That functionality was lost when the `keyup` condition was added.
 - Reset / Cancel button

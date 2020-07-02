@@ -290,7 +290,7 @@ const exercises = [
 
 const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
-startBtn.addEventListener('click', setCountdownTimer);
+startBtn.addEventListener('click', setTimerValue);
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let workout;
@@ -334,7 +334,7 @@ const persistentSettings = {
   breaks: breakDropdown.options[breakDropdown.selectedIndex].value,
   p: 0,
   resume: false,
-  t: true,
+  transition: true,
   timerValue: 0,
   totalTimeRemaining: 0
 }
@@ -436,36 +436,22 @@ function textUI() {
   });
 }
 
-
-// Change "persistentSettings.resume" to "persistentSettings.timerStatus", and set it to various strings, such as "ready," "active," "paused," etc.
-function setCountdownTimer() {
+function setTimerValue() {
   if (persistentSettings.i < workout.length) {
-    if (persistentSettings.t) {
+    if (persistentSettings.transition) {
       persistentSettings.timerValue = workout[persistentSettings.i].transition;
       console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
     } else {
       if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
         persistentSettings.timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
         console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${persistentSettings.timerValue} seconds`);
-      } else {
-        /*
-        console.log(`Moving on to the next exercise.`);
-        persistentSettings.i++; // Next exercise
-        persistentSettings.p = 0; // Reset to first pose
-        persistentSettings.t = true; // Reset transition
-        */
       }
     }
     runCountdownTimer();
   } else {
+    // If circuit is finished:
     // Advance to next circuit:
     if (persistentSettings.circuitsRemaining > 1) {
-      persistentSettings.circuitsRemaining--;
-      console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
-      persistentSettings.i = 0;
-      persistentSettings.p = 0;
-      persistentSettings.t = true;
-
       // Add condition:
       // if (breaks === nonstop), do nothing -- continue on to fire runCountdownTimer.
       // if (breaks === circuit), fire the pause function.
@@ -481,26 +467,39 @@ let timer;
 function runCountdownTimer() {
   timerUI();
   timer = setInterval(function() {
-    if (persistentSettings.timerValue > 0) {
-      persistentSettings.timerValue--;
-      timerUI();
-    } else {
-      if (persistentSettings.t) {
-        persistentSettings.t = false;
+    if (persistentSettings.i < workout.length) {
+      if (persistentSettings.timerValue > 0) {
+        persistentSettings.timerValue--;
+        timerUI();
       } else {
-        if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
-          persistentSettings.p++;
+        if (persistentSettings.transition) {
+          persistentSettings.transition = false;
         } else {
-          console.log(`Moving on to the next exercise.`);
-          persistentSettings.i++; // Next exercise
-          persistentSettings.p = 0; // Reset to first pose
-          persistentSettings.t = true; // Reset transition
+          if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
+            persistentSettings.p++;
+          } else {
+            console.log(`Advance to next exercise.`);
+            persistentSettings.i++; // Advance to next exercise
+            persistentSettings.p = 0; // Reset to first pose
+            persistentSettings.transition = true; // Reset transition
+          }
         }
+        clearInterval(timer);
+        setTimerValue();
       }
-      clearInterval(timer);
-      setCountdownTimer();
+    } else {
+      // Advance to next circuit:
+      if (persistentSettings.circuitsRemaining > 1) {
+        persistentSettings.circuitsRemaining--;
+        console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
+        persistentSettings.i = 0; // Reset to first exercise
+        persistentSettings.p = 0; // Reset to first pose
+        persistentSettings.transition = true; // Reset transition
+        clearInterval(timer);
+        setTimerValue();
+      }
     }
-  }, 1000);
+  }, 1);
 }
 
 function timerUI() {
