@@ -290,7 +290,14 @@ const exercises = [
 
 const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
-startBtn.addEventListener('click', setTimerValue);
+startBtn.addEventListener('click', function() {
+  pauseBtn.classList.remove('hideBtn');
+  pauseBtn.classList.add('showBtn');
+  startBtn.classList.remove('showBtn');
+  startBtn.classList.add('hideBtn');
+  setTimerValue();
+});
+
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
 let workout;
@@ -333,7 +340,6 @@ const persistentSettings = {
   i: 0,
   breaks: breakDropdown.options[breakDropdown.selectedIndex].value,
   p: 0,
-  resume: false,
   transition: true,
   timerValue: 0,
   totalTimeRemaining: 0
@@ -459,12 +465,28 @@ function setTimerValue() {
       runCountdownTimer();
     } else {
       console.log('Finished!');
+      // Should these be moved to runCountdownTimer or not?
+      pauseBtn.classList.remove('showBtn');
+      pauseBtn.classList.add('hideBtn');
+      resumeBtn.classList.remove('showBtn'); // Probably unnecessary
+      resumeBtn.classList.add('hideBtn'); // Probably unnecessary
+      startBtn.classList.remove('hideBtn');
+      startBtn.classList.add('showBtn');
+
+      // Reset:
+      // Put original workout settings back into the object.
+      // For this to happen, when the "Begin Workout" button is clicked, the first thing that should happen is the persistentSettings object should get copied into another object and saved. Then it can get copied back into the persistentSettings object at this point.
+      createWorkout();
     }
   }
 }
 
 let timer;
 function runCountdownTimer() {
+  pauseBtn.classList.remove('hideBtn');
+  pauseBtn.classList.add('showBtn');
+  startBtn.classList.remove('showBtn');
+  startBtn.classList.add('hideBtn');
   timerUI();
   timer = setInterval(function() {
     if (persistentSettings.i < workout.length) {
@@ -535,14 +557,24 @@ function timerUI() {
 // Displays total remaining time.
 
 const pauseBtn = document.querySelector('.pause-btn');
+const resumeBtn = document.querySelector('.resume-btn');
+
 pauseBtn.addEventListener('click', pause);
 function pause() {
   clearInterval(timer);
-  persistentSettings.resume = true;
-  // NOTE: ALL OF THESE ARE CONSTANTLY BEING UPDATED AS THE TIMER RUNS, CORRECT?  SO NO NEED FOR A FUNCTION THAT UPDATES THEM WHEN IT PAUSES.
+  pauseBtn.classList.remove('showBtn');
+  pauseBtn.classList.add('hideBtn');
+  resumeBtn.classList.remove('hideBtn');
+  resumeBtn.classList.add('showBtn');
 }
 
-const resumeBtn = document.querySelector('.resume-btn');
-resumeBtn.addEventListener('click', runCountdownTimer);
+resumeBtn.addEventListener('click', resume);
+function resume() {
+  runCountdownTimer();
+  pauseBtn.classList.remove('hideBtn');
+  pauseBtn.classList.add('showBtn');
+  resumeBtn.classList.remove('showBtn');
+  resumeBtn.classList.add('hideBtn');
+}
 
 createWorkout(); // Create default workout when page loads.

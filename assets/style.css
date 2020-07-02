@@ -22,6 +22,10 @@
   font-size: 16px;
 }
 
+.hideBtn {
+  display: none;
+}
+
 .list-of-exercises {
   align-content: center;
   align-items: flex-start;
@@ -29,6 +33,10 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.showBtn {
+  display: inline-block;
 }
 
 .timer {
