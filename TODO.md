@@ -3,6 +3,9 @@
 
 ## First Iteration
 
+- Reset button
+  - Every time `createWorkout()` fires, it should save all the starting settings. That way at the end, a function can be invoked that goes back to those settings, even though the timer doesn't begin again unless you click the "Begin Workout" button.
+  - LOOK UP "UNDERSTANDING THE WEIRD PARTS" IN REGARD TO COPYING OBJECTS.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - At the end of each circuit:
   - If circuits remain:
@@ -15,9 +18,6 @@
   - Display remaining circuits in the UI.
   - Convert `setCircuits` function to regex for numerical keyups.
   - Circuits input: Make sure everything still updates when up and down arrows are clicked. That functionality was lost when the `keyup` condition was added.
-- Reset / Cancel button
-  - This displays when paused, or when workout is finished.
-  - Every time `createWorkout()` fires, it should save all the starting settings. That way at the end, a function can be invoked that goes back to those settings, even though the timer doesn't begin again unless you click the "Begin Workout" button.
 - Find sfx and add them to the project:
   - Start workout.
   - Last 5 seconds of pose. (One beep per second except for zero.)
@@ -31,9 +31,10 @@
 
 - Style UI.
   - Adobe XD.
+  - Change color of countdown timer depending how much time is left.
+- Refactor code.
   - Use proper accessibility protocols.
-  - Refactor in BEM.
-- Change color of countdown timer depending how much time is left.
+  - Use BEM.
 
 
 ## Third Iteration

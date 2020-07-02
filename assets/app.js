@@ -333,7 +333,7 @@ circuitsInput.addEventListener('change', setCircuits);
 
 //let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
 // Pull intervals value from the UI
-const persistentSettings = {
+let persistentSettings = {
   bonus: false,
   circuitsRemaining: parseInt(circuitsInput.value),
   difficulty: 1,
@@ -344,6 +344,8 @@ const persistentSettings = {
   timerValue: 0,
   totalTimeRemaining: 0
 }
+
+let startingSettings = {}; // persistentSettings to be copied here.
 
 
 breakDropdown.addEventListener('change', function() {
@@ -383,6 +385,18 @@ function createWorkout() {
   });
   estimateWorkoutTime();
   textUI();
+  // Store starting settings for retrieval if workout is reset later:
+  startingSettings = {
+    bonus: persistentSettings.bonus,
+    circuitsRemaining: persistentSettings.circuitsRemaining,
+    difficulty: persistentSettings.difficulty,
+    i: persistentSettings.i,
+    breaks: persistentSettings.breaks,
+    p: persistentSettings.p,
+    transition: persistentSettings.transition,
+    timerValue: persistentSettings.timerValue,
+    totalTimeRemaining: persistentSettings.totalTimeRemaining
+  };
 }
 
 // Estimate Total Workout Time:
@@ -585,7 +599,17 @@ function resume() {
 
 resetBtn.addEventListener('click', reset);
 function reset() {
-  // Pull everything from the savedSettings into the persistent settings.
+  persistentSettings = {
+    bonus: startingSettings.bonus,
+    circuitsRemaining: startingSettings.circuitsRemaining,
+    difficulty: startingSettings.difficulty,
+    i: startingSettings.i,
+    breaks: startingSettings.breaks,
+    p: startingSettings.p,
+    transition: startingSettings.transition,
+    timerValue: startingSettings.timerValue,
+    totalTimeRemaining: startingSettings.totalTimeRemaining
+  };
   setTimerValue();
 }
 
