@@ -442,12 +442,15 @@ function textUI() {
   });
 }
 
+const currentExerciseUI = document.querySelector('.current-exercise');
 function setTimerValue() {
   if (persistentSettings.i < workout.length) {
     if (persistentSettings.transition) {
       persistentSettings.timerValue = workout[persistentSettings.i].transition;
+      currentExerciseUI.innerText = `Transition to ${workout[persistentSettings.i].title}`;
       console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
     } else {
+      currentExerciseUI.innerText = `${workout[persistentSettings.i].title}`;
       if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
         persistentSettings.timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
         console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${persistentSettings.timerValue} seconds`);
@@ -464,14 +467,14 @@ function setTimerValue() {
       // if (breaks === exercises), I think the pause might have happened at the end of the last exercise, before reaching this point. Be careful how this is handled -- maybe it can skate right past as if it were set to nonstop?
       runCountdownTimer();
     } else {
-      console.log('Finished!');
       // Should these be moved to runCountdownTimer or not?
+      currentExerciseUI.innerText = `Finished!`;
       pauseBtn.classList.remove('showBtn');
       pauseBtn.classList.add('hideBtn');
       resumeBtn.classList.remove('showBtn'); // Probably unnecessary
       resumeBtn.classList.add('hideBtn'); // Probably unnecessary
-      startBtn.classList.remove('hideBtn');
-      startBtn.classList.add('showBtn');
+      resetBtn.classList.remove('hideBtn');
+      resetBtn.classList.add('showBtn');
 
       // Reset:
       // Put original workout settings back into the object.
@@ -558,6 +561,7 @@ function timerUI() {
 
 const pauseBtn = document.querySelector('.pause-btn');
 const resumeBtn = document.querySelector('.resume-btn');
+const resetBtn = document.querySelector('.reset-btn');
 
 pauseBtn.addEventListener('click', pause);
 function pause() {
@@ -566,6 +570,8 @@ function pause() {
   pauseBtn.classList.add('hideBtn');
   resumeBtn.classList.remove('hideBtn');
   resumeBtn.classList.add('showBtn');
+  resetBtn.classList.remove('hideBtn');
+  resetBtn.classList.add('showBtn');
 }
 
 resumeBtn.addEventListener('click', resume);
@@ -575,6 +581,12 @@ function resume() {
   pauseBtn.classList.add('showBtn');
   resumeBtn.classList.remove('showBtn');
   resumeBtn.classList.add('hideBtn');
+}
+
+resetBtn.addEventListener('click', reset);
+function reset() {
+  // Pull everything from the savedSettings into the persistent settings.
+  setTimerValue();
 }
 
 createWorkout(); // Create default workout when page loads.
