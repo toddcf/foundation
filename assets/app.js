@@ -482,7 +482,7 @@ function setTimerValue() {
       // Should these be moved to runCountdownTimer or not?
       currentExerciseUI.innerText = `Finished!`;
       pauseBtn.classList.add('hideBtn');
-      resumeBtn.classList.add('hideBtn'); // Probably unnecessary
+      //continueBtn.classList.add('hideBtn'); // Probably unnecessary
       resetBtn.classList.remove('hideBtn');
       
       // Reset:
@@ -557,32 +557,28 @@ function timerUI() {
 // When complete, play sfx.finale.
 
 
-// UX:
-// User can pause, resume, reset, or clear workout.
-
-
 // UI:
 // Displays current circuit number.
 // Displays remaining number of circuits.
 // Displays total remaining time.
 
 const pauseBtn = document.querySelector('.pause-btn');
-const resumeBtn = document.querySelector('.resume-btn');
+const continueBtn = document.querySelector('.continue-btn');
 const resetBtn = document.querySelector('.reset-btn');
 
 pauseBtn.addEventListener('click', pause);
 function pause() {
   clearInterval(timer);
   pauseBtn.classList.add('hideBtn');
-  resumeBtn.classList.remove('hideBtn');
+  continueBtn.classList.remove('hideBtn');
   resetBtn.classList.remove('hideBtn');
 }
 
-resumeBtn.addEventListener('click', resume);
-function resume() {
+continueBtn.addEventListener('click', continueWorkout);
+function continueWorkout() {
   runCountdownTimer();
   pauseBtn.classList.remove('hideBtn');
-  resumeBtn.classList.add('hideBtn');
+  continueBtn.classList.add('hideBtn');
   resetBtn.classList.add('hideBtn');
 }
 
