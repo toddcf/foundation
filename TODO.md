@@ -10,12 +10,12 @@
     - If breaks are set to "circuit," pause.
     - Else ("nonstop" or "exercise"), run the next circuit without stopping. (If "exercise," it will have already paused at the end of the last exercise.)
   - Else:
-    - Reset to the starting settings. (Calls the same function as the "Reset" button that will display while paused.)
-- BUG: Disable or hide certain buttons while the timer is already running.
+    - DONE: Reset to the starting settings. (Calls the same function as the "Reset" button that will display while paused.)
+- BUG: Disable or hide workout settings buttons while the workout is ACTIVE.
 - Circuits:
-  - Display remaining circuits in the UI.
-  - Convert `setCircuits` function to regex for numerical keyups.
+  - Display "Circuit X of X" in the UI.
   - Circuits input: Make sure everything still updates when up and down arrows are clicked. That functionality was lost when the `keyup` condition was added.
+  - Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
   - Start workout.
   - Last 5 seconds of pose. (One beep per second except for zero.)

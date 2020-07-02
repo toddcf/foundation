@@ -321,7 +321,7 @@ function setCircuits(e) {
     )
   ) {
     persistentSettings.circuitsRemaining = parseInt(circuitsInput.value);
-    console.log(`Circuits Remaining: ${persistentSettings.circuitsRemaining}`);
+    console.log(`Circuits Set To: ${persistentSettings.circuitsRemaining}`);
     createWorkout();
   }
 }
@@ -457,8 +457,10 @@ function textUI() {
 }
 
 const currentExerciseUI = document.querySelector('.current-exercise');
+const currentCircuitUI = document.querySelector('.current-circuit');
 function setTimerValue() {
   if (persistentSettings.i < workout.length) {
+    currentCircuitUI.innerText = `Circuit ${startingSettings.circuitsRemaining - persistentSettings.circuitsRemaining + 1} of ${startingSettings.circuitsRemaining}`;
     if (persistentSettings.transition) {
       persistentSettings.timerValue = workout[persistentSettings.i].transition;
       currentExerciseUI.innerText = `Transition to ${workout[persistentSettings.i].title}`;
@@ -488,15 +490,8 @@ function setTimerValue() {
       }
     } else {
       // Should these be moved to runCountdownTimer or not?
-      currentExerciseUI.innerText = `Finished!`;
-      pauseBtn.classList.add('hideBtn');
-      //continueBtn.classList.add('hideBtn'); // Probably unnecessary
-      resetBtn.classList.remove('hideBtn');
-      
-      // Reset:
-      // Put original workout settings back into the object.
-      // For this to happen, when the "Begin Workout" button is clicked, the first thing that should happen is the persistentSettings object should get copied into another object and saved. Then it can get copied back into the persistentSettings object at this point.
-      createWorkout();
+      reset();
+      currentExerciseUI.innerText = `Finished!`; // reset() clears this field.
     }
   }
 }
@@ -531,7 +526,6 @@ function runCountdownTimer() {
       // Advance to next circuit:
       if (persistentSettings.circuitsRemaining > 1) {
         persistentSettings.circuitsRemaining--;
-        console.log(`Circuits remaining: ${persistentSettings.circuitsRemaining}`);
         persistentSettings.i = 0; // Reset to first exercise
         persistentSettings.p = 0; // Reset to first pose
         persistentSettings.transition = true; // Reset transition
@@ -539,7 +533,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1000);
+  }, 1);
 }
 
 function timerUI() {
@@ -606,9 +600,9 @@ function reset() {
   persistentSettings.transition = startingSettings.transition;
   persistentSettings.timerValue = startingSettings.timerValue;
   persistentSettings.totalTimeRemaining = startingSettings.totalTimeRemaining;
-  
   timerUI();
-  currentExerciseUI.innerText = ``; // Clear current exercise UI.
+  currentExerciseUI.innerText = ``; // Clear UI.
+  currentCircuitUI.innerText = ``; // Clear UI
 }
 
 createWorkout(); // Create default workout when page loads.
