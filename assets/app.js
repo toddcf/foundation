@@ -306,17 +306,18 @@ let bonusExercises = [];
 const circuitsInput = document.querySelector('.settings-circuits__value');
 function setCircuits(e) {
   // Value must be greater than 0, and keyup must be a number key.
+  // Have to use NOT so that clicks on the arrow keys don't get excluded.
   // Convert to regex later.
   if (
     (circuitsInput.value > 0) &&
     (
       (
-        (e.keyCode >= 48) &&
-        (e.keyCode <= 57)
+        !(e.keyCode <= 48) &&
+        !(e.keyCode >= 57)
       ) ||
       (
-        (e.keyCode >= 96) &&
-        (e.keyCode <= 105)
+        !(e.keyCode <= 96) &&
+        !(e.keyCode >= 105)
       )
     )
   ) {

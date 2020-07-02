@@ -13,8 +13,6 @@
     - DONE: Reset to the starting settings. (Calls the same function as the "Reset" button that will display while paused.)
 - BUG: Disable or hide workout settings buttons while the workout is ACTIVE.
 - Circuits:
-  - Display "Circuit X of X" in the UI.
-  - Circuits input: Make sure everything still updates when up and down arrows are clicked. That functionality was lost when the `keyup` condition was added.
   - Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
   - Start workout.
