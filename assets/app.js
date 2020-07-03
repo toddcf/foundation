@@ -290,12 +290,14 @@ const exercises = [
 
 const breakDropdown = document.querySelector('.break-dropdown');
 const startBtn = document.querySelector('.begin-btn');
-startBtn.addEventListener('click', function() {
+startBtn.addEventListener('click', startNewWorkout);
+
+function startNewWorkout() {
   persistentSettings.active = true;
   pauseBtn.classList.remove('hideBtn');
   startBtn.classList.add('hideBtn');
   setTimerValue();
-});
+}
 
 const timerDisplay = document.querySelector('.timer');
 const totalDurationUI = document.querySelector('.totalDurationUI');
@@ -442,6 +444,7 @@ function textUI() {
   workout.forEach(function(exercise) {
     const exerciseCard = document.createElement('div');
     exerciseCard.classList.add('exercise-card');
+    exerciseCard.setAttribute('data-exercise-title', exercise.title);
     const exerciseCardImg = document.createElement('div');
     exerciseCardImg.classList.add('exercise-card-img');
     exerciseCard.appendChild(exerciseCardImg);
@@ -455,9 +458,14 @@ function textUI() {
 
 const currentExerciseUI = document.querySelector('.current-exercise');
 const currentCircuitUI = document.querySelector('.current-circuit');
+let currentExerciseCard;
 function setTimerValue() {
   if (persistentSettings.i < workout.length) {
     currentCircuitUI.innerText = `Circuit ${startingSettings.circuitsRemaining - persistentSettings.circuitsRemaining + 1} of ${startingSettings.circuitsRemaining}`;
+    // Add border to current exercise card:
+    if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
+    currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[persistentSettings.i].title}"]`);
+    currentExerciseCard.classList.add('thick-border');
     if (persistentSettings.transition) {
       persistentSettings.timerValue = workout[persistentSettings.i].transition;
       currentExerciseUI.innerText = `Transition to ${workout[persistentSettings.i].title}`;
@@ -487,8 +495,10 @@ function setTimerValue() {
       }
     } else {
       // Should these be moved to runCountdownTimer or not?
-      reset();
-      currentExerciseUI.innerText = `Finished!`; // reset() clears this field.
+      startOver();
+      currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
+      startOverBtn.classList.remove('hideBtn'); 
+      startBtn.classList.add('hideBtn');
     }
   }
 }
@@ -563,14 +573,14 @@ function timerUI() {
 
 const pauseBtn = document.querySelector('.pause-btn');
 const continueBtn = document.querySelector('.continue-btn');
-const resetBtn = document.querySelector('.reset-btn');
+const startOverBtn = document.querySelector('.start-over-btn');
 
 pauseBtn.addEventListener('click', pause);
 function pause() {
   clearInterval(timer);
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.remove('hideBtn');
-  resetBtn.classList.remove('hideBtn');
+  startOverBtn.classList.remove('hideBtn');
 }
 
 continueBtn.addEventListener('click', continueWorkout);
@@ -578,14 +588,18 @@ function continueWorkout() {
   runCountdownTimer();
   pauseBtn.classList.remove('hideBtn');
   continueBtn.classList.add('hideBtn');
-  resetBtn.classList.add('hideBtn');
+  startOverBtn.classList.add('hideBtn');
 }
 
-resetBtn.addEventListener('click', reset);
-function reset() {
+startOverBtn.addEventListener('click', function() {
+  // If startOver();
+  // else startNewWorkout();
+});
+
+function startOver() {
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.add('hideBtn');
-  resetBtn.classList.add('hideBtn'); 
+  startOverBtn.classList.add('hideBtn'); 
   startBtn.classList.remove('hideBtn');
   // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
   persistentSettings.active = false;
@@ -599,6 +613,7 @@ function reset() {
   timerUI();
   currentExerciseUI.innerText = ``; // Clear UI.
   currentCircuitUI.innerText = ``; // Clear UI
+  currentExerciseCard.classList.remove('thick-border');
 }
 
 createWorkout(); // Create default workout when page loads.

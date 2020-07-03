@@ -3,7 +3,6 @@
 
 ## First Iteration
 
-- Add a thick border to the exercise card for the current exercise.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - At the end of each circuit:
   - If circuits remain:
@@ -11,7 +10,7 @@
     - Else ("nonstop" or "exercise"), run the next circuit without stopping. (If "exercise," it will have already paused at the end of the last exercise.)
   - Else:
     - DONE: Reset to the starting settings. (Calls the same function as the "Reset" button that will display while paused.)
-- BUG: Disable or hide workout settings buttons while the workout is ACTIVE.
+- BUG: Disable or hide workout settings buttons while the workout is ACTIVE. Re-enable them if workout is INACTIVE.
 - Circuits:
   - Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
@@ -21,6 +20,7 @@
   - User option to turn sound on or off.
 - Convert everything to arrow functions.
 - Convert everything possible to object literal.
+- Create detailed README.
 
 
 ## Second Iteration
@@ -28,6 +28,7 @@
 - Style UI.
   - Adobe XD.
   - Change color of countdown timer depending how much time is left.
+  - Create separate "instructions" page that explains how to use the timer.
 - Refactor code.
   - Use proper accessibility protocols.
   - Use BEM.

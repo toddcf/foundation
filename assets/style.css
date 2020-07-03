@@ -35,6 +35,10 @@
   justify-content: center;
 }
 
+.thick-border {
+  border: 5px solid orange;
+}
+
 .timer {
   font-size: 200px;
 }
