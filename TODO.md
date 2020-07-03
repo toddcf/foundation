@@ -14,13 +14,24 @@
 - Circuits:
   - Convert `setCircuits` function to regex for numerical keyups.
 - Find sfx and add them to the project:
-  - Start workout.
+  - Make workout selections:
+    - THELIBRARYBYMTC UI TINY CLICK 28
+  - Start / Next pose || exercise || circuit || workout.
+    - ALERT 30 (or finish?)
   - Last 5 seconds of pose. (One beep per second except for zero.)
-  - Finish pose || exercise || circuit || workout.
+    - MODULAR UI FM SOLO BLEEPS 039
+    - MODULAR UI SOLO BLEEPS 011 ?
+    - MODULAR UI SOLO BLEEPS 033 ?
+  - Finish .
+    - ALERT 30 (or start?)
   - User option to turn sound on or off.
 - Convert everything to arrow functions.
 - Convert everything possible to object literal.
 - Create detailed README.
+- Unused SFX:
+  - MODULAR UI FM SOLO BLEEPS 001
+  - MODULAR UI CONFIRM TONEFM 014
+  - MODULAR UI CONFIRM TONEFM 062
 
 
 ## Second Iteration
