@@ -540,7 +540,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1);
+  }, 1000);
 }
 
 function timerUI() {

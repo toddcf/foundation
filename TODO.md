@@ -13,23 +13,28 @@
 - BUG: Disable or hide workout settings buttons while the workout is ACTIVE. Re-enable them if workout is INACTIVE.
 - Circuits:
   - Convert `setCircuits` function to regex for numerical keyups.
-- Find sfx and add them to the project:
-  - Make workout selections:
-    - THELIBRARYBYMTC UI TINY CLICK 28
-  - Start / Next pose || exercise || circuit || workout.
-    - ALERT 30 (or finish?)
-  - Last 5 seconds of pose. (One beep per second except for zero.)
-    - MODULAR UI FM SOLO BLEEPS 039
-    - MODULAR UI SOLO BLEEPS 011 ?
-    - MODULAR UI SOLO BLEEPS 033 ?
-  - Finish .
-    - ALERT 30 (or start?)
-  - User option to turn sound on or off.
+- SFX
+  - Download SFX:
+    - Make workout selections (including Pause and Clear Workout):
+      - THELIBRARYBYMTC UI TINY CLICK 28 [DOWNLOADED]
+    - Start || Continue || Finish Workout.
+      - ALERT 30 [DOWNLOADED]
+    - Last 5 seconds of pose. (One beep per second except for zero.)
+      - MODULAR UI FM SOLO BLEEPS 039 [DOWNLOADED]
+      - AIRY ECHO METALLIC ALERT
+      - MODULAR UI CONFIRM TONEFM 056
+    - Finish transition || pose || exercise || circuit. 
+      - MODULAR UI FM SOLO BLEEPS 001 [DOWNLOADED]
+    - User SFX Options
+      - Turn all sound on or off.
+      - Turn individual sounds on or off.
+    - Equalize the volume of each SFX in ACID if necessary.
+    - Set SFX to trigger at the appropriate times.
 - Convert everything to arrow functions.
 - Convert everything possible to object literal.
 - Create detailed README.
 - Unused SFX:
-  - MODULAR UI FM SOLO BLEEPS 001
+  - ALERT ASTERISK 1
   - MODULAR UI CONFIRM TONEFM 014
   - MODULAR UI CONFIRM TONEFM 062
 
