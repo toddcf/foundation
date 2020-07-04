@@ -514,18 +514,21 @@ function runCountdownTimer() {
       if (persistentSettings.timerValue > 0) {
         persistentSettings.timerValue--;
         timerUI();
+        if (
+          (persistentSettings.transition === false)
+          && (persistentSettings.timerValue <= 5)
+          && (persistentSettings.timerValue > 0)
+        ) {
+          sfx.warning.play();
+        }
+        else if (persistentSettings.timerValue === 0) {
+          sfx.next.play();
+        }
       } else {
         if (persistentSettings.transition) {
           persistentSettings.transition = false;
         } else {
           if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
-            if (
-              (persistentSettings.transition === false)
-              && (timerValue <= 5)
-              && (timerValue > 0)
-            ) {
-              sfx.warning.play();
-            }
             persistentSettings.p++;
           } else {
             console.log(`Advance to next exercise.`);

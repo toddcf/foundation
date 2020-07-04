@@ -3,6 +3,7 @@
 
 ## First Iteration
 
+- BUG: Pause button seems to have broken.
 - Have "Breaks" dropdown trigger `createWorkout()`.
 - `startOver()` conditions need to be set in the function.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
