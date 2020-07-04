@@ -3,6 +3,8 @@
 
 ## First Iteration
 
+- Have "Breaks" dropdown trigger `createWorkout()`.
+- `startOver()` conditions need to be set in the function.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - At the end of each circuit:
   - If circuits remain:
@@ -19,11 +21,11 @@
       - THELIBRARYBYMTC UI TINY CLICK 28 [DOWNLOADED]
     - Start || Continue || Finish Workout.
       - ALERT 30 [DOWNLOADED]
-    - Last 5 seconds of pose. (One beep per second except for zero.)
+    - Last 5 seconds of pose ("Warning"). (One beep per second except for zero.)
       - MODULAR UI FM SOLO BLEEPS 039 [DOWNLOADED]
       - AIRY ECHO METALLIC ALERT
       - MODULAR UI CONFIRM TONEFM 056
-    - Finish transition || pose || exercise || circuit. 
+    - Finish ("Next") transition || pose || exercise || circuit. 
       - MODULAR UI FM SOLO BLEEPS 001 [DOWNLOADED]
     - User SFX Options
       - Turn all sound on or off.

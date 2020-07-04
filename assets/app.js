@@ -356,12 +356,12 @@ breakDropdown.addEventListener('change', function() {
 });
 
 
+// Refactor:
 const sfx = {
-  begin: '',
-  penultimate: '',
-  nextPose: '',
-  done: '',
-  finale: ''
+  startContinueFinish: document.querySelector('.audio-start-continue-finish'),
+  clickBtn: document.querySelector('.audio-ui-click'),
+  warning: document.querySelector('.audio-warning'),
+  next: document.querySelector('.audio-next')
 }
 
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
@@ -383,6 +383,7 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Create nodelist(s) of all exercises to be included.
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
+  sfx.clickBtn.play();
   workout = exercises.filter(function(exercise) {
     return (persistentSettings.bonus) ? (exercise.difficulty <= persistentSettings.difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= persistentSettings.difficulty));
   });
@@ -518,6 +519,13 @@ function runCountdownTimer() {
           persistentSettings.transition = false;
         } else {
           if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
+            if (
+              (persistentSettings.transition === false)
+              && (timerValue <= 5)
+              && (timerValue > 0)
+            ) {
+              sfx.warning.play();
+            }
             persistentSettings.p++;
           } else {
             console.log(`Advance to next exercise.`);
@@ -577,6 +585,7 @@ const startOverBtn = document.querySelector('.start-over-btn');
 
 pauseBtn.addEventListener('click', pause);
 function pause() {
+  sfx.click.play();
   clearInterval(timer);
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.remove('hideBtn');
@@ -597,6 +606,7 @@ startOverBtn.addEventListener('click', function() {
 });
 
 function startOver() {
+  sfx.click.play();
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.add('hideBtn');
   startOverBtn.classList.add('hideBtn'); 
