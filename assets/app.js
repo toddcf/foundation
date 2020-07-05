@@ -588,7 +588,7 @@ const startOverBtn = document.querySelector('.start-over-btn');
 
 pauseBtn.addEventListener('click', pause);
 function pause() {
-  sfx.click.play();
+  sfx.clickBtn.play();
   clearInterval(timer);
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.remove('hideBtn');

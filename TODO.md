@@ -3,7 +3,7 @@
 
 ## First Iteration
 
-- BUG: Pause button seems to have broken.
+- BUG: Get rid of console error for blocked sfx play: https://developers.google.com/web/updates/2017/09/autoplay-policy-changes.
 - Have "Breaks" dropdown trigger `createWorkout()`.
 - `startOver()` conditions need to be set in the function.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
