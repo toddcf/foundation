@@ -28,9 +28,7 @@
       - MODULAR UI CONFIRM TONEFM 056
     - Finish ("Next") transition || pose || exercise || circuit. 
       - MODULAR UI FM SOLO BLEEPS 001 [DOWNLOADED]
-    - User SFX Options
-      - Turn all sound on or off.
-      - Turn individual sounds on or off.
+    - User SFX Options: Turn all sound on or off.
     - Equalize the volume of each SFX in ACID if necessary.
     - Set SFX to trigger at the appropriate times.
 - Convert everything to arrow functions.

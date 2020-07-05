@@ -293,6 +293,7 @@ const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', startNewWorkout);
 
 function startNewWorkout() {
+  sfx.startContinueFinish.play();
   persistentSettings.active = true;
   pauseBtn.classList.remove('hideBtn');
   startBtn.classList.add('hideBtn');
@@ -597,6 +598,7 @@ function pause() {
 
 continueBtn.addEventListener('click', continueWorkout);
 function continueWorkout() {
+  sfx.startContinueFinish.play();
   runCountdownTimer();
   pauseBtn.classList.remove('hideBtn');
   continueBtn.classList.add('hideBtn');
@@ -609,7 +611,7 @@ startOverBtn.addEventListener('click', function() {
 });
 
 function startOver() {
-  sfx.click.play();
+  sfx.clickBtn.play();
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.add('hideBtn');
   startOverBtn.classList.add('hideBtn'); 
