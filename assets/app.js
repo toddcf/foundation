@@ -605,11 +605,8 @@ function continueWorkout() {
 }
 
 startOverBtn.addEventListener('click', function() {
-  if (currentSettings.active) {
-    startOver();
-  } else {
-    startNewWorkout();
-  }
+  // If paused, reset. If finished, restart:
+  (currentSettings.active) ? startOver() : startNewWorkout();
 });
 
 function startOver() {
