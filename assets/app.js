@@ -294,7 +294,7 @@ startBtn.addEventListener('click', startNewWorkout);
 
 function startNewWorkout() {
   sfx.startContinueFinish.play();
-  persistentSettings.active = true;
+  currentSettings.active = true;
   pauseBtn.classList.remove('hideBtn');
   startBtn.classList.add('hideBtn');
   setTimerValue();
@@ -324,8 +324,8 @@ function setCircuits(e) {
       )
     )
   ) {
-    persistentSettings.circuitsRemaining = parseInt(circuitsInput.value);
-    console.log(`Circuits Set To: ${persistentSettings.circuitsRemaining}`);
+    currentSettings.circuitsRemaining = parseInt(circuitsInput.value);
+    console.log(`Circuits Set To: ${currentSettings.circuitsRemaining}`);
     createWorkout();
   }
 }
@@ -334,9 +334,7 @@ circuitsInput.addEventListener('keyup', setCircuits); // For typing into the fie
 circuitsInput.addEventListener('change', setCircuits); // For input arrow keys
 
 
-//let intervals = 0; // default = nonstop.  User can override this via UI. CONVERT TO PERSISTENTSETTINGS OBJECT.
-// Pull intervals value from the UI
-const persistentSettings = {
+const currentSettings = {
   active: false,
   bonus: false,
   circuitsRemaining: parseInt(circuitsInput.value),
@@ -349,11 +347,12 @@ const persistentSettings = {
   totalTimeRemaining: 0
 }
 
-let startingSettings = {}; // persistentSettings to be copied here.
+let originalSettings = {}; // currentSettings to be copied here.
 
 
 breakDropdown.addEventListener('change', function() {
-  persistentSettings.breaks = breakDropdown.options[breakDropdown.selectedIndex].value;
+  currentSettings.breaks = breakDropdown.options[breakDropdown.selectedIndex].value;
+  createWorkout();
 });
 
 
@@ -367,7 +366,7 @@ const sfx = {
 
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
 function setDifficulty(e) {
-  persistentSettings.difficulty = parseInt(e.target.value);
+  currentSettings.difficulty = parseInt(e.target.value);
   createWorkout();
 }
 difficultyButtons.forEach(function(difficultyButton) {
@@ -376,7 +375,7 @@ difficultyButtons.forEach(function(difficultyButton) {
 
 const bonusCheckbox = document.querySelector('.settings-bonus__checkbox');
 function setBonus(e) {
-  persistentSettings.bonus = (e.target.checked) ? true : false;
+  currentSettings.bonus = (e.target.checked) ? true : false;
   createWorkout();
 }
 bonusCheckbox.addEventListener('click', setBonus);
@@ -386,44 +385,44 @@ bonusCheckbox.addEventListener('click', setBonus);
 function createWorkout() {
   sfx.clickBtn.play();
   workout = exercises.filter(function(exercise) {
-    return (persistentSettings.bonus) ? (exercise.difficulty <= persistentSettings.difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= persistentSettings.difficulty));
+    return (currentSettings.bonus) ? (exercise.difficulty <= currentSettings.difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= currentSettings.difficulty));
   });
   estimateWorkoutTime();
   textUI();
   // Store starting settings for retrieval if workout is reset later:
-  startingSettings = {
-    bonus: persistentSettings.bonus,
-    circuitsRemaining: persistentSettings.circuitsRemaining,
-    difficulty: persistentSettings.difficulty,
-    breaks: persistentSettings.breaks,
-    totalTimeRemaining: persistentSettings.totalTimeRemaining
+  originalSettings = {
+    bonus: currentSettings.bonus,
+    circuitsRemaining: currentSettings.circuitsRemaining,
+    difficulty: currentSettings.difficulty,
+    breaks: currentSettings.breaks,
+    totalTimeRemaining: currentSettings.totalTimeRemaining
   };
 }
 
 // Estimate Total Workout Time:
 function estimateWorkoutTime() {
-  persistentSettings.totalTimeRemaining = 0; // Reset
+  currentSettings.totalTimeRemaining = 0; // Reset
   // Sum of all transitions and pose durations:
   workout.forEach(function(exercise) {
-    persistentSettings.totalTimeRemaining += exercise.transition;
+    currentSettings.totalTimeRemaining += exercise.transition;
     return exercise.poses.forEach(function(pose) {
-      persistentSettings.totalTimeRemaining += pose.duration;
+      currentSettings.totalTimeRemaining += pose.duration;
     });
   });
 
-  if (persistentSettings.bonus) {
+  if (currentSettings.bonus) {
     bonusExercises.forEach(function(bonusExercise) {
-      persistentSettings.totalTimeRemaining += bonusExercise.transition;
+      currentSettings.totalTimeRemaining += bonusExercise.transition;
       return bonusExercise.poses.forEach(function(pose) {
-        persistentSettings.totalTimeRemaining += pose.duration;
+        currentSettings.totalTimeRemaining += pose.duration;
       });
     });  
   }
 
-  persistentSettings.totalTimeRemaining *= persistentSettings.circuitsRemaining;
+  currentSettings.totalTimeRemaining *= currentSettings.circuitsRemaining;
 
-  const minutes = Math.floor(persistentSettings.totalTimeRemaining / 60);
-  const seconds = persistentSettings.totalTimeRemaining % 60;
+  const minutes = Math.floor(currentSettings.totalTimeRemaining / 60);
+  const seconds = currentSettings.totalTimeRemaining % 60;
   totalDurationUI.innerText = `${minutes}:${(seconds < 10) ? '0' + seconds : seconds}`;
 }
 
@@ -433,12 +432,12 @@ let titles = [];
 const exercisesList = document.querySelector('.list-of-exercises');
 const qtyExercises = document.querySelector('.qty-Exercises');
 function textUI() {
-  if (persistentSettings.difficulty === 1) {
-    difficultyUI.innerText = (persistentSettings.bonus) ? 'Basic + Bonus' : 'Basic';
-  } else if (persistentSettings.difficulty === 2) {
-    difficultyUI.innerText = (persistentSettings.bonus) ? 'Moderate + Bonus' : 'Moderate';
-  } else if (persistentSettings.difficulty === 3) {
-    difficultyUI.innerText = (persistentSettings.bonus) ? 'Intense + Bonus' : 'Intense';
+  if (currentSettings.difficulty === 1) {
+    difficultyUI.innerText = (currentSettings.bonus) ? 'Basic + Bonus' : 'Basic';
+  } else if (currentSettings.difficulty === 2) {
+    difficultyUI.innerText = (currentSettings.bonus) ? 'Moderate + Bonus' : 'Moderate';
+  } else if (currentSettings.difficulty === 3) {
+    difficultyUI.innerText = (currentSettings.bonus) ? 'Intense + Bonus' : 'Intense';
   }
   qtyExercises.innerText = workout.length;
 
@@ -462,37 +461,37 @@ const currentExerciseUI = document.querySelector('.current-exercise');
 const currentCircuitUI = document.querySelector('.current-circuit');
 let currentExerciseCard;
 function setTimerValue() {
-  if (persistentSettings.i < workout.length) {
-    currentCircuitUI.innerText = `Circuit ${startingSettings.circuitsRemaining - persistentSettings.circuitsRemaining + 1} of ${startingSettings.circuitsRemaining}`;
+  if (currentSettings.i < workout.length) {
+    currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
     // Add border to current exercise card:
     if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
-    currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[persistentSettings.i].title}"]`);
+    currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
     currentExerciseCard.classList.add('thick-border');
-    if (persistentSettings.transition) {
-      persistentSettings.timerValue = workout[persistentSettings.i].transition;
-      currentExerciseUI.innerText = `Transition to ${workout[persistentSettings.i].title}`;
-      console.log(`Transition to "${workout[persistentSettings.i].title}": ${workout[persistentSettings.i].transition} seconds`);
+    if (currentSettings.transition) {
+      currentSettings.timerValue = workout[currentSettings.i].transition;
+      currentExerciseUI.innerText = `Transition to ${workout[currentSettings.i].title}`;
+      console.log(`Transition to "${workout[currentSettings.i].title}": ${workout[currentSettings.i].transition} seconds`);
     } else {
-      currentExerciseUI.innerText = `${workout[persistentSettings.i].title}`;
-      if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
-        persistentSettings.timerValue = workout[persistentSettings.i].poses[persistentSettings.p].duration;
-        console.log(`"${workout[persistentSettings.i].title}" ${workout[persistentSettings.i].poses[persistentSettings.p].desc} of ${workout[persistentSettings.i].poses.length}: ${persistentSettings.timerValue} seconds`);
+      currentExerciseUI.innerText = `${workout[currentSettings.i].title}`;
+      if (currentSettings.p < workout[currentSettings.i].poses.length) {
+        currentSettings.timerValue = workout[currentSettings.i].poses[currentSettings.p].duration;
+        console.log(`"${workout[currentSettings.i].title}" ${workout[currentSettings.i].poses[currentSettings.p].desc} of ${workout[currentSettings.i].poses.length}: ${currentSettings.timerValue} seconds`);
       }
     }
     // Prevent firing if workout is simply being reset:
-    if (persistentSettings.active) {
+    if (currentSettings.active) {
       runCountdownTimer();
     }
   } else {
     // If circuit is finished:
     // Advance to next circuit:
-    if (persistentSettings.circuitsRemaining > 1) {
+    if (currentSettings.circuitsRemaining > 1) {
       // Add condition:
       // if (breaks === nonstop), do nothing -- continue on to fire runCountdownTimer.
       // if (breaks === circuit), fire the pause function.
       // if (breaks === exercises), I think the pause might have happened at the end of the last exercise, before reaching this point. Be careful how this is handled -- maybe it can skate right past as if it were set to nonstop?
       // Prevent firing if workout is simply being reset:
-      if (persistentSettings.active) {
+      if (currentSettings.active) {
         runCountdownTimer();
       }
     } else {
@@ -511,31 +510,31 @@ function runCountdownTimer() {
   startBtn.classList.add('hideBtn');
   timerUI();
   timer = setInterval(function() {
-    if (persistentSettings.i < workout.length) {
-      if (persistentSettings.timerValue > 0) {
-        persistentSettings.timerValue--;
+    if (currentSettings.i < workout.length) {
+      if (currentSettings.timerValue > 0) {
+        currentSettings.timerValue--;
         timerUI();
         if (
-          (persistentSettings.transition === false)
-          && (persistentSettings.timerValue <= 5)
-          && (persistentSettings.timerValue > 0)
+          (currentSettings.transition === false)
+          && (currentSettings.timerValue <= 5)
+          && (currentSettings.timerValue > 0)
         ) {
           sfx.warning.play();
         }
-        else if (persistentSettings.timerValue === 0) {
+        else if (currentSettings.timerValue === 0) {
           sfx.next.play();
         }
       } else {
-        if (persistentSettings.transition) {
-          persistentSettings.transition = false;
+        if (currentSettings.transition) {
+          currentSettings.transition = false;
         } else {
-          if (persistentSettings.p < workout[persistentSettings.i].poses.length) {
-            persistentSettings.p++;
+          if (currentSettings.p < workout[currentSettings.i].poses.length) {
+            currentSettings.p++;
           } else {
             console.log(`Advance to next exercise.`);
-            persistentSettings.i++; // Advance to next exercise
-            persistentSettings.p = 0; // Reset to first pose
-            persistentSettings.transition = true; // Reset transition
+            currentSettings.i++; // Advance to next exercise
+            currentSettings.p = 0; // Reset to first pose
+            currentSettings.transition = true; // Reset transition
           }
         }
         clearInterval(timer);
@@ -543,11 +542,11 @@ function runCountdownTimer() {
       }
     } else {
       // Advance to next circuit:
-      if (persistentSettings.circuitsRemaining > 1) {
-        persistentSettings.circuitsRemaining--;
-        persistentSettings.i = 0; // Reset to first exercise
-        persistentSettings.p = 0; // Reset to first pose
-        persistentSettings.transition = true; // Reset transition
+      if (currentSettings.circuitsRemaining > 1) {
+        currentSettings.circuitsRemaining--;
+        currentSettings.i = 0; // Reset to first exercise
+        currentSettings.p = 0; // Reset to first pose
+        currentSettings.transition = true; // Reset transition
         clearInterval(timer);
         setTimerValue();
       }
@@ -556,13 +555,13 @@ function runCountdownTimer() {
 }
 
 function timerUI() {
-  if (persistentSettings.timerValue > 9) {
+  if (currentSettings.timerValue > 9) {
     // Set color back to default if it's not already.
-    timerDisplay.innerText = persistentSettings.timerValue;
+    timerDisplay.innerText = currentSettings.timerValue;
   } else {
     // Make 5 thru 1 red and add beeps and pulsations.
     // Make 0 green and add a finish sound. (Do not collide with any starting SFX of the next pose or exercise.)
-    timerDisplay.innerText = `0${persistentSettings.timerValue}`;
+    timerDisplay.innerText = `0${currentSettings.timerValue}`;
   }
 }
 // When the countdown reaches zero, play sfx.begin.
@@ -617,14 +616,14 @@ function startOver() {
   startOverBtn.classList.add('hideBtn'); 
   startBtn.classList.remove('hideBtn');
   // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
-  persistentSettings.active = false;
-  persistentSettings.bonus = startingSettings.bonus;
-  persistentSettings.circuitsRemaining = startingSettings.circuitsRemaining;
-  persistentSettings.difficulty = startingSettings.difficulty;
-  persistentSettings.breaks = startingSettings.breaks;
-  persistentSettings.transition = true;
-  persistentSettings.timerValue = 0;
-  persistentSettings.totalTimeRemaining = startingSettings.totalTimeRemaining;
+  currentSettings.active = false;
+  currentSettings.bonus = originalSettings.bonus;
+  currentSettings.circuitsRemaining = originalSettings.circuitsRemaining;
+  currentSettings.difficulty = originalSettings.difficulty;
+  currentSettings.breaks = originalSettings.breaks;
+  currentSettings.transition = true;
+  currentSettings.timerValue = 0;
+  currentSettings.totalTimeRemaining = originalSettings.totalTimeRemaining;
   timerUI();
   currentExerciseUI.innerText = ``; // Clear UI.
   currentCircuitUI.innerText = ``; // Clear UI
