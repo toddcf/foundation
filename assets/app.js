@@ -551,7 +551,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1000);
+  }, 1);
 }
 
 function timerUI() {
@@ -605,12 +605,15 @@ function continueWorkout() {
 }
 
 startOverBtn.addEventListener('click', function() {
-  // If startOver();
-  // else startNewWorkout();
+  if (currentSettings.active) {
+    startOver();
+  } else {
+    startNewWorkout();
+  }
 });
 
 function startOver() {
-  sfx.clickBtn.play();
+  sfx.clickBtn.play(); // Maybe rely on the other SFX that will play, instead.
   pauseBtn.classList.add('hideBtn');
   continueBtn.classList.add('hideBtn');
   startOverBtn.classList.add('hideBtn'); 
@@ -618,9 +621,11 @@ function startOver() {
   // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
   currentSettings.active = false;
   currentSettings.bonus = originalSettings.bonus;
+  currentSettings.breaks = originalSettings.breaks;
   currentSettings.circuitsRemaining = originalSettings.circuitsRemaining;
   currentSettings.difficulty = originalSettings.difficulty;
-  currentSettings.breaks = originalSettings.breaks;
+  currentSettings.i = 0;
+  currentSettings.p = 0;
   currentSettings.transition = true;
   currentSettings.timerValue = 0;
   currentSettings.totalTimeRemaining = originalSettings.totalTimeRemaining;

@@ -4,7 +4,6 @@
 ## First Iteration
 
 - BUG: Get rid of console error for blocked sfx play: https://developers.google.com/web/updates/2017/09/autoplay-policy-changes.
-- `startOver()` conditions need to be set in the function.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - At the end of each circuit:
   - If circuits remain:
