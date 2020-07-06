@@ -495,7 +495,8 @@ function setTimerValue() {
         runCountdownTimer();
       }
     } else {
-      // Should these be moved to runCountdownTimer or not?
+      // Just fire startOver().  Move the rest into that function with conditionals:
+      // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
       startOver();
       currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
       startOverBtn.classList.remove('hideBtn'); 
