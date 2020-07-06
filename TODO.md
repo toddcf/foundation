@@ -15,27 +15,12 @@
 - Circuits:
   - Convert `setCircuits` function to regex for numerical keyups.
 - SFX
-  - Download SFX:
-    - Make workout selections (including Pause and Clear Workout):
-      - THELIBRARYBYMTC UI TINY CLICK 28 [DOWNLOADED]
-    - Start || Continue || Finish Workout.
-      - ALERT 30 [DOWNLOADED]
-    - Last 5 seconds of pose ("Warning"). (One beep per second except for zero.)
-      - MODULAR UI FM SOLO BLEEPS 039 [DOWNLOADED]
-      - AIRY ECHO METALLIC ALERT
-      - MODULAR UI CONFIRM TONEFM 056
-    - Finish ("Next") transition || pose || exercise || circuit. 
-      - MODULAR UI FM SOLO BLEEPS 001 [DOWNLOADED]
-    - User SFX Options: Turn all sound on or off.
-    - Equalize the volume of each SFX in ACID if necessary.
-    - Set SFX to trigger at the appropriate times.
+  - User SFX Options: Turn all sound on or off.
+  - Equalize the volume of each SFX in ACID if necessary.
+  - BUG: Don't play SFX for countdown during lunge stretch shift (from left to right).
 - Convert everything to arrow functions.
 - Convert everything possible to object literal.
 - Create detailed README.
-- Unused SFX:
-  - ALERT ASTERISK 1
-  - MODULAR UI CONFIRM TONEFM 014
-  - MODULAR UI CONFIRM TONEFM 062
 
 
 ## Second Iteration
