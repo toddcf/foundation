@@ -544,6 +544,7 @@ function runCountdownTimer() {
               && (currentSettings.circuitsRemaining > 0)
               && (currentSettings.i < workout.length)
             ) {
+              // Probably add that third condition inside here and use a ternary to handle circuits vs. exercises.
               pause();
               return;
             }

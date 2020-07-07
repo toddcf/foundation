@@ -3,15 +3,10 @@
 
 ## First Iteration
 
-- At the end of each exercise:
-  - If exercises remain:
-    - If breaks === "exercise", run `pause()`. (Else, no coding necessary.)
 - At the end of each circuit:
   - If circuits remain:
     - If breaks are set to "circuit," pause.
     - Else ("nonstop" or "exercise"), run the next circuit without stopping. (If "exercise," it will have already paused at the end of the last exercise.)
-  - Else:
-    - DONE: Reset to the starting settings. (Calls the same function as the "Reset" button that will display while paused.)
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - BUG: Disable or hide workout settings buttons while the workout is ACTIVE. Re-enable them if workout is INACTIVE.
 - Convert `setCircuits` function to regex for numerical keyups.
