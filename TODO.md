@@ -3,17 +3,16 @@
 
 ## First Iteration
 
-- BUG: There seems to be an extra one-second pause right before each Transition begins.
 - At the end of each circuit:
   - If circuits remain:
     - If breaks are set to "circuit," pause.
     - Else ("nonstop" or "exercise"), run the next circuit without stopping. (If "exercise," it will have already paused at the end of the last exercise.)
   - Else:
     - DONE: Reset to the starting settings. (Calls the same function as the "Reset" button that will display while paused.)
+- BUG: There seems to be an extra one-second pause right before each Transition begins.
 - BUG: Disable or hide workout settings buttons while the workout is ACTIVE. Re-enable them if workout is INACTIVE.
 - Convert `setCircuits` function to regex for numerical keyups.
 - SFX
-  - User SFX Options: Turn all sound on or off.
   - Equalize the volume of each SFX in ACID if necessary.
   - BUG: Don't play SFX for countdown during lunge stretch shift (from left to right).
 - BUG: Get rid of console error for blocked sfx play: https://developers.google.com/web/updates/2017/09/autoplay-policy-changes.
