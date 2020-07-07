@@ -537,7 +537,13 @@ function runCountdownTimer() {
             currentSettings.i++; // Advance to next exercise
             currentSettings.p = 0; // Reset to first pose
             currentSettings.transition = true; // Reset transition
-            if (currentSettings.breaks === 'exercise') {
+
+            // Pause after each exercise, unless it is the final exercise of the final circuit:
+            if (
+              (currentSettings.breaks === 'exercise')
+              && (currentSettings.circuitsRemaining > 0)
+              && (currentSettings.i < workout.length)
+            ) {
               pause();
               return;
             }
