@@ -3,6 +3,9 @@
 
 ## First Iteration
 
+- At the end of each exercise:
+  - If exercises remain:
+    - If breaks === "exercise", run `pause()`. (Else, no coding necessary.)
 - At the end of each circuit:
   - If circuits remain:
     - If breaks are set to "circuit," pause.

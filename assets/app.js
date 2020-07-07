@@ -338,10 +338,10 @@ const currentSettings = {
   active: false,
   audio: 'on',
   bonus: false,
+  breaks: breakDropdown.options[breakDropdown.selectedIndex].value.toString(),
   circuitsRemaining: parseInt(circuitsInput.value),
   difficulty: 1,
   i: 0,
-  breaks: breakDropdown.options[breakDropdown.selectedIndex].value,
   p: 0,
   transition: true,
   timerValue: 0,
@@ -537,6 +537,10 @@ function runCountdownTimer() {
             currentSettings.i++; // Advance to next exercise
             currentSettings.p = 0; // Reset to first pose
             currentSettings.transition = true; // Reset transition
+            if (currentSettings.breaks === 'exercise') {
+              pause();
+              return;
+            }
           }
         }
         clearInterval(timer);
@@ -553,7 +557,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1000);
+  }, 1);
 }
 
 function timerUI() {
@@ -590,6 +594,7 @@ const startOverBtn = document.querySelector('.start-over-btn');
 
 pauseBtn.addEventListener('click', pause);
 function pause() {
+  console.log(`pause() invoked.`);
   if (currentSettings.audio === 'on') {sfx.clickBtn.play();}
   clearInterval(timer);
   pauseBtn.classList.add('hideBtn');
