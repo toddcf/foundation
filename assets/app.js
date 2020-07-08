@@ -295,8 +295,8 @@ startBtn.addEventListener('click', startNewWorkout);
 function startNewWorkout() {
   if (currentSettings.audio === 'on') {sfx.startContinueFinish.play();}
   currentSettings.active = true;
-  pauseBtn.classList.remove('hideBtn');
-  startBtn.classList.add('hideBtn');
+  pauseBtn.classList.remove('hide');
+  startBtn.classList.add('hide');
   setTimerValue();
 }
 
@@ -500,16 +500,16 @@ function setTimerValue() {
       // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
       startOver();
       currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
-      startOverBtn.classList.remove('hideBtn'); 
-      startBtn.classList.add('hideBtn');
+      startOverBtn.classList.remove('hide'); 
+      startBtn.classList.add('hide');
     }
   }
 }
 
 let timer;
 function runCountdownTimer() {
-  pauseBtn.classList.remove('hideBtn');
-  startBtn.classList.add('hideBtn');
+  pauseBtn.classList.remove('hide');
+  startBtn.classList.add('hide');
   timerUI();
   timer = setInterval(function() {
     if (currentSettings.i < workout.length) {
@@ -614,18 +614,20 @@ function pause() {
   console.log(`pause() invoked.`);
   if (currentSettings.audio === 'on') {sfx.clickBtn.play();}
   clearInterval(timer);
-  pauseBtn.classList.add('hideBtn');
-  continueBtn.classList.remove('hideBtn');
-  startOverBtn.classList.remove('hideBtn');
+  pauseBtn.classList.add('hide');
+  continueBtn.classList.remove('hide');
+  startOverBtn.classList.remove('hide');
+  pauseMsg.classList.remove('hide');
 }
 
 continueBtn.addEventListener('click', continueWorkout);
 function continueWorkout() {
   if (currentSettings.audio === 'on') {sfx.startContinueFinish.play();}
   runCountdownTimer();
-  pauseBtn.classList.remove('hideBtn');
-  continueBtn.classList.add('hideBtn');
-  startOverBtn.classList.add('hideBtn');
+  pauseBtn.classList.remove('hide');
+  continueBtn.classList.add('hide');
+  startOverBtn.classList.add('hide');
+  pauseMsg.classList.add('hide');
 }
 
 startOverBtn.addEventListener('click', function() {
@@ -635,10 +637,11 @@ startOverBtn.addEventListener('click', function() {
 
 function startOver() {
   if (currentSettings.audio === 'on') {sfx.clickBtn.play();} // Maybe rely on the other SFX that will play, instead.
-  pauseBtn.classList.add('hideBtn');
-  continueBtn.classList.add('hideBtn');
-  startOverBtn.classList.add('hideBtn'); 
-  startBtn.classList.remove('hideBtn');
+  pauseBtn.classList.add('hide');
+  continueBtn.classList.add('hide');
+  startOverBtn.classList.add('hide'); 
+  startBtn.classList.remove('hide');
+  pauseMsg.classList.add('hide');
   // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
   currentSettings.active = false;
   currentSettings.bonus = originalSettings.bonus;
@@ -664,5 +667,7 @@ function setAudio(e) {
   console.log(e.target.value);
   currentSettings.audio = e.target.value;
 }
+
+const pauseMsg = document.querySelector('.pause-message');
 
 createWorkout(); // Create default workout when page loads.
