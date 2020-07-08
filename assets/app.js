@@ -614,6 +614,7 @@ function pause() {
   console.log(`pause() invoked.`);
   if (currentSettings.audio === 'on') {sfx.clickBtn.play();}
   clearInterval(timer);
+  countupTimer();
   pauseBtn.classList.add('hide');
   continueBtn.classList.remove('hide');
   startOverBtn.classList.remove('hide');
@@ -623,6 +624,8 @@ function pause() {
 continueBtn.addEventListener('click', continueWorkout);
 function continueWorkout() {
   if (currentSettings.audio === 'on') {sfx.startContinueFinish.play();}
+  clearInterval(countupValue); // Stop the pause timer
+  pauseClock.innerText = 0; // Reset pause timer UI
   runCountdownTimer();
   pauseBtn.classList.remove('hide');
   continueBtn.classList.add('hide');
@@ -637,6 +640,7 @@ startOverBtn.addEventListener('click', function() {
 
 function startOver() {
   if (currentSettings.audio === 'on') {sfx.clickBtn.play();} // Maybe rely on the other SFX that will play, instead.
+  //clearInterval(countupValue); // Stop the pause timer -- UNLESS IT WASN'T RUNNING?
   pauseBtn.classList.add('hide');
   continueBtn.classList.add('hide');
   startOverBtn.classList.add('hide'); 
@@ -669,5 +673,19 @@ function setAudio(e) {
 }
 
 const pauseMsg = document.querySelector('.pause-message');
+const pauseClock = document.querySelector('.pause-clock');
+let countupValue;
+function countupTimer() {
+  let ps = 0;
+  let pauseMin = 0;
+  let pauseSec = 0;
+  pauseClock.innerText = `00:00`;
+  countupValue = setInterval(function() {
+    ps++;
+    pauseMin = Math.floor(ps/60);
+    pauseSec = ps % 60;
+    pauseClock.innerText = `${(pauseMin < 10) ? '0' + pauseMin : pauseMin}:${(pauseSec < 10) ? '0' + pauseSec : pauseSec}`;
+  }, 1000);
+}
 
 createWorkout(); // Create default workout when page loads.
