@@ -574,7 +574,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1);
+  }, 1000);
 }
 
 function timerUI() {
@@ -587,23 +587,9 @@ function timerUI() {
     timerDisplay.innerText = `0${currentSettings.timerValue}`;
   }
 }
-// When the countdown reaches zero, play sfx.begin.
-// Then count down its first pose duration in the UI. Play sfx.penultimate for each of the last five seconds. When time limit is reached, play sfx.nextPose (unless it is the last pose in the object).
-
-// Repeat this process for each pose OR SHIFT in this object. (NOTE: A shift should be added to some objects.)
-// When all the poses are done, play sfx.done, move on to the next object in the array, and repeat the steps above.
-// When all exercises are done, if bonus === false, then play sfx.finale. If bonus === true, initiate bonus workout.
-
-
-// Bonus Workout:
-// Run the same procedure listed above for exercises.crossover and exercises.crossUnder.
-// When complete, play sfx.finale.
-
 
 // UI:
-// Displays current circuit number.
-// Displays remaining number of circuits.
-// Displays total remaining time.
+// Displays total remaining time. (Pauses if workout is paused.)
 
 const pauseBtn = document.querySelector('.pause-btn');
 const continueBtn = document.querySelector('.continue-btn');
@@ -690,7 +676,7 @@ function countupTimer() {
       clearInterval(countupValue);
       pauseClock.innerText = `You've been taking a "break" for over an hour.`;
     }
-  }, 10);
+  }, 1000);
 }
 
 createWorkout(); // Create default workout when page loads.

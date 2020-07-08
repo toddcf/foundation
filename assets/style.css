@@ -3,7 +3,6 @@
 }
 
 .exercise-card {
-  /*border: 1px solid red;*/
   border-radius: 5px;
   flex-grow: 1;
   margin: 1em;
