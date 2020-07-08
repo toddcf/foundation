@@ -560,6 +560,16 @@ function runCountdownTimer() {
         currentSettings.i = 0; // Reset to first exercise
         currentSettings.p = 0; // Reset to first pose
         currentSettings.transition = true; // Reset transition
+
+        // Pause after each circuit, depending on user settings:
+        if (
+          (currentSettings.breaks === 'circuit')
+          || (currentSettings.breaks === 'exercise')
+        ) {
+          pause();
+          return;
+        }
+
         clearInterval(timer);
         setTimerValue();
       }
