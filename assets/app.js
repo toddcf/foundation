@@ -682,10 +682,15 @@ function countupTimer() {
   pauseClock.innerText = `00:00`;
   countupValue = setInterval(function() {
     ps++;
-    pauseMin = Math.floor(ps/60);
-    pauseSec = ps % 60;
-    pauseClock.innerText = `${(pauseMin < 10) ? '0' + pauseMin : pauseMin}:${(pauseSec < 10) ? '0' + pauseSec : pauseSec}`;
-  }, 1000);
+    if (ps < 3600) {
+      pauseMin = Math.floor(ps/60);
+      pauseSec = ps % 60;
+      pauseClock.innerText = `${(pauseMin < 10) ? '0' + pauseMin : pauseMin}:${(pauseSec < 10) ? '0' + pauseSec : pauseSec}`;
+    } else {
+      clearInterval(countupValue);
+      pauseClock.innerText = `You've been taking a "break" for over an hour.`;
+    }
+  }, 10);
 }
 
 createWorkout(); // Create default workout when page loads.

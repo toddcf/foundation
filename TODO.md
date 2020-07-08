@@ -3,7 +3,6 @@
 
 ## First Iteration
 
-- Whenever workout is paused, run a small count-UP timer that shows how long you've been taking a break.
 - BUG: There seems to be an extra one-second pause right before each Transition begins.
 - BUG: Disable or hide workout settings buttons while the workout is ACTIVE. Re-enable them if workout is INACTIVE.
 - Convert `setCircuits` function to regex for numerical keyups.
