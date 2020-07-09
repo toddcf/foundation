@@ -680,6 +680,7 @@ function countupTimer() {
 }
 
 // Disable / Enable Workout Selection Controls:
+const shade = document.querySelector('.shaded-overlay');
 function disableEnable() {
   if (currentSettings.active) {
     // Disable Controls
@@ -689,6 +690,7 @@ function disableEnable() {
     difficultyButtons.forEach(function(difficultyButton) {
       difficultyButton.disabled = true;
     });
+    shade.classList.remove('hide');
   } else {
     // Ensable Controls
     bonusCheckbox.disabled = false;
@@ -697,6 +699,7 @@ function disableEnable() {
     difficultyButtons.forEach(function(difficultyButton) {
       difficultyButton.disabled = false;
     });
+    shade.classList.add('hide');
   }
 }
 
