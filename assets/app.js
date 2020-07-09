@@ -295,6 +295,7 @@ startBtn.addEventListener('click', startNewWorkout);
 function startNewWorkout() {
   if (currentSettings.audio === 'on') {sfx.startContinueFinish.play();}
   currentSettings.active = true;
+  disableEnable(); // Disable workout selection controls
   pauseBtn.classList.remove('hide');
   startBtn.classList.add('hide');
   setTimerValue();
@@ -330,8 +331,8 @@ function setCircuits(e) {
   }
 }
 
-circuitsInput.addEventListener('keyup', setCircuits); // For typing into the field
-circuitsInput.addEventListener('change', setCircuits); // For input arrow keys
+circuitsInput.addEventListener('keyup', setCircuits); // For keyboard
+circuitsInput.addEventListener('change', setCircuits); // For clicks on arrow keys
 
 
 const currentSettings = {
@@ -501,12 +502,12 @@ function setTimerValue() {
   }
 }
 
-let timer;
+let countdownTimer;
 function runCountdownTimer() {
   pauseBtn.classList.remove('hide');
   startBtn.classList.add('hide');
   timerUI();
-  timer = setInterval(function() {
+  countdownTimer = setInterval(function() {
     if (currentSettings.i < workout.length) {
       if (currentSettings.timerValue > 0) {
         currentSettings.timerValue--;
@@ -545,7 +546,7 @@ function runCountdownTimer() {
             }
           }
         }
-        clearInterval(timer);
+        clearInterval(countdownTimer);
         setTimerValue();
       }
     } else {
@@ -567,7 +568,7 @@ function runCountdownTimer() {
 
         currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
 
-        clearInterval(timer);
+        clearInterval(countdownTimer);
         setTimerValue();
       }
     }
@@ -596,7 +597,7 @@ pauseBtn.addEventListener('click', pause);
 function pause() {
   console.log(`pause() invoked.`);
   if (currentSettings.audio === 'on') {sfx.clickBtn.play();}
-  clearInterval(timer);
+  clearInterval(countdownTimer);
   countupTimer();
   pauseBtn.classList.add('hide');
   continueBtn.classList.remove('hide');
@@ -632,6 +633,7 @@ function startOver() {
   pauseMsg.classList.add('hide');
   // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
   currentSettings.active = false;
+  disableEnable(); // Disable Workout Settings Controls
   currentSettings.bonus = originalSettings.bonus;
   currentSettings.breaks = originalSettings.breaks;
   currentSettings.circuitsRemaining = originalSettings.circuitsRemaining;
@@ -675,6 +677,27 @@ function countupTimer() {
       pauseClock.innerText = `You've been taking a "break" for over an hour.`;
     }
   }, 1000);
+}
+
+// Disable / Enable Workout Selection Controls:
+function disableEnable() {
+  if (currentSettings.active) {
+    // Disable Controls
+    bonusCheckbox.disabled = true;
+    breakDropdown.disabled = true;
+    circuitsInput.disabled = true;
+    difficultyButtons.forEach(function(difficultyButton) {
+      difficultyButton.disabled = true;
+    });
+  } else {
+    // Ensable Controls
+    bonusCheckbox.disabled = false;
+    breakDropdown.disabled = false;
+    circuitsInput.disabled = false;
+    difficultyButtons.forEach(function(difficultyButton) {
+      difficultyButton.disabled = false;
+    });
+  }
 }
 
 createWorkout(); // Create default workout when page loads.
