@@ -293,7 +293,7 @@ const startBtn = document.querySelector('.begin-btn');
 startBtn.addEventListener('click', startNewWorkout);
 
 function startNewWorkout() {
-  if (currentSettings.audio === 'on') {sfx.startContinueFinish.play();}
+  if (currentSettings.audio) {sfx.startContinueFinish.play();}
   currentSettings.active = true;
   disableEnable(); // Disable workout selection controls
   pauseBtn.classList.remove('hide');
@@ -337,7 +337,7 @@ circuitsInput.addEventListener('change', setCircuits); // For clicks on arrow ke
 
 const currentSettings = {
   active: false,
-  audio: 'on',
+  audio: true,
   bonus: false,
   breaks: breakDropdown.options[breakDropdown.selectedIndex].value,
   circuitsRemaining: parseInt(circuitsInput.value),
@@ -385,7 +385,7 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Create nodelist(s) of all exercises to be included.
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
-  if (currentSettings.audio === 'on') {sfx.clickBtn.play();}
+  if (currentSettings.audio) {sfx.clickBtn.play();}
   workout = exercises.filter(function(exercise) {
     return (currentSettings.bonus) ? (exercise.difficulty <= currentSettings.difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= currentSettings.difficulty));
   });
@@ -517,10 +517,10 @@ function runCountdownTimer() {
           && (currentSettings.timerValue <= 5)
           && (currentSettings.timerValue > 0)
         ) {
-          if (currentSettings.audio === 'on') {sfx.warning.play();}
+          if (currentSettings.audio) {sfx.warning.play();}
         }
         else if (currentSettings.timerValue === 0) {
-          if (currentSettings.audio === 'on') {sfx.next.play();}
+          if (currentSettings.audio) {sfx.next.play();}
         }
       } else {
         if (currentSettings.transition) {
@@ -596,7 +596,7 @@ const startOverBtn = document.querySelector('.start-over-btn');
 pauseBtn.addEventListener('click', pause);
 function pause() {
   console.log(`pause() invoked.`);
-  if (currentSettings.audio === 'on') {sfx.clickBtn.play();}
+  if (currentSettings.audio) {sfx.clickBtn.play();}
   clearInterval(countdownTimer);
   countupTimer();
   pauseBtn.classList.add('hide');
@@ -607,7 +607,7 @@ function pause() {
 
 continueBtn.addEventListener('click', continueWorkout);
 function continueWorkout() {
-  if (currentSettings.audio === 'on') {sfx.startContinueFinish.play();}
+  if (currentSettings.audio) {sfx.startContinueFinish.play();}
   clearInterval(countupValue); // Stop the pause timer
   pauseClock.innerText = 0; // Reset pause timer UI
   runCountdownTimer();
@@ -624,7 +624,7 @@ startOverBtn.addEventListener('click', function() {
 });
 
 function startOver() {
-  if (currentSettings.audio === 'on') {sfx.clickBtn.play();} // Maybe rely on the other SFX that will play, instead.
+  if (currentSettings.audio) {sfx.clickBtn.play();} // Maybe rely on the other SFX that will play, instead.
   //clearInterval(countupValue); // Stop the pause timer -- UNLESS IT WASN'T RUNNING?
   pauseBtn.classList.add('hide');
   continueBtn.classList.add('hide');
@@ -649,13 +649,10 @@ function startOver() {
   currentExerciseCard.classList.remove('thick-border');
 }
 
-const audioBtns = document.querySelectorAll('.audio-btn');
-audioBtns.forEach(function(audioBtn) {
-  audioBtn.addEventListener('click', setAudio); // Need any other listeners besides 'click'?
-});
+const audioToggle = document.querySelector('.audio-toggle');
+audioToggle.addEventListener('click', setAudio);
 function setAudio(e) {
-  console.log(e.target.value);
-  currentSettings.audio = e.target.value;
+  currentSettings.audio = (e.target.checked) ? true : false;
 }
 
 const pauseMsg = document.querySelector('.pause-message');
