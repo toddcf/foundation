@@ -338,7 +338,7 @@ const currentSettings = {
   active: false,
   audio: 'on',
   bonus: false,
-  breaks: breakDropdown.options[breakDropdown.selectedIndex].value.toString(),
+  breaks: breakDropdown.options[breakDropdown.selectedIndex].value,
   circuitsRemaining: parseInt(circuitsInput.value),
   difficulty: 1,
   i: 0,
@@ -398,6 +398,7 @@ function createWorkout() {
     breaks: currentSettings.breaks,
     totalTimeRemaining: currentSettings.totalTimeRemaining
   };
+  currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
 }
 
 // Estimate Total Workout Time:
@@ -463,7 +464,6 @@ const currentCircuitUI = document.querySelector('.current-circuit');
 let currentExerciseCard;
 function setTimerValue() {
   if (currentSettings.i < workout.length) {
-    currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
     // Add border to current exercise card:
     if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
     currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
@@ -471,7 +471,6 @@ function setTimerValue() {
     if (currentSettings.transition) {
       currentSettings.timerValue = workout[currentSettings.i].transition;
       currentExerciseUI.innerText = `Transition to ${workout[currentSettings.i].title}`;
-      console.log(`Transition to "${workout[currentSettings.i].title}": ${workout[currentSettings.i].transition} seconds`);
     } else {
       currentExerciseUI.innerText = `${workout[currentSettings.i].title}`;
       if (currentSettings.p < workout[currentSettings.i].poses.length) {
@@ -487,10 +486,6 @@ function setTimerValue() {
     // If circuit is finished:
     // Advance to next circuit:
     if (currentSettings.circuitsRemaining > 1) {
-      // Add condition:
-      // if (breaks === nonstop), do nothing -- continue on to fire runCountdownTimer.
-      // if (breaks === circuit), fire the pause function.
-      // if (breaks === exercises), I think the pause might have happened at the end of the last exercise, before reaching this point. Be careful how this is handled -- maybe it can skate right past as if it were set to nonstop?
       // Prevent firing if workout is simply being reset:
       if (currentSettings.active) {
         runCountdownTimer();
@@ -570,11 +565,13 @@ function runCountdownTimer() {
           return;
         }
 
+        currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
+
         clearInterval(timer);
         setTimerValue();
       }
     }
-  }, 1000);
+  }, 1);
 }
 
 function timerUI() {
@@ -617,6 +614,7 @@ function continueWorkout() {
   continueBtn.classList.add('hide');
   startOverBtn.classList.add('hide');
   pauseMsg.classList.add('hide');
+  currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
 }
 
 startOverBtn.addEventListener('click', function() {
