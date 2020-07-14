@@ -349,16 +349,15 @@ const currentSettings = {
   totalTimeRemaining: 0
 }
 
-let originalSettings = {}; // currentSettings to be copied here.
-
+let originalSettings = {}; // Some currentSettings get saved here every time a new workout begins.
 
 breakDropdown.addEventListener('change', function() {
+  sfx.clickBtn.play();
   currentSettings.breaks = breakDropdown.options[breakDropdown.selectedIndex].value;
   createWorkout();
 });
 
 
-// Refactor:
 const sfx = {
   startContinueFinish: document.querySelector('.audio-start-continue-finish'),
   clickBtn: document.querySelector('.audio-ui-click'),
@@ -368,6 +367,7 @@ const sfx = {
 
 const difficultyButtons = document.querySelectorAll('.settings-difficulty__btn');
 function setDifficulty(e) {
+  if (currentSettings.audio) {sfx.clickBtn.play();}
   currentSettings.difficulty = parseInt(e.target.value);
   createWorkout();
 }
@@ -377,6 +377,7 @@ difficultyButtons.forEach(function(difficultyButton) {
 
 const bonusCheckbox = document.querySelector('.settings-bonus__checkbox');
 function setBonus(e) {
+  if (currentSettings.audio) {sfx.clickBtn.play();}
   currentSettings.bonus = (e.target.checked) ? true : false;
   createWorkout();
 }
@@ -385,7 +386,7 @@ bonusCheckbox.addEventListener('click', setBonus);
 // Create nodelist(s) of all exercises to be included.
 // Invoke estimateWorkoutTime() and textUI().
 function createWorkout() {
-  if (currentSettings.audio) {sfx.clickBtn.play();}
+  // if (currentSettings.audio) {sfx.clickBtn.play();}
   workout = exercises.filter(function(exercise) {
     return (currentSettings.bonus) ? (exercise.difficulty <= currentSettings.difficulty) : ((exercise.difficulty > 0) && (exercise.difficulty <= currentSettings.difficulty));
   });
@@ -464,11 +465,15 @@ const currentExerciseUI = document.querySelector('.current-exercise');
 const currentCircuitUI = document.querySelector('.current-circuit');
 let currentExerciseCard;
 function setTimerValue() {
+  console.log(`setTimerValue() invoked.`);
   if (currentSettings.i < workout.length) {
+    console.log('The last exercise has not been completed yet.'); // This is getting logged twice in a row.
     // Add border to current exercise card:
     if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
     currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
     currentExerciseCard.classList.add('thick-border');
+
+    // Play transition once at the beginning, then loop through the poses:
     if (currentSettings.transition) {
       currentSettings.timerValue = workout[currentSettings.i].transition;
       currentExerciseUI.innerText = `Transition to ${workout[currentSettings.i].title}`;
@@ -485,13 +490,17 @@ function setTimerValue() {
     }
   } else {
     // If circuit is finished:
+    console.log(`The last exercise in the circuit has been completed.`);
     // Advance to next circuit:
     if (currentSettings.circuitsRemaining > 1) {
+      console.log(`There are still circuits remaining.`);
       // Prevent firing if workout is simply being reset:
       if (currentSettings.active) {
+        console.log(`The workout is still active. Initializing runCountdownTimer() again.`);
         runCountdownTimer();
       }
     } else {
+      console.log(`There are no circuits remaining. The workout is done. Resetting now.`);
       // Just fire startOver().  Move the rest into that function with conditionals:
       // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
       startOver();
@@ -504,6 +513,7 @@ function setTimerValue() {
 
 let countdownTimer;
 function runCountdownTimer() {
+  console.log(`runCountdownTimer() invoked.`);
   pauseBtn.classList.remove('hide');
   startBtn.classList.add('hide');
   timerUI();
@@ -653,6 +663,7 @@ const audioToggle = document.querySelector('.audio-toggle');
 audioToggle.addEventListener('click', setAudio);
 function setAudio(e) {
   currentSettings.audio = (e.target.checked) ? true : false;
+  if (currentSettings.audio) {sfx.clickBtn.play();}
 }
 
 const pauseMsg = document.querySelector('.pause-message');
