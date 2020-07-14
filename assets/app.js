@@ -467,7 +467,7 @@ let currentExerciseCard;
 function setTimerValue() {
   console.log(`setTimerValue() invoked.`);
   if (currentSettings.i < workout.length) {
-    console.log('The last exercise has not been completed yet.'); // This is getting logged twice in a row.
+    console.log(`setTimerValue(): The last exercise has not been completed yet.`); // This is getting logged twice in a row.
     // Add border to current exercise card:
     if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
     currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
@@ -486,21 +486,21 @@ function setTimerValue() {
     }
     // Prevent firing if workout is simply being reset:
     if (currentSettings.active) {
-      runCountdownTimer();
-    }
+      console.log(`setTimerValue(): Invoke runCountdownTimer().`);
+      runCountdownTimer();}
   } else {
     // If circuit is finished:
-    console.log(`The last exercise in the circuit has been completed.`);
+    console.log(`setTimerValue(): The last exercise in the circuit has been completed.`);
     // Advance to next circuit:
     if (currentSettings.circuitsRemaining > 1) {
-      console.log(`There are still circuits remaining.`);
+      console.log(`setTimerValue(): There are still circuits remaining.`);
       // Prevent firing if workout is simply being reset:
       if (currentSettings.active) {
-        console.log(`The workout is still active. Initializing runCountdownTimer() again.`);
+        console.log(`setTimerValue(): The workout is still active. Initializing runCountdownTimer() again.`);
         runCountdownTimer();
       }
     } else {
-      console.log(`There are no circuits remaining. The workout is done. Resetting now.`);
+      console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
       // Just fire startOver().  Move the rest into that function with conditionals:
       // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
       startOver();
@@ -519,7 +519,9 @@ function runCountdownTimer() {
   timerUI();
   countdownTimer = setInterval(function() {
     if (currentSettings.i < workout.length) {
+      console.log(`runCountdownTimer(): The last exercise has not been completed yet.`);
       if (currentSettings.timerValue > 0) {
+        console.log(`runCountdownTimer(): timerValue is greater than zero.`);
         currentSettings.timerValue--;
         timerUI();
         if (
@@ -528,11 +530,12 @@ function runCountdownTimer() {
           && (currentSettings.timerValue > 0)
         ) {
           if (currentSettings.audio) {sfx.warning.play();}
-        }
-        else if (currentSettings.timerValue === 0) {
+        } else if (currentSettings.timerValue === 0) {
+          console.log(`runCountdownTimer(): timerValue has now been set to zero.`);
           if (currentSettings.audio) {sfx.next.play();}
         }
       } else {
+        console.log(`runCountdownTimer(): timerValue was already zero.`); // I probably need to move this entire ELSE code block into the ELSE IF code block above!
         if (currentSettings.transition) {
           currentSettings.transition = false;
         } else {
