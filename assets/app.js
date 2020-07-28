@@ -496,6 +496,7 @@ function setTimerValue() {
       currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
       startOverBtn.classList.remove('hide'); 
       startBtn.classList.add('hide');
+      return;
     }
   }
   // Timer value has been set. Now run the timer -- but only if the workout is still active.
