@@ -349,7 +349,7 @@ const currentSettings = {
   totalTimeRemaining: 0
 }
 
-let originalSettings = {}; // Some currentSettings get saved here every time a new workout begins.
+let originalSettings = {}; // Some currentSettings get saved here every time a new workout begins to allow for resets, etc.
 
 breakDropdown.addEventListener('change', function() {
   sfx.clickBtn.play();
@@ -585,7 +585,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 1);
+  }, 1000);
 }
 
 function timerUI() {
