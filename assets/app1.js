@@ -349,7 +349,7 @@ const currentSettings = {
   totalTimeRemaining: 0
 }
 
-let originalSettings = {}; // Some currentSettings get saved here every time a new workout begins to allow for resets, etc.
+let originalSettings = {}; // Some currentSettings get saved here every time a new workout begins.
 
 breakDropdown.addEventListener('change', function() {
   sfx.clickBtn.play();
@@ -484,25 +484,30 @@ function setTimerValue() {
         console.log(`"${workout[currentSettings.i].title}" ${workout[currentSettings.i].poses[currentSettings.p].desc} of ${workout[currentSettings.i].poses.length}: ${currentSettings.timerValue} seconds`);
       }
     }
+    // Prevent firing if workout is simply being reset:
+    if (currentSettings.active) {
+      console.log(`setTimerValue(): Invoke runCountdownTimer().`);
+      runCountdownTimer();}
   } else {
+    // If circuit is finished:
     console.log(`setTimerValue(): The last exercise in the circuit has been completed.`);
-    // Circuit is finished, so check if it was the last one:
-    if (currentSettings.circuitsRemaining < 1) {
-      // If no more circuits remain, the workout is over:
+    // Advance to next circuit:
+    if (currentSettings.circuitsRemaining > 1) {
+      console.log(`setTimerValue(): There are still circuits remaining.`);
+      // Prevent firing if workout is simply being reset:
+      if (currentSettings.active) {
+        console.log(`setTimerValue(): The workout is still active. Initializing runCountdownTimer() again.`);
+        runCountdownTimer();
+      }
+    } else {
       console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
       // Just fire startOver().  Move the rest into that function with conditionals:
       // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
-      startOver(); // This also sets currentSetting.active to "false."
+      startOver();
       currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
       startOverBtn.classList.remove('hide'); 
       startBtn.classList.add('hide');
     }
-  }
-  // Timer value has been set. Now run the timer -- but only if the workout is still active.
-  // (This also prevents firing if workout is simply being reset.)
-  if (currentSettings.active) {
-    console.log(`setTimerValue(): Invoke runCountdownTimer().`);
-    runCountdownTimer();
   }
 }
 
@@ -580,7 +585,7 @@ function runCountdownTimer() {
         setTimerValue();
       }
     }
-  }, 10);
+  }, 1000);
 }
 
 function timerUI() {
@@ -636,7 +641,7 @@ function startOver() {
   //clearInterval(countupValue); // Stop the pause timer -- UNLESS IT WASN'T RUNNING?
   pauseBtn.classList.add('hide');
   continueBtn.classList.add('hide');
-  startOverBtn.classList.add('hide');
+  startOverBtn.classList.add('hide'); 
   startBtn.classList.remove('hide');
   pauseMsg.classList.add('hide');
   // NOTE: WILL I NEED TO UPDATE UI TO MATCH THE FOLLOWING? PROBABLY NOT -- IT SHOULD HAVE BEEN LOCKED IN PLACE WHEN THE WORKOUT BEGAN.
