@@ -572,13 +572,12 @@ function runCountdownTimer() {
           || (currentSettings.breaks === 'exercise')
         ) {
           pause();
-          return;
+        } else {
+          currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
+
+          clearInterval(countdownTimer);
+          setTimerValue();
         }
-
-        currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
-
-        clearInterval(countdownTimer);
-        setTimerValue();
       }
     }
   }, 10);
