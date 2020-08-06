@@ -466,38 +466,14 @@ const currentCircuitUI = document.querySelector('.current-circuit');
 let currentExerciseCard;
 function setTimerValue() {
   console.log(`setTimerValue() invoked.`);
-  if (currentSettings.i < workout.length) {
-    console.log(`setTimerValue(): The last exercise has not been completed yet.`); // This is getting logged twice in a row.
-    // Add border to current exercise card:
-    if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
-    currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
-    currentExerciseCard.classList.add('thick-border');
-
-    // Play transition once at the beginning, then loop through the poses:
-    if (currentSettings.transition) {
-      currentSettings.timerValue = workout[currentSettings.i].transition;
-      currentExerciseUI.innerText = `Transition to ${workout[currentSettings.i].title}`;
-    } else {
-      currentExerciseUI.innerText = `${workout[currentSettings.i].title}`;
-      if (currentSettings.p < workout[currentSettings.i].poses.length) {
-        currentSettings.timerValue = workout[currentSettings.i].poses[currentSettings.p].duration;
-        console.log(`"${workout[currentSettings.i].title}" ${workout[currentSettings.i].poses[currentSettings.p].desc} of ${workout[currentSettings.i].poses.length}: ${currentSettings.timerValue} seconds`);
-      }
-    }
+  // Play transition once at the beginning, then loop through the poses:
+  if (currentSettings.transition) {
+    currentSettings.timerValue = workout[currentSettings.i].transition;
+    currentExerciseUI.innerText = `Transition to ${workout[currentSettings.i].title}`;
   } else {
-    console.log(`setTimerValue(): The last exercise in the circuit has been completed.`);
-    // Circuit is finished, so check if it was the last one:
-    if (currentSettings.circuitsRemaining < 1) {
-      // If no more circuits remain, the workout is over:
-      console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
-      // Just fire startOver().  Move the rest into that function with conditionals:
-      // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
-      startOver(); // This also sets currentSetting.active to "false."
-      currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
-      startOverBtn.classList.remove('hide'); 
-      startBtn.classList.add('hide');
-      return;
-    }
+    currentSettings.timerValue = workout[currentSettings.i].poses[currentSettings.p].duration;
+    currentExerciseUI.innerText = `${workout[currentSettings.i].title}`;
+    console.log(`"${workout[currentSettings.i].title}" ${workout[currentSettings.i].poses[currentSettings.p].desc} of ${workout[currentSettings.i].poses.length}: ${currentSettings.timerValue} seconds`);
   }
   // Timer value has been set. Now run the timer -- but only if the workout is still active.
   // (This also prevents firing if workout is simply being reset.)
@@ -506,6 +482,33 @@ function setTimerValue() {
     runCountdownTimer();
   }
 }
+
+
+// DISPLACED CODE SNIPPETS:
+
+// Add border to current exercise card: [SHOULD THIS GET MOVED TO RUNCOUNTDOWNTIMER() or TIMERUI()?]
+if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
+currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
+currentExerciseCard.classList.add('thick-border');
+
+
+// MOVE TO RUNCOUNTDOWNTIMER():
+console.log(`setTimerValue(): The last exercise in the circuit has been completed.`);
+// Circuit is finished, so check if it was the last one:
+if (currentSettings.circuitsRemaining < 1) {
+  // If no more circuits remain, the workout is over:
+  console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
+  // Just fire startOver().  Move the rest into that function with conditionals:
+  // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
+  startOver(); // This also sets currentSetting.active to "false."
+  currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
+  startOverBtn.classList.remove('hide'); 
+  startBtn.classList.add('hide');
+  return;
+}
+
+
+
 
 let countdownTimer;
 function runCountdownTimer() {
