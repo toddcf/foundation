@@ -530,7 +530,6 @@ function runCountdownTimer() {
         // End of interval.
       }
     } else {
-      // This opening bracket will need a closing bracket somewhere.
       // Timer is either 0, or greater than 5.
       if (currentSettings.timerValue === 0) {
         if (currentSettings.audio) {sfx.next.play();}
@@ -548,26 +547,26 @@ function runCountdownTimer() {
         // This interval is now finished, and will be cleared at the end.
       } else {
         // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
-            console.log(`Advance to next exercise.`);
-            currentSettings.i++; // Advance to next exercise
-            currentSettings.p = 0; // Reset to first pose
-            currentSettings.transition = true; // Reset transition
+        if (currentSettings.i < workout.length) { // CONFIRM THIS SYNTAX
+          // There are more exercises in the circuit.
+          console.log(`Advance to next exercise.`);
+          currentSettings.i++; // Advance to next exercise
+          currentSettings.p = 0; // Reset to first pose
+          currentSettings.transition = true; // Reset transition
 
-            // Pause after each exercise, unless it is the final exercise of the final circuit:
-            if (
-              (currentSettings.breaks === 'exercise')
-              && (currentSettings.circuitsRemaining > 0)
-              && (currentSettings.i < workout.length)
-            ) {
-              // Probably add that third condition inside here and use a ternary to handle circuits vs. exercises.
-              pause();
-              return;
-            }
+          // Did user want to pause between each exercise?
+          if (currentSettings.breaks === 'exercise') {
+            pause();
+            return;
           }
+        } else {
+          // If there are no more exercises in the circuit, the circuit is done. Check if there are more circuits in the workout:
+          // RESUME REFACTORING HERE
         }
-        clearInterval(countdownTimer);
-        setTimerValue();
       }
+      clearInterval(countdownTimer);
+      setTimerValue();
+    }
     } else {
       // Advance to next circuit:
       if (currentSettings.circuitsRemaining > 1) {
