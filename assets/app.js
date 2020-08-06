@@ -509,7 +509,6 @@ if (currentSettings.circuitsRemaining < 1) {
 
 
 
-
 let countdownTimer;
 function runCountdownTimer() {
   console.log(`runCountdownTimer() invoked.`);
@@ -517,30 +516,38 @@ function runCountdownTimer() {
   startBtn.classList.add('hide');
   timerUI();
   countdownTimer = setInterval(function() {
-    if (currentSettings.i < workout.length) {
-      console.log(`runCountdownTimer(): The last exercise has not been completed yet.`);
-      if (currentSettings.timerValue > 0) {
-        console.log(`runCountdownTimer(): timerValue is greater than zero.`);
-        currentSettings.timerValue--;
-        timerUI();
-        if (
-          (currentSettings.transition === false)
-          && (currentSettings.timerValue <= 5)
-          && (currentSettings.timerValue > 0)
-        ) {
-          if (currentSettings.audio) {sfx.warning.play();}
-        } else if (currentSettings.timerValue === 0) {
-          console.log(`runCountdownTimer(): timerValue has now been set to zero.`);
-          if (currentSettings.audio) {sfx.next.play();}
-        }
+    currentSettings.timerValue--;
+    timerUI();
+    if (
+      && (currentSettings.timerValue <= 5)
+      && (currentSettings.timerValue > 0)
+    ) {
+      if (
+        (currentSettings.audio)
+        && (currentSettings.transition === false)
+      ) {
+        sfx.warning.play();
+        // End of interval.
+      }
+    } else {
+      // This opening bracket will need a closing bracket somewhere.
+      // Timer is either 0, or greater than 5.
+      if (currentSettings.timerValue === 0) {
+        if (currentSettings.audio) {sfx.next.play();}
+      }
+    }
+
+    if (currentSettings.transition) {
+      // If transition was true, set it to false:
+      currentSettings.transition = false;
+    } else {
+      // If transition was false, check if there are more poses in this exercise:
+      if (currentSettings.p < workout[currentSettings.i].poses.length) {
+        // If there are more poses in this exercise, advance to the next exercise.
+        currentSettings.p++;
+        // This interval is now finished, and will be cleared at the end.
       } else {
-        console.log(`runCountdownTimer(): timerValue was already zero.`); // I probably need to move this entire ELSE code block into the ELSE IF code block above!
-        if (currentSettings.transition) {
-          currentSettings.transition = false;
-        } else {
-          if (currentSettings.p < workout[currentSettings.i].poses.length) {
-            currentSettings.p++;
-          } else {
+        // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
             console.log(`Advance to next exercise.`);
             currentSettings.i++; // Advance to next exercise
             currentSettings.p = 0; // Reset to first pose
