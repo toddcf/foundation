@@ -468,15 +468,18 @@ function setTimerValue() {
   console.log(`setTimerValue() invoked.`);
   // Play transition once at the beginning, then loop through the poses:
   if (currentSettings.transition) {
+    console.log(`setTimerValue(): Setting transition timer value to ${workout[currentSettings.i].transition}.`);
     currentSettings.timerValue = workout[currentSettings.i].transition;
     currentExerciseUI.innerText = `Transition to ${workout[currentSettings.i].title}`;
   } else {
+    console.log(`setTimerValue(): Setting pose timer value to ${workout[currentSettings.i].poses[currentSettings.p].duration}.`);
     currentSettings.timerValue = workout[currentSettings.i].poses[currentSettings.p].duration;
     currentExerciseUI.innerText = `${workout[currentSettings.i].title}`;
     console.log(`"${workout[currentSettings.i].title}" ${workout[currentSettings.i].poses[currentSettings.p].desc} of ${workout[currentSettings.i].poses.length}: ${currentSettings.timerValue} seconds`);
   }
   // Timer value has been set. Now run the timer -- but only if the workout is still active.
   // (This also prevents firing if workout is simply being reset.)
+  // ADD THIS TO FLOWCHART:
   if (currentSettings.active) {
     console.log(`setTimerValue(): Invoke runCountdownTimer().`);
     runCountdownTimer();
@@ -498,7 +501,7 @@ function runCountdownTimer() {
     currentSettings.timerValue--;
     timerUI();
     if (
-      && (currentSettings.timerValue <= 5)
+      (currentSettings.timerValue <= 5)
       && (currentSettings.timerValue > 0)
     ) {
       if (
@@ -522,7 +525,7 @@ function runCountdownTimer() {
       // If transition was false, check if there are more poses in this exercise:
       if (currentSettings.p < workout[currentSettings.i].poses.length) {
         // If there are more poses in this exercise, advance to the next exercise.
-        currentSettings.p++;
+        currentSettings.p++; // THIS IS INCREMENTING BEFORE THE FIRST POSE HAS EVEN RUN.
         // This interval is now finished, and will be cleared at the end.
       } else {
         // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
