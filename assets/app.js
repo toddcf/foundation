@@ -483,32 +483,6 @@ function setTimerValue() {
   }
 }
 
-
-// DISPLACED CODE SNIPPETS:
-
-// Add border to current exercise card: [SHOULD THIS GET MOVED TO RUNCOUNTDOWNTIMER() or TIMERUI()?]
-if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
-currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
-currentExerciseCard.classList.add('thick-border');
-
-
-// MOVE TO RUNCOUNTDOWNTIMER():
-console.log(`setTimerValue(): The last exercise in the circuit has been completed.`);
-// Circuit is finished, so check if it was the last one:
-if (currentSettings.circuitsRemaining < 1) {
-  // If no more circuits remain, the workout is over:
-  console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
-  // Just fire startOver().  Move the rest into that function with conditionals:
-  // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
-  startOver(); // This also sets currentSetting.active to "false."
-  currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
-  startOverBtn.classList.remove('hide'); 
-  startBtn.classList.add('hide');
-  return;
-}
-
-
-
 let countdownTimer;
 function runCountdownTimer() {
   console.log(`runCountdownTimer() invoked.`);
@@ -516,6 +490,11 @@ function runCountdownTimer() {
   startBtn.classList.add('hide');
   timerUI();
   countdownTimer = setInterval(function() {
+    // Add border to current exercise card:
+    if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
+    currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
+    currentExerciseCard.classList.add('thick-border');
+
     currentSettings.timerValue--;
     timerUI();
     if (
@@ -547,7 +526,7 @@ function runCountdownTimer() {
         // This interval is now finished, and will be cleared at the end.
       } else {
         // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
-        if (currentSettings.i < workout.length) { // CONFIRM THIS SYNTAX
+        if (currentSettings.i < workout.length) {
           // There are more exercises in the circuit.
           console.log(`Advance to next exercise.`);
           currentSettings.i++; // Advance to next exercise
@@ -560,36 +539,39 @@ function runCountdownTimer() {
             return;
           }
         } else {
-          // If there are no more exercises in the circuit, the circuit is done. Check if there are more circuits in the workout:
-          // RESUME REFACTORING HERE
+          console.log(`runCountdownTimer(): The last exercise in the circuit has been completed.`);
+          // There are no more exercises in the circuit; the circuit is done. Check if there are more circuits in the workout:
+          if (currentSettings.circuitsRemaining > 1) {
+            currentSettings.circuitsRemaining--;
+            currentSettings.i = 0; // Reset to first exercise
+            currentSettings.p = 0; // Reset to first pose
+            currentSettings.transition = true; // Reset transition
+
+            currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
+
+            // Did user want to pause between circuits?
+            if (currentSettings.breaks === 'circuit') {
+              pause();
+              return;
+            }
+          } else {
+            // If no more circuits remain, the workout is over:
+            clearInterval(countdownTimer); // Do I need this here?
+            console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
+            // Just fire startOver().  Move the rest into that function with conditionals:
+            // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
+            startOver(); // This also sets currentSetting.active to "false."
+            currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
+            startOverBtn.classList.remove('hide'); 
+            startBtn.classList.add('hide');
+            return;
+          }
         }
       }
       clearInterval(countdownTimer);
       setTimerValue();
     }
-    } else {
-      // Advance to next circuit:
-      if (currentSettings.circuitsRemaining > 1) {
-        currentSettings.circuitsRemaining--;
-        currentSettings.i = 0; // Reset to first exercise
-        currentSettings.p = 0; // Reset to first pose
-        currentSettings.transition = true; // Reset transition
-
-        // Pause after each circuit, depending on user settings:
-        if (
-          (currentSettings.breaks === 'circuit')
-          || (currentSettings.breaks === 'exercise')
-        ) {
-          pause();
-        } else {
-          currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
-
-          clearInterval(countdownTimer);
-          setTimerValue();
-        }
-      }
-    }
-  }, 10);
+  }, 1000);
 }
 
 function timerUI() {
