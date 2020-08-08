@@ -479,7 +479,6 @@ function setTimerValue() {
   }
   // Timer value has been set. Now run the timer -- but only if the workout is still active.
   // (This also prevents firing if workout is simply being reset.)
-  // ADD THIS TO FLOWCHART:
   if (currentSettings.active) {
     console.log(`setTimerValue(): Invoke runCountdownTimer().`);
     runCountdownTimer();
