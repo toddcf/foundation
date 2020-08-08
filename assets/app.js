@@ -515,64 +515,68 @@ function runCountdownTimer() {
       if (currentSettings.timerValue === 0) {
         if (currentSettings.audio) {sfx.next.play();}
       }
-    }
 
-    if (currentSettings.transition) {
-      // If transition was true, set it to false:
-      currentSettings.transition = false;
-    } else {
-      // If transition was false, check if there are more poses in this exercise:
-      if (currentSettings.p < workout[currentSettings.i].poses.length) {
-        // If there are more poses in this exercise, advance to the next exercise.
-        currentSettings.p++; // THIS IS INCREMENTING BEFORE THE FIRST POSE HAS EVEN RUN.
-        // This interval is now finished, and will be cleared at the end.
+      if (currentSettings.transition) {
+        // If transition was true, set it to false:
+        currentSettings.transition = false;
       } else {
-        // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
-        if (currentSettings.i < workout.length) {
-          // There are more exercises in the circuit.
-          console.log(`Advance to next exercise.`);
-          currentSettings.i++; // Advance to next exercise
-          currentSettings.p = 0; // Reset to first pose
-          currentSettings.transition = true; // Reset transition
-
-          // Did user want to pause between each exercise?
-          if (currentSettings.breaks === 'exercise') {
-            pause();
-            return;
-          }
+        // If transition was false, check if there are more poses in this exercise:
+        if (currentSettings.p < workout[currentSettings.i].poses.length) {
+          // If there are more poses in this exercise, advance to the next exercise.
+          currentSettings.p++; // THIS IS INCREMENTING BEFORE THE FIRST POSE HAS EVEN RUN.
+          // This interval is now finished, and will be cleared at the end.
         } else {
-          console.log(`runCountdownTimer(): The last exercise in the circuit has been completed.`);
-          // There are no more exercises in the circuit; the circuit is done. Check if there are more circuits in the workout:
-          if (currentSettings.circuitsRemaining > 1) {
-            currentSettings.circuitsRemaining--;
-            currentSettings.i = 0; // Reset to first exercise
+          // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
+          if (currentSettings.i < workout.length) {
+            // There are more exercises in the circuit.
+            console.log(`Advance to next exercise.`);
+            currentSettings.i++; // Advance to next exercise
             currentSettings.p = 0; // Reset to first pose
             currentSettings.transition = true; // Reset transition
 
-            currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
-
-            // Did user want to pause between circuits?
-            if (currentSettings.breaks === 'circuit') {
+            // Did user want to pause between each exercise?
+            if (currentSettings.breaks === 'exercise') {
               pause();
               return;
             }
           } else {
-            // If no more circuits remain, the workout is over:
-            clearInterval(countdownTimer); // Do I need this here?
-            console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
-            // Just fire startOver().  Move the rest into that function with conditionals:
-            // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
-            startOver(); // This also sets currentSetting.active to "false."
-            currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
-            startOverBtn.classList.remove('hide'); 
-            startBtn.classList.add('hide');
-            return;
+            console.log(`runCountdownTimer(): The last exercise in the circuit has been completed.`);
+            // There are no more exercises in the circuit; the circuit is done. Check if there are more circuits in the workout:
+            if (currentSettings.circuitsRemaining > 1) {
+              currentSettings.circuitsRemaining--;
+              currentSettings.i = 0; // Reset to first exercise
+              currentSettings.p = 0; // Reset to first pose
+              currentSettings.transition = true; // Reset transition
+
+              currentCircuitUI.innerText = `Circuit ${originalSettings.circuitsRemaining - currentSettings.circuitsRemaining + 1} of ${originalSettings.circuitsRemaining}`;
+
+              // Did user want to pause between circuits?
+              if (currentSettings.breaks === 'circuit') {
+                pause();
+                return;
+              }
+            } else {
+              // If no more circuits remain, the workout is over:
+              clearInterval(countdownTimer); // Do I need this here?
+              console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
+              // Just fire startOver().  Move the rest into that function with conditionals:
+              // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
+              startOver(); // This also sets currentSetting.active to "false."
+              currentExerciseUI.innerText = `Finished!`; // startOver() clears this field.
+              startOverBtn.classList.remove('hide'); 
+              startBtn.classList.add('hide');
+              return;
+            }
           }
         }
+        clearInterval(countdownTimer);
+        setTimerValue();
       }
-      clearInterval(countdownTimer);
-      setTimerValue();
     }
+
+    timerUI();
+
+    
   }, 1000);
 }
 
