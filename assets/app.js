@@ -498,7 +498,7 @@ function runCountdownTimer() {
     currentExerciseCard.classList.add('thick-border');
 
     currentSettings.timerValue--;
-    timerUI();
+    //timerUI();
     if (
       (currentSettings.timerValue <= 5)
       && (currentSettings.timerValue > 0)
@@ -522,7 +522,7 @@ function runCountdownTimer() {
       } else {
         // If transition was false, check if there are more poses in this exercise:
         if (currentSettings.p < workout[currentSettings.i].poses.length) {
-          // If there are more poses in this exercise, advance to the next exercise.
+          // If there are more poses in this exercise, advance to the next pose.
           currentSettings.p++; // THIS IS INCREMENTING BEFORE THE FIRST POSE HAS EVEN RUN.
           // This interval is now finished, and will be cleared at the end.
         } else {
@@ -575,7 +575,6 @@ function runCountdownTimer() {
     }
 
     timerUI();
-
     
   }, 1000);
 }
