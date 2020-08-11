@@ -8,6 +8,7 @@
   - The only thing `setTimerValue()` should have to do is determine which value to set it to, set it, and then fire `runCountdownTimer()`.  The only times it is fired is at the beginning of the workout (when all the settings are going to evaluate to a value for the timer), and when `runCountdownTimer()` or the "unpause" functions fire it -- and the logic in those will mean that it doesn't even get fired if it's unnecessary, so we don't need to worry about much logic inside `setTimerValue()`.
   - Create logic flowcharts for `runCountdownTimer()` and `setTimerValue()`.
     - Create drafts that highlight each use case path and test them -- but do these one at a time because you might have to make changes to the flowchart as you discover mistakes!
+    - Flowchart example: https://docs.adobe.com/content/help/en/target/using/implement-target/client-side/at-js/manage-flicker-with-atjs.html
 - BUG: Why is the first click sfx quiet and the rest louder? Is it getting fired once the first time, and multiple times simultaneously on subsequent clicks?
 - BUG: Don't play SFX for countdown during lunge stretch shift (from left to right) or similar shifts in other exercises.
 - Convert `setCircuits` function to regex for numerical keyups.
