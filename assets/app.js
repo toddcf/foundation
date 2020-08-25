@@ -477,7 +477,7 @@ function setTimerValue() {
     currentSettings.timerValue = workout[currentSettings.i].poses[currentSettings.p].duration;
     currentExerciseUI.innerText = `${workout[currentSettings.i].title}`;
     console.log(`"${workout[currentSettings.i].title}" ${workout[currentSettings.i].poses[currentSettings.p].desc} of ${workout[currentSettings.i].poses.length}: ${currentSettings.timerValue} seconds`);
-    p++; // Increment for next time.
+    currentSettings.p++; // Increment for next time.
   }
   // Timer value has been set. Now run the timer -- but only if the workout is still active.
   // (This also prevents firing if workout is simply being reset.)
