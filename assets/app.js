@@ -17,12 +17,12 @@ const exercises = [
       },
       {
         desc: 'Pose 3',
-        duration: 15,
+        duration: 10,
         img: ''
       },
       {
         desc: 'Pose 4',
-        duration: 6,
+        duration: 15,
         img: ''
       },
       {
@@ -32,11 +32,6 @@ const exercises = [
       },
       {
         desc: 'Pose 6',
-        duration: 15,
-        img: ''
-      },
-      {
-        desc: 'Pose 7',
         duration: 20,
         img: ''
       }

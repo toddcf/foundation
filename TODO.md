@@ -3,6 +3,7 @@
 
 ## First Iteration
 
+- BUG: At the end of the workout, UI displays "0-1". (I don't think startOver() got invoked at the end.)
 - BUG: Why is the first click sfx quiet and the rest louder? Is it getting fired once the first time, and multiple times simultaneously on subsequent clicks?
 - BUG: Don't play SFX for countdown during lunge stretch shift (from left to right) or similar shifts in other exercises.
 - Convert `setCircuits` function to regex for numerical keyups.
