@@ -1,7 +1,7 @@
 # Test Cases
 
 01. Start workout. (Transition countdown begins.) - PASS
-02. Transition reaches zero. - FAIL: Zero gets skipped in the UI, and the first pose begins counting down.
+02. Transition reaches zero. - PASS
 
 02. End of workout.
 03. Transition is true.

@@ -500,7 +500,7 @@ function runCountdownTimer() {
     timerUI();
     
     if (
-      (currentSettings.timerValue > 0)
+      (currentSettings.timerValue > -1)
       && (currentSettings.timerValue <= 5)
     ) {
       console.log(`Timer value is between 1 - 5.`);
@@ -515,7 +515,7 @@ function runCountdownTimer() {
       // Timer is either 0, or greater than 5.
       console.log(`Timer is either 0, or greater than 5.`);
       // If 0:
-      if (currentSettings.timerValue === 0) {
+      if (currentSettings.timerValue === -1) {
         console.log(`Timer is 0.`);
         if (currentSettings.audio) {sfx.next.play();}
 

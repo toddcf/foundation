@@ -3,7 +3,6 @@
 
 ## First Iteration
 
-- BUG: "Zero" is getting skipped at the end of each countdown.
 - BUG: Why is the first click sfx quiet and the rest louder? Is it getting fired once the first time, and multiple times simultaneously on subsequent clicks?
 - BUG: Don't play SFX for countdown during lunge stretch shift (from left to right) or similar shifts in other exercises.
 - Convert `setCircuits` function to regex for numerical keyups.
