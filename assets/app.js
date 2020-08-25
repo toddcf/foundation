@@ -466,6 +466,7 @@ const currentCircuitUI = document.querySelector('.current-circuit');
 let currentExerciseCard;
 function setTimerValue() {
   console.log(`setTimerValue() invoked.`);
+  updateExerciseCard();
   // Play transition once at the beginning, then loop through the poses:
   if (currentSettings.transition) {
     console.log(`setTimerValue(): Setting transition timer value to ${workout[currentSettings.i].transition}.`);
@@ -499,8 +500,8 @@ function runCountdownTimer() {
     timerUI();
     
     if (
-      (currentSettings.timerValue <= 5)
-      && (currentSettings.timerValue > 0)
+      (currentSettings.timerValue > 0)
+      && (currentSettings.timerValue <= 5)
     ) {
       console.log(`Timer value is between 1 - 5.`);
       if (
@@ -508,8 +509,8 @@ function runCountdownTimer() {
         && (currentSettings.transition === false)
       ) {
         sfx.warning.play();
-        // End of interval.
       }
+      // This interval is now finished, and will be cleared at the end.
     } else {
       // Timer is either 0, or greater than 5.
       console.log(`Timer is either 0, or greater than 5.`);
@@ -519,26 +520,23 @@ function runCountdownTimer() {
         if (currentSettings.audio) {sfx.next.play();}
 
         if (currentSettings.transition) {
-          // If transition was true, set it to false:
+          // Transition was true, but it's over now. Set it to false:
           currentSettings.transition = false;
-          clearInterval(countdownTimer);
-          console.log(`Interval cleared.`);
-          setTimerValue();
+          // clearInterval(countdownTimer); // MOVE TO END
+          // console.log(`Interval cleared.`); // MOVE TO END
+          // setTimerValue(); // MOVE TO END
+          // This interval is now finished, and will be cleared at the end.
         } else {
           // If transition was false, check if there are more poses in this exercise:
           if (currentSettings.p < workout[currentSettings.i].poses.length) {
             console.log(`There are more poses in this exercise.`);
-            // If there are more poses in this exercise, 
-            //timerUI();
-            // Then advance to the next pose.
-            currentSettings.p++; // THIS IS INCREMENTING BEFORE THE FIRST POSE HAS EVEN RUN.
-            // This interval is now finished, and will be cleared at the end.
+            // If there are more poses in this exercise, this interval is now finished, and will be cleared at the end.
           } else {
             // If there are no more poses in this exercise, the exercise is done. Check if there are more exercises in the circuit:
             if (currentSettings.i < workout.length) {
               // There are more exercises in the circuit.
               console.log(`Advance to next exercise.`);
-              currentSettings.i++; // Advance to next exercise
+              currentSettings.i++; // Advance to next exercise (probably okay)
               currentSettings.p = 0; // Reset to first pose
               currentSettings.transition = true; // Reset transition
 
@@ -547,6 +545,7 @@ function runCountdownTimer() {
                 pause();
                 return;
               }
+              // This interval is now finished, and will be cleared at the end.
             } else {
               console.log(`runCountdownTimer(): The last exercise in the circuit has been completed.`);
               // There are no more exercises in the circuit; the circuit is done. Check if there are more circuits in the workout:
@@ -563,9 +562,10 @@ function runCountdownTimer() {
                   pause();
                   return;
                 }
+                // This interval is now finished, and will be cleared at the end.
               } else {
                 // If no more circuits remain, the workout is over:
-                clearInterval(countdownTimer); // Do I need this here?
+                clearInterval(countdownTimer);
                 console.log(`setTimerValue(): There are no circuits remaining. The workout is done. Resetting now.`);
                 // Just fire startOver().  Move the rest into that function with conditionals:
                 // If "finished," do these actions. Else, do the actions that are already in the startOver() function.
@@ -577,21 +577,22 @@ function runCountdownTimer() {
               }
             }
           }
-          clearInterval(countdownTimer);
-          setTimerValue();
+          // clearInterval(countdownTimer);
+          // setTimerValue();
         }
+        clearInterval(countdownTimer);
+        setTimerValue();
       } else {
         // If timer is greater than 5:
         console.log(`Timer is greater than 5.`);
+        // End of interval.
       }
     }
-
     timerUI();
-    
   }, 1000);
 }
 
-// Figure out the right place to invoke this. Not every second, but after each pose, exercise, etc.
+// Figure out the right place to invoke this -- not every second, but after each exercise.
 function updateExerciseCard() {
   // Add border to current exercise card:
   if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
