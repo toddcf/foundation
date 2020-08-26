@@ -6,6 +6,6 @@
 04. Next exercise in circuit, no pause. - PASS
 05. Next exercise in circuit, with pause.
 
-02. End of workout.
+02. End of workout. - FAIL: Timer UI displays "0-1".
 05. Last pose of exercise, but exercises remain in the circuit.
 06. End of circuit, but more circuits remain.

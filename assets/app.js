@@ -198,17 +198,17 @@ const exercises = [
     transition: 10,
     poses: [
       {
-        desc: 'Pose 1',
+        desc: 'Pose 1: Left Side',
         duration: 20,
         img: ''
       },
       {
         // Can this shift get rolled into the next pose so that that image can be displayed?
-        desc: 'Shift Position',
+        desc: 'Reverse Your Stance',
         duration: 5
       },
       {
-        desc: 'Pose 2',
+        desc: 'Pose 2: Right Side',
         duration: 20,
         img: ''
       }
@@ -531,7 +531,7 @@ function runCountdownTimer() {
             if (currentSettings.i < workout.length) {
               // There are more exercises in the circuit.
               console.log(`Advance to next exercise.`);
-              currentSettings.i++; // Advance to next exercise (probably okay)
+              currentSettings.i++; // PROBLEM
               currentSettings.p = 0; // Reset to first pose
               currentSettings.transition = true; // Reset transition
 
@@ -584,18 +584,21 @@ function runCountdownTimer() {
       }
     }
     timerUI();
-  }, 1000);
+  }, 10);
 }
 
 // Figure out the right place to invoke this -- not every second, but after each exercise.
 function updateExerciseCard() {
   // Add border to current exercise card:
-  if (currentExerciseCard) {currentExerciseCard.classList.remove('thick-border');}
-  currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
-  currentExerciseCard.classList.add('thick-border');
+  if (currentExerciseCard) {
+    currentExerciseCard.classList.remove('thick-border');
+    currentExerciseCard = exercisesList.querySelector(`[data-exercise-title="${workout[currentSettings.i].title}"]`);
+    currentExerciseCard.classList.add('thick-border');
+  }
 }
 
 function timerUI() {
+  console.log(`timerUI() invoked.`);
   if (currentSettings.timerValue > 9) {
     // Set color back to default if it's not already.
     timerDisplay.innerText = currentSettings.timerValue;
@@ -641,6 +644,7 @@ startOverBtn.addEventListener('click', function() {
 });
 
 function startOver() {
+  console.log('startOver() invoked.');
   if (currentSettings.audio) {sfx.clickBtn.play();} // Maybe rely on the other SFX that will play, instead.
   //clearInterval(countupValue); // Stop the pause timer -- UNLESS IT WASN'T RUNNING?
   pauseBtn.classList.add('hide');
